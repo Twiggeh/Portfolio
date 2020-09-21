@@ -1,7 +1,4 @@
-# Minimal ReactJs setup
+# My Portfolio Site.
 
-## VSCode
-
-1. Have the chrome debugger extension installed
-2. Run `yarn install` or `npm install` in `client/src/`
-3. Run `start debug session`. Enjoy!
+Debug with `yarn debug`. If VSC's Chrome debugger is installed, breakpoints will be mapped to VSC.
+Run with `yarn build` and then host the index.html in public.
