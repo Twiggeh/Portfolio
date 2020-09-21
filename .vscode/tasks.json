@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "start Webpack",
+			"command": "yarn debug",
+			"options": { "cwd": "${workspaceFolder}/client" },
+			"type": "shell",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "typescript",
+				"fileLocation": "relative",
+				"pattern": {
+					"regexp": "asdfg"
+				},
+				"background": {
+					"activeOnStart": false,
+					"beginsPattern": "Time:",
+					"endsPattern": "Built at:"
+				}
+			},
+			"presentation": {
+				"reveal": "always"
+			},
+			"group": "build"
+		}
+	]
+}

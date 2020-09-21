@@ -1,0 +1,21 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Chrome",
+			"sourceMaps": true,
+			"outFiles": ["./client/public/js/*.js", "!**/node_modules/**"],
+			"request": "launch",
+			"type": "pwa-chrome",
+			"url": "http://localhost:8080",
+			"webRoot": "${workspaceFolder}/client/public"
+		}
+	],
+	"compounds": [
+		{
+			"name": "start debug session",
+			"configurations": ["Launch Chrome"],
+			"preLaunchTask": "start Webpack"
+		}
+	]
+}
