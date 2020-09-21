@@ -1,15 +1,12 @@
 import { hot } from 'react-hot-loader/root';
 
 const App = () => {
-	const [count, setCount] = useState(0);
 	return (
 		<>
-			<h1>Counter</h1>
-			<div>{count}</div>
-			<button onClick={() => setCount(c => c + 1)}>Increase Count</button>
-			<button onClick={() => setCount(c => c - 1)}>Decrease Count</button>
+			<Navigation />
 		</>
 	);
 };
 export default hot(App);
-import React, { useState } from 'react';
+import React from 'react';
+import Navigation from './components/Navigation';
