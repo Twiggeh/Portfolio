@@ -11,7 +11,10 @@
 				"owner": "typescript",
 				"fileLocation": "relative",
 				"pattern": {
-					"regexp": "asdfg"
+					"regexp": "asdfg",
+					"file": 1,
+					"location": 2,
+					"message": 3
 				},
 				"background": {
 					"activeOnStart": false,
@@ -19,10 +22,20 @@
 					"endsPattern": "Built at:"
 				}
 			},
-			"presentation": {
-				"reveal": "always"
-			},
 			"group": "build"
+		},
+		{
+			"label": "Linux kill webpack",
+			"type": "shell",
+			"command": "ps a | grep \"/usr/bin/yarn debug\" | grep -o -m 1  [0-9]* | head -1 | xargs kill",
+			"presentation": {
+				"echo": false,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
 		}
 	]
 }

@@ -8,14 +8,16 @@
 			"request": "launch",
 			"type": "pwa-chrome",
 			"url": "http://localhost:8080",
-			"webRoot": "${workspaceFolder}/client/public"
+			"webRoot": "${workspaceFolder}/client/public",
+			"postDebugTask": "Linux kill webpack"
 		}
 	],
 	"compounds": [
 		{
 			"name": "start debug session",
 			"configurations": ["Launch Chrome"],
-			"preLaunchTask": "start Webpack"
+			"preLaunchTask": "start Webpack",
+			"stopAll": true
 		}
 	]
 }
