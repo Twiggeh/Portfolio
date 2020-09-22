@@ -35,6 +35,18 @@ module.exports = {
 				],
 			},
 			{
+				test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'fonts/',
+						},
+					},
+				],
+			},
+			{
 				test: /\.(jpg|jpeg|png|svg)?$/,
 				use: ['file-loader'],
 			},
@@ -53,7 +65,7 @@ module.exports = {
 	resolve: {
 		alias: {
 			'react-dom': '@hot-loader/react-dom',
-			GConfig$: path.resolve(__dirname, 'config/global.js'),
+			source$: path.join(process.cwd(), 'client', 'src'),
 		},
 		modules: ['src', 'node_modules'],
 		extensions: ['*', '.js', '.jsx'],
