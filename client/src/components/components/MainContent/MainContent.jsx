@@ -14,10 +14,20 @@
  *
  * @param {{features: feature[]}} param0
  */
+
+const ButtonS = css({
+	fontFamily: globalStyle.fonts.mainFont,
+	color: globalStyle.colors.whiteText,
+	textDecoration: 'underline',
+	textDecorationColor: globalStyle.colors.whiteText,
+	textAlign: 'center',
+	margin: '20px',
+	backgroundColor: globalStyle.colors.bgInfill,
+	...globalStyle.styles.outline,
+});
+
 const MainContent = ({ title, subTitle, features, buttons }) => {
-	/**
-	 * @param {feature[]} features
-	 */
+	/** @param {feature[]} features*/
 	const getFeatures = features => {
 		return features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
@@ -28,7 +38,9 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					</a>
 					<img src={img} alt={alt} />
 					<div>{text}</div>
-					<a href={btnUrl}>More</a>
+					<a css={ButtonS} href={btnUrl}>
+						More
+					</a>
 				</section>
 			);
 		});
@@ -76,8 +88,9 @@ MainContent.propTypes = {
 		},
 	]),
 };
-
 export default MainContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css } from '@emotion/core';
+import globalStyle from '../../../styles/globalStyle';

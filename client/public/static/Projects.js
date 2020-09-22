@@ -1,8 +1,14 @@
 /**
- * @type {{features : import("../../src/components/components/MainContent/MainContent").feature[], 
-					buttons   : import("../../src/components/components/MainContent/MainContent").button[]}}
+ * @type {{
+					features : import("../../src/components/components/MainContent/MainContent").feature[], 
+					buttons   : import("../../src/components/components/MainContent/MainContent").button[],
+					title     : string,
+          subTitle  : string,
+					}}
  */
 export const ReplayBotData = {
+	title: 'Replay Bot',
+	subTitle: 'Functionally written, stateless, Discord Bot.',
 	buttons: [
 		{
 			btnName: 'Github',
@@ -32,3 +38,5 @@ export const ReplayBotData = {
 		},
 	],
 };
+
+export default [ReplayBotData];
