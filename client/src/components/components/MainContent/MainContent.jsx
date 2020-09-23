@@ -21,50 +21,105 @@ const ButtonS = css({
 	textDecoration: 'underline',
 	textDecorationColor: globalStyle.colors.whiteText,
 	textAlign: 'center',
-	margin: '20px',
-	backgroundColor: globalStyle.colors.bgInfill,
+	padding: '20px',
+	backgroundColor: globalStyle.colors.darkestInfill,
 	...globalStyle.styles.outline,
+	letterSpacing: '0.265em',
+	'&:hover': {
+		color: 'hotpink',
+	},
 });
 
 const MainContent = ({ title, subTitle, features, buttons }) => {
 	/** @param {feature[]} features*/
-	const getFeatures = features => {
-		return features.map((feature, i) => {
+	const getFeatures = features =>
+		features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
 			return (
-				<section key={i}>
+				<div key={i}>
 					<a href={btnUrl}>
-						<h1>{title}</h1>
+						<h1
+							css={{
+								fontSize: 'clamp(27px, 2vw, 50px)',
+								letterSpacing: '0.165em',
+								fontWeight: 700,
+							}}>
+							{title}
+						</h1>
 					</a>
 					<img src={img} alt={alt} />
 					<div>{text}</div>
 					<a css={ButtonS} href={btnUrl}>
 						More
 					</a>
-				</section>
+				</div>
 			);
 		});
-	};
 
 	const getBtns = buttons => {
-		return buttons.map((button, i) => {
+		const buttonList = buttons.map((button, i) => {
 			const { btnName, btnUrl, btnIcn, btnIcnFallback } = button;
+
 			return (
-				<section key={i}>
-					<a href={btnUrl}>
-						<img src={btnIcn} alt={btnIcnFallback} />
-						<div>{btnName}</div>
-					</a>
-				</section>
+				<a key={i} href={btnUrl} css={{ ...ButtonS }}>
+					<img src={btnIcn} alt={btnIcnFallback} />
+					{btnName}
+				</a>
 			);
 		});
+		return (
+			<section
+				css={{
+					display: 'flex',
+					flexGrow: 0,
+					flexDirection: 'column',
+					alignContent: 'center',
+				}}>
+				{buttonList}
+			</section>
+		);
 	};
 
 	return (
-		<article>
-			<h1>{title}</h1>
-			<h2>{subTitle}</h2>
-			{getBtns(buttons)}
+		<article
+			css={{
+				background: globalStyle.colors.darkestInfill,
+				marginTop: '4em',
+				...globalStyle.styles.outline,
+			}}>
+			<div
+				css={{
+					display: 'flex',
+					alignContent: 'stretch',
+					alignItems: 'center',
+				}}>
+				<div
+					css={{
+						padding: '2.5em',
+						...globalStyle.styles.customOutline(0, 1, 1, 0),
+						flexGrow: 9,
+					}}>
+					<h1
+						css={{
+							fontWeight: 700,
+							fontSize: 'clamp(35px, 3vw, 60px)',
+							letterSpacing: '0.145em',
+						}}>
+						{title}
+					</h1>
+					<h2
+						css={{
+							fontWeight: 300,
+							letterSpacing: '0.145em',
+							marginTop: '0.45em',
+							fontSize: 'clamp(20px, 2vw, 35px)',
+						}}>
+						{subTitle}
+					</h2>
+				</div>
+				{getBtns(buttons)}
+			</div>
+
 			{getFeatures(features)}
 		</article>
 	);
