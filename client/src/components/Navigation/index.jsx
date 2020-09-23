@@ -10,12 +10,19 @@ const Navigation = () => (
 			<ul
 				css={{
 					display: 'flex',
+					paddingTop: '2em',
+					paddingBottom: '2em',
+					alignContent: 'stretch',
+					background: globalStyle.colors.darkestInfill,
+					...globalStyle.styles.customOutline(0, 0, 1),
 					a: {
+						textDecoration: 'none',
 						'&:hover': { color: 'hotpink' },
-						fontSize: 'clamp(12px, 5vw, 25px)',
-						fontWeight: '100',
-						padding: '1em',
+						fontSize: 'clamp(18px, 2vw, 22px)',
+						fontWeight: '400',
+						paddingLeft: '1em',
 						textTransform: 'uppercase',
+						letterSpacing: '0.135em',
 					},
 					'li:nth-of-type(5)': {
 						marginLeft: 'auto',
@@ -24,7 +31,13 @@ const Navigation = () => (
 						marginLeft: 'auto',
 					},
 				}}>
-				<li css={{ fontWeight: 800 }}>
+				<li
+					css={{
+						a: {
+							fontWeight: 700,
+							fontSize: 'clamp(20px, 2vw, 32px)',
+						},
+					}}>
 					<Link to='/art'>Twiggeh&apos;s Portfolio</Link>
 				</li>
 				<li>
