@@ -14,6 +14,10 @@ export const ReplayBotData = {
 			btnName: 'Github',
 			btnUrl: 'https:github.com/Twiggeh',
 		},
+		{
+			btnName: 'Hosted',
+			btnUrl: 'https:github.com/Twiggeh',
+		},
 	],
 	features: [
 		{
