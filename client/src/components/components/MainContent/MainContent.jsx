@@ -15,53 +15,127 @@
  * @param {{features: feature[]}} param0
  */
 
-const ButtonS = css({
+const ButtonS = {
 	fontFamily: globalStyle.fonts.mainFont,
 	color: globalStyle.colors.whiteText,
 	textDecoration: 'underline',
 	textDecorationColor: globalStyle.colors.whiteText,
 	textAlign: 'center',
-	padding: '20px',
+	paddingTop: '1em',
+	paddingBottom: '1em',
+	paddingLeft: '1.7em',
+	paddingRight: '1.7em',
 	backgroundColor: globalStyle.colors.darkestInfill,
 	...globalStyle.styles.outline,
 	letterSpacing: '0.265em',
 	'&:hover': {
 		color: 'hotpink',
 	},
-});
+};
+
+/**
+ * @typedef {number} Tablet - The tablet breakpoint in px
+ * @typedef {number} Phone - The phone breakpoint in px
+ * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
+ */
+const mq = [1400, 1000].map(query => `@media (max-width: ${query}px)`);
 
 const MainContent = ({ title, subTitle, features, buttons }) => {
 	/** @param {feature[]} features*/
-	const getFeatures = features =>
-		features.map((feature, i) => {
+	const getFeatures = features => {
+		const featureList = features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
 			return (
 				<div key={i}>
 					<a href={btnUrl}>
 						<h1
 							css={{
-								fontSize: 'clamp(27px, 2vw, 50px)',
-								letterSpacing: '0.165em',
 								fontWeight: 700,
+								fontSize: 'clamp(30px, 3vw, 47px)',
+								letterSpacing: '0.165em',
+								padding: '2.5rem',
 							}}>
 							{title}
 						</h1>
 					</a>
-					<img src={img} alt={alt} />
-					<div>{text}</div>
-					<a css={ButtonS} href={btnUrl}>
-						More
-					</a>
+					<div
+						css={{
+							display: 'flex',
+							paddingLeft: '2.5rem',
+							...globalStyle.styles.customOutline(0, 0, 1),
+							paddingBottom: '1.5rem',
+							flexWrap: 'wrap',
+						}}>
+						<Img
+							src={img}
+							alt={alt}
+							customCss={{
+								minHeight: '225px',
+								minWidth: '400px',
+								backgroundPosition: ['center', 'bottom'],
+								width: '12vw',
+								maxHeight: '400px',
+								height: 'calc(12vw * 0.5625)',
+								flexGrow: 1,
+								[mq[1]]: {
+									marginRight: '2.5rem',
+								},
+							}}
+						/>
+						{/* Text and Button*/}
+						<div
+							css={{
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'flex-start',
+								justifyContent: 'space-between',
+								paddingLeft: '1rem',
+								flex: ['1', '1', '25vw'],
+								paddingRight: '3rem',
+								[mq[1]]: {
+									paddingLeft: '0',
+									paddingTop: '2rem',
+									minWidth: '90%',
+								},
+							}}>
+							<div
+								css={{
+									marginBottom: '1rem',
+									fontSize: 'clamp(20px, 2vw, 25px)',
+									letterSpacing: '0.265rem',
+									fontWeight: 400,
+									lineHeight: '1.5em',
+								}}>
+								{text}
+							</div>
+							<a css={{ ...ButtonS, fontSize: 'clamp(14px, 1.5vw, 22px)' }} href={btnUrl}>
+								More
+							</a>
+						</div>
+					</div>
 				</div>
 			);
 		});
-
+		return (
+			<div
+				cs={{
+					'div:nth-child(2)': {
+						flexDirection: 'row-reverse',
+					},
+				}}>
+				{featureList}
+			</div>
+		);
+	};
 	const getBtns = buttons => {
 		const buttonList = buttons.map((button, i) => {
 			const { btnName, btnUrl, btnIcn, btnIcnFallback } = button;
 
 			return (
-				<a key={i} href={btnUrl} css={{ ...ButtonS }}>
+				<a
+					key={i}
+					href={btnUrl}
+					css={{ ...ButtonS, fontSize: 'clamp(14px, 1.5vw, 22px)' }}>
 					<img src={btnIcn} alt={btnIcnFallback} />
 					{btnName}
 				</a>
@@ -73,7 +147,12 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					display: 'flex',
 					flexGrow: 0,
 					flexDirection: 'column',
-					alignContent: 'center',
+					justifyContent: 'center',
+					paddingTop: '   clamp(30px, 4vw, 40px)',
+					paddingBottom: 'clamp(30px, 4vw, 40px)',
+					paddingLeft: ' clamp(40px, 6vw, 60px)',
+					paddingRight: 'clamp(40px, 6vw, 60px)',
+					...globalStyle.styles.customOutline(0, 0, 1),
 				}}>
 				{buttonList}
 			</section>
@@ -84,18 +163,25 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 		<article
 			css={{
 				background: globalStyle.colors.darkestInfill,
-				marginTop: '4em',
+				marginTop: '4rem',
+				maxWidth: '65vw',
+				[mq[0]]: {
+					maxWidth: '100%',
+				},
 				...globalStyle.styles.outline,
 			}}>
 			<div
 				css={{
 					display: 'flex',
-					alignContent: 'stretch',
-					alignItems: 'center',
+					alignContent: 'center',
+					alignItems: 'stretch',
 				}}>
 				<div
 					css={{
-						padding: '2.5em',
+						paddingTop: '   clamp(30px, 4vw, 40px)',
+						paddingBottom: 'clamp(30px, 4vw, 40px)',
+						paddingRight: '2.5rem',
+						paddingLeft: '2.5rem',
 						...globalStyle.styles.customOutline(0, 1, 1, 0),
 						flexGrow: 9,
 					}}>
@@ -111,7 +197,7 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 						css={{
 							fontWeight: 300,
 							letterSpacing: '0.145em',
-							marginTop: '0.45em',
+							paddingTop: '0.5em',
 							fontSize: 'clamp(20px, 2vw, 35px)',
 						}}>
 						{subTitle}
@@ -149,3 +235,4 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/core';
 import globalStyle from '../../../styles/globalStyle';
+import Img from '../Img';
