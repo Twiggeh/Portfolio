@@ -104,7 +104,8 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 									fontSize: 'clamp(20px, 2vw, 25px)',
 									letterSpacing: '0.265rem',
 									fontWeight: 400,
-									lineHeight: '1.5em',
+									lineHeight: '1.5',
+									marginTop: '-.35em',
 								}}>
 								{text}
 							</div>
