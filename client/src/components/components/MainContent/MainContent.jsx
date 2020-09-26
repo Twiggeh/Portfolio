@@ -38,11 +38,12 @@ const ButtonS = {
  * @typedef {number} Phone - The phone breakpoint in px
  * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
  */
-const mq = [1400, 1000].map(query => `@media (max-width: ${query}px)`);
-
+const mq = [1400, 700].map((query) => `@media (max-width: ${query}px)`);
 const MainContent = ({ title, subTitle, features, buttons }) => {
 	/** @param {feature[]} features*/
-	const getFeatures = features => {
+	const getFeatures = (features) => {
+		const imgMinWidth = '200px',
+			imgMaxWidth = '600px';
 		const featureList = features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
 			return (
@@ -64,20 +65,19 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 							paddingLeft: '2.5rem',
 							...globalStyle.styles.customOutline(0, 0, 1),
 							paddingBottom: '1.5rem',
-							flexWrap: 'wrap',
+							[mq[1]]: {
+								flexWrap: 'wrap',
+							},
 						}}>
-						<Img
+						<img
 							src={img}
 							alt={alt}
-							customCss={{
-								minHeight: '225px',
-								minWidth: '400px',
-								backgroundPosition: ['center', 'bottom'],
-								width: '12vw',
-								maxHeight: '400px',
-								height: 'calc(12vw * 0.5625)',
-								flexGrow: 1,
+							css={{
+								width: `clamp(${imgMinWidth}, 30%, ${imgMaxWidth})`,
+								height: `clamp(calc(${imgMinWidth} * 0.5625), calc(30% * 0.5625), calc(${imgMaxWidth} * 0.5625))`,
 								[mq[1]]: {
+									width: '90%',
+									height: 'calc(30% * 0.5625)',
 									marginRight: '2.5rem',
 								},
 							}}
@@ -90,8 +90,8 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 								alignItems: 'flex-start',
 								justifyContent: 'space-between',
 								paddingLeft: '1rem',
-								flex: ['1', '1', '25vw'],
 								paddingRight: '3rem',
+								flex: ['0', '1', 'auto'],
 								[mq[1]]: {
 									paddingLeft: '0',
 									paddingTop: '2rem',
@@ -117,21 +117,24 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 				</div>
 			);
 		});
+
 		return (
 			<div
-				cs={{
-					'div:nth-child(2)': {
+				css={{
+					'& > div:nth-child(even) > div': {
 						flexDirection: 'row-reverse',
+						div: {
+							paddingLeft: 0,
+						},
 					},
 				}}>
 				{featureList}
 			</div>
 		);
 	};
-	const getBtns = buttons => {
+	const getBtns = (buttons) => {
 		const buttonList = buttons.map((button, i) => {
 			const { btnName, btnUrl, btnIcn, btnIcnFallback } = button;
-
 			return (
 				<a
 					key={i}
@@ -206,7 +209,6 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 				</div>
 				{getBtns(buttons)}
 			</div>
-
 			{getFeatures(features)}
 		</article>
 	);
@@ -234,6 +236,4 @@ export default MainContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@emotion/core';
 import globalStyle from '../../../styles/globalStyle';
-import Img from '../Img';
