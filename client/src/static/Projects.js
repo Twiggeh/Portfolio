@@ -1,11 +1,12 @@
 /**
- * @type {{
-					features : import("../../src/components/components/MainContent/MainContent").feature[], 
-					buttons   : import("../../src/components/components/MainContent/MainContent").button[],
+ * @typedef {{
+					features  : import("../components/components/MainContent/MainContent").feature[], 
+					buttons   : import("../components/components/MainContent/MainContent").button[],
 					title     : string,
-          subTitle  : string,
-					}}
+					subTitle  : string,
+					}} Content
  */
+/** @type {Content} */
 export const ReplayBotData = {
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
@@ -13,10 +14,28 @@ export const ReplayBotData = {
 		{
 			btnName: 'Github',
 			btnUrl: 'https:github.com/Twiggeh',
+			modal: {
+				content: (
+					<div css={{ padding: '1em', paddingTop: '0' }}>
+						<h1 css={{ fontSize: '2em', paddingBottom: '1em', fontWeight: 500 }}>
+							Currently not available
+						</h1>
+						<article css={{ fontSize: '1.2em' }}>
+							Will become available once all payments by the client have been made.
+						</article>
+					</div>
+				),
+				css: {
+					display: 'flex',
+					alignItems: 'flex-start',
+					flexDirection: 'row-reverse',
+					button: {},
+				},
+			},
 		},
 		{
 			btnName: 'Hosted',
-			btnUrl: 'https:github.com/Twiggeh',
+			btnUrl: 'https:discord.gg/f5gQQPP',
 		},
 	],
 	features: [
@@ -43,4 +62,6 @@ export const ReplayBotData = {
 	],
 };
 
+/** @type {Content[]} */
 export default [ReplayBotData];
+import React from 'react';
