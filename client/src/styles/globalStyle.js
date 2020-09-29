@@ -78,6 +78,8 @@ const customOutline = (top = 0, right = 0, bottom = 0, left = 0) => {
 	};
 };
 
+const mainQueries = [1400, 700].map(query => `@media (max-width: ${query}px)`);
+
 export const styles = {
 	outline,
 	customOutline,
@@ -91,6 +93,9 @@ export const svgs = {
 	githubLogo,
 	discordLogo,
 };
+
+export const queries = {
+	mainQueries,
 };
 
 export default {
@@ -98,4 +103,5 @@ export default {
 	fonts,
 	styles,
 	svgs,
+	queries,
 };
