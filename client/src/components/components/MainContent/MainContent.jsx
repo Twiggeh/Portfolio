@@ -40,6 +40,8 @@ const ButtonS = {
 	fontSize: `max(calc(${globalStyle.styles.text} - 0.3rem), 14px)`,
 };
 
+const MainContentPaddingLeft = '3.5rem';
+
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
  * @typedef {number} Phone - The phone breakpoint in px
@@ -51,20 +53,29 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 	const { setModal } = useContext(ModalContext);
 
 	/** @param {feature[]} features*/
-	const getFeatures = (features) => {
-		const imgMinWidth = '200px',
-			imgMaxWidth = '600px';
+	const getFeatures = features => {
+		const imgMinWidth = '200px';
+		const imgMaxWidth = '600px';
 		const featureList = features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
 			return (
-				<div key={i}>
+				<div
+					key={i}
+					css={{
+						display: 'flex',
+						flexDirection: 'column',
+						paddingLeft: MainContentPaddingLeft,
+						paddingRight: MainContentPaddingLeft,
+						overflow: 'hidden',
+					}}>
 					<a href={btnUrl}>
 						<h1
 							css={{
 								fontWeight: 700,
-								fontSize: 'clamp(30px, 3vw, 47px)',
-								letterSpacing: '0.165em',
-								padding: '2.5rem',
+								fontSize: globalStyle.styles.midtitleFontSize,
+								letterSpacing: '0.2rem',
+								paddingTop: '3.2rem',
+								paddingBottom: '2.2rem',
 							}}>
 							{title}
 						</h1>
@@ -72,8 +83,6 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					<div
 						css={{
 							display: 'flex',
-							paddingLeft: '2.5rem',
-							...globalStyle.styles.customOutline(0, 0, 1),
 							paddingBottom: '1.5rem',
 							[mq[1]]: {
 								flexWrap: 'wrap',
@@ -86,9 +95,8 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 								width: `clamp(${imgMinWidth}, 30%, ${imgMaxWidth})`,
 								height: `clamp(calc(${imgMinWidth} * 0.5625), calc(30% * 0.5625), calc(${imgMaxWidth} * 0.5625))`,
 								[mq[1]]: {
-									width: '90%',
+									width: '100%',
 									height: 'calc(30% * 0.5625)',
-									marginRight: '2.5rem',
 								},
 							}}
 						/>
@@ -99,11 +107,12 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 								flexDirection: 'column',
 								alignItems: 'flex-start',
 								justifyContent: 'space-between',
-								paddingLeft: '1rem',
+								paddingLeft: '2.5rem',
 								paddingRight: '3rem',
 								flex: ['0', '1', 'auto'],
 								[mq[1]]: {
 									paddingLeft: '0',
+									paddingRight: '0',
 									paddingTop: '2rem',
 									minWidth: '90%',
 								},
@@ -111,19 +120,26 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 							<div
 								css={{
 									marginBottom: '1rem',
-									fontSize: 'clamp(20px, 2vw, 25px)',
-									letterSpacing: '0.265rem',
+									fontSize: globalStyle.styles.text,
+									letterSpacing: '0.165rem',
 									fontWeight: 400,
 									lineHeight: '1.5',
 									marginTop: '-.35em',
 								}}>
 								{text}
 							</div>
-							<a css={{ ...ButtonS, fontSize: 'clamp(14px, 1.5vw, 22px)' }} href={btnUrl}>
+							<a css={ButtonS} href={btnUrl}>
 								More
 							</a>
 						</div>
 					</div>
+					<div
+						css={{
+							...globalStyle.styles.customOutline(1),
+							width: '100vw',
+							alignSelf: 'center',
+						}}
+					/>
 				</div>
 			);
 		});
@@ -263,13 +279,16 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					display: 'flex',
 					alignContent: 'center',
 					alignItems: 'stretch',
+					[mq[1]]: {
+						flexDirection: 'column',
+					},
 				}}>
 				<div
 					css={{
-						paddingTop: '   clamp(30px, 4vw, 40px)',
+						paddingTop: 'clamp(30px, 4vw, 40px)',
 						paddingBottom: 'clamp(30px, 4vw, 40px)',
 						paddingRight: '2.5rem',
-						paddingLeft: '2.5rem',
+						paddingLeft: MainContentPaddingLeft,
 						...globalStyle.styles.customOutline(0, 1, 1, 0),
 						flexGrow: 9,
 					}}>
