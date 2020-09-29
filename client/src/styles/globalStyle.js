@@ -6,6 +6,7 @@ const githubLogo = (
 		version='1.1'
 		x='0px'
 		y='0px'
+		fill='white'
 		viewBox='0 0 438.549 438.549'
 		style={{
 			enableBackground: 'new 0 0 438.549 438.549',
