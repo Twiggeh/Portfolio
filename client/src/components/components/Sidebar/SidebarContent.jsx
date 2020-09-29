@@ -1,18 +1,19 @@
-const SidebarContent = ({ title, date, src, alt }) => {
+/** @param {{title: string, date: string, features : import('../MainContent/MainContent').feature[]}} */
+const SidebarContent = ({
+	title,
+	hero = { src: './static/khala_close.jpg', alt: '' },
+}) => {
 	return (
 		<aside>
-			<img src={src} alt={alt} />
+			<img src={hero.src} alt={hero.alt} />
 			<h4>{title}</h4>
-			<h4>{date}</h4>
 		</aside>
 	);
 };
 
 SidebarContent.propTypes = {
 	title: PropTypes.string,
-	date: PropTypes.string,
-	src: PropTypes.string,
-	alt: PropTypes.string,
+	hero: PropTypes.object,
 };
 
 export default SidebarContent;
