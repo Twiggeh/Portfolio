@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /**
  * @typedef {object} feature
  * @prop {string} feature.title - The title of the sidebar header
@@ -11,10 +12,13 @@
  * @prop {string} button.btnUrl - The url the button points to
  * @prop {string} button.btnIcn - The path relative to src to get to the image / url
  * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
+ * @prop {JSX.Element} button.svg - The svg icon for the button
+ * @prop {import("../../Modals/modal_index").Modal} [button.modal] - A modal that can pop up if defined
  *
  * @param {{features: feature[]}} param0
  */
 
+/** @type {import('@emotion/core').Interpolation} */
 const ButtonS = {
 	fontFamily: globalStyle.fonts.mainFont,
 	color: globalStyle.colors.whiteText,
@@ -38,7 +42,8 @@ const ButtonS = {
  * @typedef {number} Phone - The phone breakpoint in px
  * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
  */
-const mq = [1400, 700].map((query) => `@media (max-width: ${query}px)`);
+const mq = globalStyle.queries.mainQueries;
+
 const MainContent = ({ title, subTitle, features, buttons }) => {
 	const { setModal } = useContext(ModalContext);
 
@@ -134,13 +139,73 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 			</div>
 		);
 	};
-	const getBtns = (buttons) => {
+
+	/** @param {button[]} buttons*/
+	const getBtns = buttons => {
+		const formatButton = (btnName, svg = false, btnImg = false, btnImgAlt = false) => {
+			const getBtn = btnName => (
+				<div
+					css={{
+						marginLeft: '2rem',
+						marginRight: '2rem',
+					}}>
+					{btnName}
+				</div>
+			);
+
+			if (svg || btnImg || btnImgAlt) {
+				return (
+					<>
+						<div
+							css={{
+								width: 'max(2vw, 20px)',
+								padding: '1em',
+							}}>
+							{svg ? svg : <img src={btnImg} alt={btnImgAlt} />}
+						</div>
+						<div css={{ height: '100vw', ...globalStyle.styles.customOutline(0, 1) }} />
+						{getBtn(btnName)}
+					</>
+				);
+			}
+			// if no image return just the button
+			return getBtn(btnName);
+		};
+
 		const buttonList = buttons.map((button, i) => {
 			const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
 			return (
 				<a
 					key={i}
 					href={btnUrl}
+					css={{
+						...ButtonS,
+						height: 'calc(1rem + 2vw)',
+						display: 'flex',
+						alignItems: 'center',
+						padding: 0, // TODO : figure out why this is 0
+						overflow: 'hidden',
+						'&:nth-child(even)': {
+							flexDirection: 'row-reverse',
+						},
+						':hover': {
+							svg: {
+								fill: 'hotpink',
+							},
+						},
+						[mq[1]]: {
+							border: 0,
+							paddingTop: '1rem',
+							paddingBottom: '1rem',
+							'& > div': {
+								// TODO : move the svgs closer to their buttons
+								border: 0,
+							},
+							'&:nth-child(even)': {
+								flexDirection: 'row',
+							},
+						},
+					}}
 					onClick={
 						// prettier-ignore
 						modal ? 
@@ -150,9 +215,11 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 						}
 						: () => {}
 					}>
+					{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
 				</a>
 			);
 		});
+
 		return (
 			<section
 				css={{
@@ -160,11 +227,17 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					flexGrow: 0,
 					flexDirection: 'column',
 					justifyContent: 'center',
-					paddingTop: '   clamp(30px, 4vw, 40px)',
+					paddingTop: 'clamp(30px, 4vw, 40px)',
 					paddingBottom: 'clamp(30px, 4vw, 40px)',
-					paddingLeft: ' clamp(40px, 6vw, 60px)',
+					paddingLeft: 'clamp(40px, 6vw, 60px)',
 					paddingRight: 'clamp(40px, 6vw, 60px)',
 					...globalStyle.styles.customOutline(0, 0, 1),
+					[mq[1]]: {
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						paddingTop: 0,
+						paddingBottom: 0,
+					},
 				}}>
 				{buttonList}
 			</section>
@@ -244,4 +317,6 @@ export default MainContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import globalStyle from '../../../styles/globalStyle';
+import globalStyle from '../../../styles/globalStyle.js';
+import { useContext } from 'react';
+import ModalContext from '../../Providers/modalProvider.jsx';

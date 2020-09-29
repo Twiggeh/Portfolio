@@ -14,6 +14,7 @@ export const ReplayBotData = {
 		{
 			btnName: 'Github',
 			btnUrl: 'https:github.com/Twiggeh',
+			svg: globalStyle.svgs.githubLogo,
 			modal: {
 				content: (
 					<div css={{ padding: '1em', paddingTop: '0' }}>
@@ -35,6 +36,7 @@ export const ReplayBotData = {
 		},
 		{
 			btnName: 'Hosted',
+			svg: globalStyle.svgs.discordLogo,
 			btnUrl: 'https:discord.gg/f5gQQPP',
 		},
 	],
@@ -65,3 +67,4 @@ export const ReplayBotData = {
 /** @type {Content[]} */
 export default [ReplayBotData];
 import React from 'react';
+import globalStyle from '../styles/globalStyle';
