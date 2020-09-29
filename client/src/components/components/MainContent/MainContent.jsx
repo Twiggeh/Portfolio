@@ -40,6 +40,8 @@ const ButtonS = {
  */
 const mq = [1400, 700].map((query) => `@media (max-width: ${query}px)`);
 const MainContent = ({ title, subTitle, features, buttons }) => {
+	const { setModal } = useContext(ModalContext);
+
 	/** @param {feature[]} features*/
 	const getFeatures = (features) => {
 		const imgMinWidth = '200px',
@@ -134,14 +136,20 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 	};
 	const getBtns = (buttons) => {
 		const buttonList = buttons.map((button, i) => {
-			const { btnName, btnUrl, btnIcn, btnIcnFallback } = button;
+			const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
 			return (
 				<a
 					key={i}
 					href={btnUrl}
-					css={{ ...ButtonS, fontSize: 'clamp(14px, 1.5vw, 22px)' }}>
-					<img src={btnIcn} alt={btnIcnFallback} />
-					{btnName}
+					onClick={
+						// prettier-ignore
+						modal ? 
+						e => {
+								e.preventDefault();
+								setModal(modal);
+						}
+						: () => {}
+					}>
 				</a>
 			);
 		});
