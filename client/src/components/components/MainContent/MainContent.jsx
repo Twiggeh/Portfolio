@@ -32,9 +32,12 @@ const ButtonS = {
 	backgroundColor: globalStyle.colors.darkestInfill,
 	...globalStyle.styles.outline,
 	letterSpacing: '0.265em',
+	textUnderlineOffset: '0.1em',
 	'&:hover': {
 		color: 'hotpink',
+		textDecorationColor: 'hotpink',
 	},
+	fontSize: `max(calc(${globalStyle.styles.text} - 0.3rem), 14px)`,
 };
 
 /**
