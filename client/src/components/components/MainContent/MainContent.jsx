@@ -217,7 +217,7 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 							paddingTop: '1rem',
 							paddingBottom: '1rem',
 							'& > div': {
-								// TODO : move the svgs closer to their buttons
+								marginLeft: 0,
 								border: 0,
 							},
 							'&:nth-child(even)': {
