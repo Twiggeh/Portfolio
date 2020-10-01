@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"label": "start Webpack",
-			"command": "yarn debug",
+			"command": "echo 'startTrackingTask' && echo 'endTrackingTask' && yarn debug",
 			"options": { "cwd": "${workspaceFolder}/client" },
 			"type": "shell",
 			"isBackground": true,
@@ -18,8 +18,8 @@
 				},
 				"background": {
 					"activeOnStart": false,
-					"beginsPattern": "Time:",
-					"endsPattern": "Built at:"
+					"beginsPattern": "startTrackingTask",
+					"endsPattern": "endTrackingTask"
 				}
 			},
 			"group": "build"
