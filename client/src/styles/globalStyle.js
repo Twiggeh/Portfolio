@@ -87,6 +87,7 @@ export const styles = {
 	midtitleFontSize: 'clamp(27px, 2vw, 60px)',
 	titleFontSize: 'clamp(35px, 2.8vw, 60px)',
 	text: 'clamp(14px, 1.2vw, 35px)',
+	contentPaddingSides: '1.5rem',
 };
 
 export const svgs = {

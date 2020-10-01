@@ -40,8 +40,6 @@ const ButtonS = {
 	fontSize: `max(calc(${globalStyle.styles.text} - 0.3rem), 14px)`,
 };
 
-const MainContentPaddingLeft = '3.5rem';
-
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
  * @typedef {number} Phone - The phone breakpoint in px
@@ -64,8 +62,8 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 					css={{
 						display: 'flex',
 						flexDirection: 'column',
-						paddingLeft: MainContentPaddingLeft,
-						paddingRight: MainContentPaddingLeft,
+						paddingLeft: globalStyle.styles.contentPaddingSides,
+						paddingRight: globalStyle.styles.contentPaddingSides,
 						overflow: 'hidden',
 					}}>
 					<a href={btnUrl}>
@@ -288,7 +286,7 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 						paddingTop: 'clamp(30px, 4vw, 40px)',
 						paddingBottom: 'clamp(30px, 4vw, 40px)',
 						paddingRight: '2.5rem',
-						paddingLeft: MainContentPaddingLeft,
+						paddingLeft: globalStyle.styles.contentPaddingSides,
 						...globalStyle.styles.customOutline(0, 1, 1, 0),
 						flexGrow: 9,
 					}}>
