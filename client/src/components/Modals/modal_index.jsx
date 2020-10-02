@@ -6,39 +6,6 @@
 						}} Modal
  */
 
-const cross = (
-	{ size = 40, color = 'black', width = 3, lineCap = 'round' } = {
-		size: 40,
-		color: 'black',
-		width: 3,
-		lineCap: 'round',
-	}
-) => (
-	<svg
-		width={size}
-		height={size}
-		viewBox={`0 0 ${size} ${size}`}
-		fill='none'
-		xmlns='http://www.w3.org/2000/svg'>
-		<line
-			x1='2.52952'
-			y1='2.52943'
-			x2='36.4706'
-			y2='36.4706'
-			stroke={color}
-			css={{ strokeWidth: width, strokeLinecap: lineCap }}
-		/>
-		<line
-			x1='36.4707'
-			y1='2.52943'
-			x2='2.52958'
-			y2='36.4706'
-			stroke={color}
-			css={{ strokeWidth: width, strokeLinecap: lineCap }}
-		/>
-	</svg>
-);
-
 const Modals = () => {
 	const { modal, setModal } = useContext(ModalContext);
 
@@ -86,7 +53,7 @@ const Modals = () => {
 							e.preventDefault();
 							setModal(undefined);
 						}}>
-						{cross()}
+						{globalStyle.svgs.cross()}
 					</button>
 					{content}
 				</dialog>
@@ -109,3 +76,4 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import ModalContext from '../Providers/modalProvider';
+import globalStyle from '../../styles/globalStyle';

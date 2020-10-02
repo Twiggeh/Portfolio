@@ -1,4 +1,3 @@
-import { css } from '@emotion/core';
 import React from 'react';
 
 const githubLogo = (
@@ -47,6 +46,71 @@ const discordLogo = (
 	</svg>
 );
 
+const hamburgerMenu = (
+	<svg width='44' height='26' viewBox='0 0 44 26' fill='none'>
+		<line
+			x1='2'
+			y1='13'
+			x2='42'
+			y2='13'
+			stroke='white'
+			strokeWidth='4'
+			strokeLinecap='round'
+		/>
+		<line
+			x1='2'
+			y1='24'
+			x2='42'
+			y2='24'
+			stroke='white'
+			strokeWidth='4'
+			strokeLinecap='round'
+		/>
+		<line
+			x1='42'
+			y1='2'
+			x2='2'
+			y2='2'
+			stroke='white'
+			strokeWidth='4'
+			strokeLinecap='round'
+		/>
+	</svg>
+);
+
+const cross = (
+	{ size = 40, color = 'white', width = 3, lineCap = 'round' } = {
+		size: 40,
+		color: 'white',
+		width: 3,
+		lineCap: 'round',
+	}
+) => (
+	<svg
+		width={size}
+		height={size}
+		viewBox={`0 0 ${size} ${size}`}
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'>
+		<line
+			x1='2.52952'
+			y1='2.52943'
+			x2='36.4706'
+			y2='36.4706'
+			stroke={color}
+			css={{ strokeWidth: width, strokeLinecap: lineCap }}
+		/>
+		<line
+			x1='36.4707'
+			y1='2.52943'
+			x2='2.52958'
+			y2='36.4706'
+			stroke={color}
+			css={{ strokeWidth: width, strokeLinecap: lineCap }}
+		/>
+	</svg>
+);
+
 const colors = {
 	grayBorder: '#3F3F3F',
 	darkestInfill: '#17181A',
@@ -86,6 +150,7 @@ export const styles = {
 	subtitleFontSize: 'clamp(16px, 1.4vw, 50px)',
 	midtitleFontSize: 'clamp(27px, 2vw, 60px)',
 	titleFontSize: 'clamp(35px, 2.8vw, 60px)',
+	navElFontSize: 'clamp(18px, 2vw, 22px)',
 	text: 'clamp(14px, 1.2vw, 35px)',
 	contentPaddingSides: '1.5rem',
 };
@@ -93,6 +158,8 @@ export const styles = {
 export const svgs = {
 	githubLogo,
 	discordLogo,
+	hamburgerMenu,
+	cross,
 };
 
 export const queries = {
