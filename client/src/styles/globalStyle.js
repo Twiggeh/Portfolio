@@ -142,16 +142,18 @@ const customOutline = (top = 0, right = 0, bottom = 0, left = 0) => {
 	};
 };
 
-const mainQueries = [1400, 700].map(query => `@media (max-width: ${query}px)`);
+const numQueries = [1400, 700];
+const mainQueries = numQueries.map(query => `@media (max-width: ${query}px)`);
 
 export const styles = {
 	outline,
 	customOutline,
 	subtitleFontSize: 'clamp(16px, 1.4vw, 50px)',
-	midtitleFontSize: 'clamp(27px, 2vw, 60px)',
+	midtitleFontSize: 'clamp(30px, 2vw, 60px)',
 	titleFontSize: 'clamp(35px, 2.8vw, 60px)',
-	navElFontSize: 'clamp(18px, 2vw, 22px)',
-	text: 'clamp(14px, 1.2vw, 35px)',
+	navElFontSize: 'clamp(20px, 2vw, 2vw)',
+	navTitleFontSize: 'clamp(25px, 2.2vw, 2.2vw)',
+	text: 'clamp(18px, 1.2vw, 35px)',
 	contentPaddingSides: '1.5rem',
 };
 
@@ -164,6 +166,7 @@ export const svgs = {
 
 export const queries = {
 	mainQueries,
+	numQueries,
 };
 
 export default {
