@@ -27,7 +27,7 @@ const Navigation = () => (
 
 export default Navigation;
 import React from 'react';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import globalStyle from '../../styles/globalStyle';
 import AboutPage from '../About';
 import ArtPage from '../Art';

@@ -1,5 +1,5 @@
-const MainContents = () =>
-	allData.map((data, i) => (
+const MainContents = () => {
+	const contentList = allData.map((data, i) => (
 		<MainContent
 			features={data.features}
 			buttons={data.buttons}
@@ -8,6 +8,8 @@ const MainContents = () =>
 			key={i}
 		/>
 	));
+	return contentList;
+};
 
 export default MainContents;
 

@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 // TODO : Figure out how to deal with this
 import '../public/static/global.css';
+
 const App = () => {
 	const [modal, setModal] = useState(undefined);
 	/** @type {import('@emotion/core').Interpolation}*/

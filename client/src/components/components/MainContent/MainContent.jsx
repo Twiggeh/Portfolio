@@ -18,28 +18,6 @@
  * @param {{features: feature[]}} param0
  */
 
-/** @type {import('@emotion/core').Interpolation} */
-const ButtonS = {
-	fontFamily: globalStyle.fonts.mainFont,
-	color: globalStyle.colors.whiteText,
-	textDecoration: 'underline',
-	textDecorationColor: globalStyle.colors.whiteText,
-	textAlign: 'center',
-	paddingTop: '1em',
-	paddingBottom: '1em',
-	paddingLeft: '1.7em',
-	paddingRight: '1.7em',
-	backgroundColor: globalStyle.colors.darkestInfill,
-	...globalStyle.styles.outline,
-	letterSpacing: '0.265em',
-	textUnderlineOffset: '0.1em',
-	'&:hover': {
-		color: 'hotpink',
-		textDecorationColor: 'hotpink',
-	},
-	fontSize: `max(calc(${globalStyle.styles.text} - 0.3rem), 14px)`,
-};
-
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
  * @typedef {number} Phone - The phone breakpoint in px
@@ -52,266 +30,75 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 
 	/** @param {feature[]} features*/
 	const getFeatures = features => {
-		const imgMinWidth = '200px';
-		const imgMaxWidth = '600px';
 		const featureList = features.map((feature, i) => {
 			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
 			return (
-				<div
-					key={i}
-					css={{
-						display: 'flex',
-						flexDirection: 'column',
-						paddingLeft: globalStyle.styles.contentPaddingSides,
-						paddingRight: globalStyle.styles.contentPaddingSides,
-						overflow: 'hidden',
-					}}>
+				<FeatureWrap key={i}>
 					<a href={btnUrl}>
-						<h1
-							css={{
-								fontWeight: 700,
-								fontSize: globalStyle.styles.midtitleFontSize,
-								letterSpacing: '0.2rem',
-								paddingTop: '3.2rem',
-								paddingBottom: '2.2rem',
-							}}>
-							{title}
-						</h1>
+						<FeatureTitle>{title}</FeatureTitle>
 					</a>
-					<div
-						css={{
-							display: 'flex',
-							paddingBottom: '1.5rem',
-							[mq[1]]: {
-								flexWrap: 'wrap',
-							},
-						}}>
-						<img
-							src={img}
-							alt={alt}
-							css={{
-								width: `clamp(${imgMinWidth}, 30%, ${imgMaxWidth})`,
-								height: `clamp(calc(${imgMinWidth} * 0.5625), calc(30% * 0.5625), calc(${imgMaxWidth} * 0.5625))`,
-								[mq[1]]: {
-									width: '100%',
-									height: 'calc(30% * 0.5625)',
-								},
-							}}
-						/>
-						{/* Text and Button*/}
-						<div
-							css={{
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'flex-start',
-								justifyContent: 'space-between',
-								paddingLeft: '2.5rem',
-								paddingRight: '3rem',
-								flex: ['0', '1', 'auto'],
-								[mq[1]]: {
-									paddingLeft: '0',
-									paddingRight: '0',
-									paddingTop: '2rem',
-									minWidth: '90%',
-								},
-							}}>
-							<div
-								css={{
-									marginBottom: '1rem',
-									fontSize: globalStyle.styles.text,
-									letterSpacing: '0.165rem',
-									fontWeight: 400,
-									lineHeight: '1.5',
-									marginTop: '-.35em',
-								}}>
-								{text}
-							</div>
-							<a css={ButtonS} href={btnUrl}>
-								More
-							</a>
-						</div>
-					</div>
-					<div
-						css={{
-							...globalStyle.styles.customOutline(1),
-							width: '100vw',
-							alignSelf: 'center',
-						}}
-					/>
-				</div>
+					<FeatureContentWrap>
+						<FeatureImg src={img} alt={alt} />
+						<FeatureDescBtnWrap>
+							<FeatureDesc>{text}</FeatureDesc>
+							<Button href={btnUrl}>More</Button>
+						</FeatureDescBtnWrap>
+					</FeatureContentWrap>{' '}
+					<Separator />
+				</FeatureWrap>
 			);
 		});
-
-		return (
-			<div
-				css={{
-					'& > div:nth-child(even) > div': {
-						flexDirection: 'row-reverse',
-						div: {
-							paddingLeft: 0,
-						},
-					},
-				}}>
-				{featureList}
-			</div>
-		);
+		return featureList;
 	};
 
 	/** @param {button[]} buttons*/
 	const getBtns = buttons => {
 		const formatButton = (btnName, svg = false, btnImg = false, btnImgAlt = false) => {
-			const getBtn = btnName => (
-				<div
-					css={{
-						marginLeft: '2rem',
-						marginRight: '2rem',
-					}}>
-					{btnName}
-				</div>
-			);
-
 			if (svg || btnImg || btnImgAlt) {
 				return (
 					<>
-						<div
-							css={{
-								width: 'max(2vw, 20px)',
-								padding: '1em',
-							}}>
+						<ButtonIconWrap>
 							{svg ? svg : <img src={btnImg} alt={btnImgAlt} />}
-						</div>
-						<div css={{ height: '100vw', ...globalStyle.styles.customOutline(0, 1) }} />
-						{getBtn(btnName)}
+						</ButtonIconWrap>
+						<VertSeparator />
+						<ButtonListButton>{btnName}</ButtonListButton>
 					</>
 				);
 			}
-			// if no image return just the button
-			return getBtn(btnName);
+			return <ButtonListButton>{btnName}</ButtonListButton>;
 		};
 
 		const buttonList = buttons.map((button, i) => {
 			const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
 			return (
-				<a
+				<ButtonListWrapper
 					key={i}
 					href={btnUrl}
-					css={{
-						...ButtonS,
-						height: 'calc(1rem + 2vw)',
-						display: 'flex',
-						alignItems: 'center',
-						padding: 0, // TODO : figure out why this is 0
-						overflow: 'hidden',
-						'&:nth-child(even)': {
-							flexDirection: 'row-reverse',
-						},
-						':hover': {
-							svg: {
-								fill: 'hotpink',
-							},
-						},
-						[mq[1]]: {
-							border: 0,
-							paddingTop: '1rem',
-							paddingBottom: '1rem',
-							'& > div': {
-								marginLeft: 0,
-								border: 0,
-							},
-							'&:nth-child(even)': {
-								flexDirection: 'row',
-							},
-						},
-					}}
-					onClick={
-						// prettier-ignore
-						modal ? 
-						e => {
-								e.preventDefault();
-								setModal(modal);
+					onClick={e => {
+						if (modal) {
+							e.preventDefault();
+							setModal(modal);
 						}
-						: () => {}
-					}>
+					}}>
 					{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
-				</a>
+				</ButtonListWrapper>
 			);
 		});
 
-		return (
-			<section
-				css={{
-					display: 'flex',
-					flexGrow: 0,
-					flexDirection: 'column',
-					justifyContent: 'center',
-					paddingTop: 'clamp(30px, 4vw, 40px)',
-					paddingBottom: 'clamp(30px, 4vw, 40px)',
-					paddingLeft: 'clamp(40px, 6vw, 60px)',
-					paddingRight: 'clamp(40px, 6vw, 60px)',
-					...globalStyle.styles.customOutline(0, 0, 1),
-					[mq[1]]: {
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						paddingTop: 0,
-						paddingBottom: 0,
-					},
-				}}>
-				{buttonList}
-			</section>
-		);
+		return <ButtonList>{buttonList}</ButtonList>;
 	};
 
 	return (
-		<article
-			css={{
-				background: globalStyle.colors.darkestInfill,
-				marginTop: '4rem',
-				maxWidth: '65vw',
-				[mq[0]]: {
-					maxWidth: '100%',
-				},
-				...globalStyle.styles.outline,
-			}}>
-			<div
-				css={{
-					display: 'flex',
-					alignContent: 'center',
-					alignItems: 'stretch',
-					[mq[1]]: {
-						flexDirection: 'column',
-					},
-				}}>
-				<div
-					css={{
-						paddingTop: 'clamp(30px, 4vw, 40px)',
-						paddingBottom: 'clamp(30px, 4vw, 40px)',
-						paddingRight: '2.5rem',
-						paddingLeft: globalStyle.styles.contentPaddingSides,
-						...globalStyle.styles.customOutline(0, 1, 1, 0),
-						flexGrow: 9,
-					}}>
-					<h1
-						css={{
-							fontWeight: 700,
-							fontSize: 'clamp(35px, 3vw, 60px)',
-							letterSpacing: '0.145em',
-						}}>
-						{title}
-					</h1>
-					<h2
-						css={{
-							fontWeight: 300,
-							letterSpacing: '0.145em',
-							paddingTop: '0.5em',
-							fontSize: 'clamp(20px, 2vw, 35px)',
-						}}>
-						{subTitle}
-					</h2>
-				</div>
+		<Main>
+			<MainHeaderWrapper>
+				<MainTitleWrapper>
+					<MainTitle>{title}</MainTitle>
+					<MainSubtitle>{subTitle}</MainSubtitle>
+				</MainTitleWrapper>
 				{getBtns(buttons)}
-			</div>
+			</MainHeaderWrapper>
 			{getFeatures(features)}
-		</article>
+		</Main>
 	);
 };
 
@@ -334,6 +121,201 @@ MainContent.propTypes = {
 	]),
 };
 export default MainContent;
+
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
+
+var ButtonS = css`
+	font-family: ${globalStyle.fonts.mainFont};
+	color: ${globalStyle.colors.whiteText};
+	text-align: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-left: 1.7em;
+	padding-right: 1.7em;
+	background-color: ${globalStyle.colors.darkestInfill};
+	letter-spacing: 0.265em;
+	&:hover {
+		svg {
+			fill: hotpink;
+		}
+		color: hotpink;
+	}
+	font-size: max(calc(${globalStyle.styles.text} - 0.3rem), 16px);
+	${globalStyle.styles.outline};
+`;
+
+var Button = styled.button`
+	${ButtonS}
+`;
+
+var MainTitle = styled.h1`
+	font-weight: 700;
+	font-size: clamp(35px, 3vw, 60px);
+	letter-spacing: 0.145em;
+`;
+
+var MainSubtitle = styled.h2`
+	font-weight: 300;
+	letter-spacing: 0.145em;
+	padding-top: 0.5em;
+	font-size: clamp(20px, 2vw, 35px);
+`;
+
+var MainTitleWrapper = styled.div`
+	padding-top: clamp(30px, 4vw, 40px);
+	padding-bottom: clamp(30px, 4vw, 40px);
+	padding-right: ${globalStyle.styles.contentPaddingSides};
+	padding-left: ${globalStyle.styles.contentPaddingSides};
+	${globalStyle.styles.customOutline(0, 1, 1)};
+	flex-grow: 9;
+`;
+
+var MainHeaderWrapper = styled.div`
+	display: flex;
+	align-content: center;
+	align-items: stretch;
+	${[mq[1]]} {
+		flex-direction: column;
+	}
+`;
+
+var FeatureTitle = styled.h1`
+	font-weight: 700;
+	font-size: ${globalStyle.styles.midtitleFontSize};
+	letter-spacing: 0.2rem;
+	padding-top: 3.2rem;
+	padding-bottom: 2.2rem;
+`;
+
+var FeatureDesc = styled.div`
+	margin-bottom: 1rem;
+	font-size: ${globalStyle.styles.text};
+	letter-spacing: 0.165rem;
+	font-weight: 400;
+	line-height: 1.5;
+	margin-top: -0.35em;
+`;
+
+var FeatureDescBtnWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding-left: 2.5rem;
+	padding-right: 3rem;
+	flex: 0 1 auto;
+	${[mq[1]]} {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 2rem;
+		min-width: 90%;
+	}
+`;
+
+var FeatureImg = styled.img`
+	width: clamp(200px, 30%, 600px);
+	height: clamp(calc(200px * 0.5625), calc(30% * 0.5625), calc(600px * 0.5625));
+	${[mq[1]]} {
+		width: 100%;
+		height: calc(30% * 0.5625);
+	}
+`;
+
+var FeatureContentWrap = styled.div`
+	display: flex;
+	padding-bottom: 1.5rem;
+	${[mq[1]]} {
+		flex-wrap: wrap;
+	}
+`;
+
+var FeatureWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding-left: ${globalStyle.styles.contentPaddingSides};
+	padding-right: ${globalStyle.styles.contentPaddingSides};
+	overflow: hidden;
+	:nth-child(even) > ${FeatureContentWrap} {
+		div {
+			padding-left: 0;
+		}
+		flex-direction: row-reverse;
+	}
+`;
+
+var Separator = styled.div`
+	${globalStyle.styles.customOutline(1)};
+	width: 100vw;
+	align-self: center;
+`;
+
+var VertSeparator = styled.div`
+	height: 100vh;
+	${globalStyle.styles.customOutline(0, 1)};
+`;
+
+var Main = styled.article`
+	background: ${globalStyle.colors.darkestInfill};
+	margin-top: 4rem;
+	max-width: 65vw;
+	${[mq[0]]} {
+		max-width: 100%;
+	}
+	${globalStyle.styles.outline};
+`;
+
+var ButtonList = styled.section`
+	display: flex;
+	flex-grow: 0;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: clamp(30px, 4vw, 40px);
+	padding-bottom: clamp(30px, 4vw, 40px);
+	padding-left: clamp(40px, 6vw, 60px);
+	padding-right: clamp(40px, 6vw, 60px);
+	${globalStyle.styles.customOutline(0, 0, 1)};
+	${[mq[1]]} {
+		flex-direction: row;
+		justify-content: space-between;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+`;
+
+var ButtonListWrapper = styled.a`
+	${ButtonS};
+	padding: 0;
+	height: calc(1rem + 2vw);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	&:nth-child(even) {
+		flex-direction: row-reverse;
+	}
+	${[mq[1]]} {
+		border: 0;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		& > div {
+			margin-left: 0;
+			border: 0;
+		}
+		&:nth-child(even) {
+			flex-direction: row;
+		}
+	}
+`;
+
+var ButtonListButton = styled.div`
+	margin-left: 2rem;
+	margin-right: 2rem;
+`;
+
+var ButtonIconWrap = styled.div`
+	width: max(2vw, 20px);
+	padding: 1em;
+`;
 
 import React from 'react';
 import PropTypes from 'prop-types';

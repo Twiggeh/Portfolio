@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 import React from 'react';
 
 const githubLogo = (
@@ -124,22 +125,22 @@ const fonts = {
 };
 
 /** @type {import('@emotion/core').Interpolation} */
-const outline = {
-	borderColor: colors.grayBorder,
-	borderWidth: '1px',
-	borderStyle: 'solid',
-};
+const outline = css`
+	border-color: ${colors.grayBorder};
+	border-width: 1px;
+	border-style: solid;
+`;
 
 const customOutline = (top = 0, right = 0, bottom = 0, left = 0) => {
 	/** @type {import('@emotion/core').Interpolation} */
-	return {
-		borderColor: colors.grayBorder,
-		borderTopWidth: `${top}px`,
-		borderBottomWidth: `${bottom}px`,
-		borderLeftWidth: `${left}px`,
-		borderRightWidth: `${right}px`,
-		borderStyle: 'solid',
-	};
+	return css`
+		border-color: ${colors.grayBorder};
+		border-top-width: ${top}px;
+		border-bottom-width: ${bottom}px;
+		border-left-width: ${left}px;
+		border-right-width: ${right}px;
+		border-style: solid;
+	`;
 };
 
 const numQueries = [1400, 700];
@@ -154,7 +155,7 @@ export const styles = {
 	navElFontSize: 'clamp(20px, 2vw, 2vw)',
 	navTitleFontSize: 'clamp(25px, 2.2vw, 2.2vw)',
 	text: 'clamp(18px, 1.2vw, 35px)',
-	contentPaddingSides: '1.5rem',
+	contentPaddingSides: '3rem',
 };
 
 export const svgs = {
