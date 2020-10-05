@@ -158,9 +158,11 @@ var SideSlideNav = styled.nav`
 	@media (min-width: ${nq[1]}px) {
 		display: none;
 	}
-	li > a > svg {
-		padding-left: 5rem;
+	a > svg {
 		height: ${globalStyle.styles.navElFontSize};
+	}
+	li:first-child > a:first-child {
+		margin-right: 5rem;
 	}
 `;
 
