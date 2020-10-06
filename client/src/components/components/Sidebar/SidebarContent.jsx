@@ -1,4 +1,4 @@
-/** @param {{title: string, date: string, features : import('../MainContent/MainContent').feature[]}} */
+/** @param {{title: string, date: string, features : import('../MainContent/MainContent').note[]}} */
 const SidebarContent = ({
 	title,
 	hero = { src: './static/khala_close.jpg', alt: '' },
