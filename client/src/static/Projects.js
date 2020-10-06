@@ -1,9 +1,10 @@
 /**
  * @typedef {{
-					features  : import("../components/components/MainContent/MainContent").feature[], 
+					notes  : import("../components/components/MainContent/MainContent").note[], 
 					buttons   : import("../components/components/MainContent/MainContent").button[],
 					title     : string,
 					subTitle  : string,
+					cover: string,
 					}} Content
  */
 /** @type {Content} */
@@ -30,7 +31,6 @@ export const ReplayBotData = {
 					display: 'flex',
 					alignItems: 'flex-start',
 					flexDirection: 'row-reverse',
-					button: {},
 				},
 			},
 		},
@@ -40,7 +40,7 @@ export const ReplayBotData = {
 			btnUrl: 'https:discord.gg/f5gQQPP',
 		},
 	],
-	features: [
+	notes: [
 		{
 			title: 'Stateless',
 			text:

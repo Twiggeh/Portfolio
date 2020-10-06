@@ -1,11 +1,12 @@
 /* eslint-disable indent */
 /**
- * @typedef {object} feature
- * @prop {string} feature.title - The title of the sidebar header
- * @prop {string} feature.img - The path relative to src to get to the image / url
- * @prop {string} feature.alt - The fallback path relative to src to get to the image / url
- * @prop {string} feature.text - The small description of the feature
- * @prop {string} feature.btnUrl - The url of the bigger description of the feature
+ * @typedef {object} note - Notes are the messages attached
+ * @prop {string} notes.title - The title of the sidebar header
+ * @prop {string} notes.img - The path relative to src to get to the image / url
+ * @prop {string} notes.alt - The fallback path relative to src to get to the image / url
+ * @prop {string} notes.text - The small description of the feature
+ * @prop {string} notes.btnUrl - The url of the bigger description of the feature
+ * @prop {"hero" | "feature" | "video"} feature.type - Whether the feature is a hero type or a feature type. Affects rendering.
  *
  * @typedef {object} button
  * @prop {string} button.btnName - The name of the buttons feature
@@ -15,7 +16,7 @@
  * @prop {JSX.Element} button.svg - The svg icon for the button
  * @prop {import("../../Modals/modal_index").Modal} [button.modal] - A modal that can pop up if defined
  *
- * @param {{features: feature[]}} param0
+ * @param {{notes: note[]}} param0
  */
 
 /**
@@ -25,13 +26,13 @@
  */
 const mq = globalStyle.queries.mainQueries;
 
-const MainContent = ({ title, subTitle, features, buttons }) => {
+const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 	const { setModal } = useContext(ModalContext);
 
-	/** @param {feature[]} features*/
-	const getFeatures = features => {
-		const featureList = features.map((feature, i) => {
-			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = feature;
+	/** @param {note[]} notes*/
+	const getFeatures = notes => {
+		const featureList = notes.map((note, i) => {
+			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = note;
 			return (
 				<FeatureWrap key={i}>
 					<a href={btnUrl}>
@@ -43,7 +44,7 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 							<FeatureDesc>{text}</FeatureDesc>
 							<Button href={btnUrl}>More</Button>
 						</FeatureDescBtnWrap>
-					</FeatureContentWrap>{' '}
+					</FeatureContentWrap>
 					<Separator />
 				</FeatureWrap>
 			);
@@ -97,28 +98,31 @@ const MainContent = ({ title, subTitle, features, buttons }) => {
 				</MainTitleWrapper>
 				{getBtns(buttons)}
 			</MainHeaderWrapper>
-			{getFeatures(features)}
+			{getFeatures(notes)}
 		</Main>
 	);
 };
 
 MainContent.propTypes = {
-	features: PropTypes.exact({
-		title: PropTypes.string.isRequired,
-		img: PropTypes.string.isRequired,
-		alt: PropTypes.string.isRequired,
-		text: PropTypes.string.isRequired,
-	}),
-	title: PropTypes.string,
-	subTitle: PropTypes.string,
-	buttons: PropTypes.exact([
-		{
-			btnName: PropTypes.string.isRequired,
-			btnLink: PropTypes.string.isRequired,
-			btnIcn: PropTypes.string.isRequired,
-			btnIcnFallback: PropTypes.string.isRequired,
-		},
-	]),
+	data: {
+		notes: PropTypes.exact({
+			title: PropTypes.string.isRequired,
+			img: PropTypes.string.isRequired,
+			alt: PropTypes.string.isRequired,
+			text: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired,
+		}),
+		title: PropTypes.string,
+		subTitle: PropTypes.string,
+		buttons: PropTypes.exact([
+			{
+				btnName: PropTypes.string.isRequired,
+				btnLink: PropTypes.string.isRequired,
+				btnIcn: PropTypes.string.isRequired,
+				btnIcnFallback: PropTypes.string.isRequired,
+			},
+		]),
+	},
 };
 export default MainContent;
 
