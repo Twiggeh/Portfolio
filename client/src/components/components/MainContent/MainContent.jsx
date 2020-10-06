@@ -284,9 +284,12 @@ var ButtonList = styled.section`
 `;
 
 var ButtonListWrapper = styled.a`
-	${ButtonS};
+	${globalStyle.styles.outline};
+	:not(:first-child) {
+		${globalStyle.styles.customOutline(0, 1, 1, 1)};
+	}
 	padding: 0;
-	height: calc(1rem + 2vw);
+	height: max(2.5em, 3vw);
 	display: flex;
 	align-items: center;
 	overflow: hidden;
