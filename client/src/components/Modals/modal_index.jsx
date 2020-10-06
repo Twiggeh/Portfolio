@@ -19,6 +19,7 @@ const Modals = () => {
 				css={{
 					width: '100vw',
 					height: '100vh',
+					zIndex: 100,
 					backgroundColor: 'rgba(0, 0, 0, .70)',
 					position: 'fixed',
 					display: 'flex',
@@ -32,7 +33,6 @@ const Modals = () => {
 				<dialog
 					css={{
 						position: 'fixed',
-						zIndex: 2,
 						display: modal ? 'block' : 'none',
 						paddingTop: '2em',
 						borderStyle: 'solid',
@@ -46,14 +46,14 @@ const Modals = () => {
 						css={{
 							padding: 0,
 							borderWidth: 0,
-							background: 'rgb(0, 0, 0, 0)',
+							background: 'transparent',
 							marginTop: '-0.5em',
 						}}
 						onClick={e => {
 							e.preventDefault();
 							setModal(undefined);
 						}}>
-						{globalStyle.svgs.cross()}
+						{globalStyle.svgs.cross({ color: 'black' })}
 					</button>
 					{content}
 				</dialog>
