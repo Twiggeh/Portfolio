@@ -45,7 +45,7 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 							<Button href={btnUrl}>More</Button>
 						</FeatureDescBtnWrap>
 					</FeatureContentWrap>
-					<Separator />
+					{i + 1 !== notes.length ? <Separator /> : null}
 				</FeatureWrap>
 			);
 		});
