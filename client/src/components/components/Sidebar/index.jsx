@@ -13,9 +13,9 @@ const SidebarContents = () => {
 };
 
 var SidebarWrapper = styled.div`
-	width: 25%;
-	overflow: hidden;
-	${[mq[1]]} {
+	width: 20%;
+	/*overflow: hidden;*/
+	${[mq[0]]} {
 		display: none;
 	}
 `;
