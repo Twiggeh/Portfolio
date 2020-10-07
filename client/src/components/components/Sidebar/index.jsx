@@ -1,20 +1,18 @@
 const mq = globalStyle.queries.mainQueries;
 
 const SidebarContents = () => {
-	const sidebarList = allData.map((data, i) => {
-		return <SidebarContent key={i} title={data.title} />;
-	});
 	return (
 		<SidebarWrapper>
 			<SidebarTitle title={'art'} subTitle={'Highlighting some of my paintings'} />
-			{sidebarList}
+			{allData.map((data, i) => (
+				<SidebarContent key={i} data={data} />
+			))}
 		</SidebarWrapper>
 	);
 };
 
 var SidebarWrapper = styled.div`
 	width: 20%;
-	/*overflow: hidden;*/
 	${[mq[0]]} {
 		display: none;
 	}
