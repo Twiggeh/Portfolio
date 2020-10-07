@@ -12,7 +12,8 @@ const SidebarContents = () => {
 };
 
 var SidebarWrapper = styled.div`
-	width: 20%;
+	--SidebarWidth: 20%;
+	width: var(--SidebarWidth);
 	${[mq[0]]} {
 		display: none;
 	}
