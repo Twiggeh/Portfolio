@@ -60,7 +60,7 @@ var nq = queries.numQueries;
 
 var Nav = styled.nav`
 	display: flex;
-	width: 100vw;
+	width: var(--trueWidth);
 	align-items: center;
 	justify-content: space-between;
 	background-color: ${colors.darkestInfill};

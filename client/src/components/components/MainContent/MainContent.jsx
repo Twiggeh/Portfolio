@@ -258,7 +258,7 @@ var FeatureWrap = styled.div`
 
 var VertSeparator = styled.div`
 	height: 100vh;
-	${globalStyle.styles.customOutline(0, 1)};
+	${styles.customOutline(0, 1)};
 `;
 
 var Main = styled.article`
@@ -267,6 +267,7 @@ var Main = styled.article`
 	max-width: 65vw;
 	${styles.outline};
 	${[mq[0]]} {
+		max-width: var(--trueWidth);
 		${styles.customOutline(1, 0, 1, 1)}
 	}
 	${globalStyle.styles.outline};
