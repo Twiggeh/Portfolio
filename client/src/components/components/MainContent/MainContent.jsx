@@ -144,6 +144,8 @@ var ButtonS = css`
 			fill: hotpink;
 		}
 		color: hotpink;
+		cursor: pointer;
+		border-color: hotpink;
 	}
 	font-size: max(calc(${fontSizes.text} - 0.3rem), 16px);
 	${styles.outline};
@@ -240,9 +242,8 @@ var FeatureContentWrap = styled.div`
 var FeatureWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding-left: ${globalStyle.styles.contentPaddingSides};
-	padding-right: ${globalStyle.styles.contentPaddingSides};
-	overflow: hidden;
+	padding-left: ${styles.contentPaddingSides};
+	padding-right: ${styles.contentPaddingSides};
 	:nth-child(even) > ${FeatureContentWrap} {
 		div {
 			padding-left: 0;
@@ -294,7 +295,7 @@ var ButtonList = styled.section`
 var ButtonListWrapper = styled.a`
 	${globalStyle.styles.outline};
 	:not(:first-child) {
-		${globalStyle.styles.customOutline(0, 1, 1, 1)};
+		margin-top: -1px;
 	}
 	padding: 0;
 	height: max(2.5em, 3vw);
@@ -304,16 +305,18 @@ var ButtonListWrapper = styled.a`
 	&:nth-child(even) {
 		flex-direction: row-reverse;
 	}
-	${[mq[1]]} {
-		border: 0;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
-		& > div {
-			margin-left: 0;
-			border: 0;
+	:hover {
+		border-color: hotpink;
+		z-index: 1;
+		div {
+			border-color: hotpink;
 		}
-		&:nth-child(even) {
-			flex-direction: row;
+	}
+	${[mq[1]]} {
+		:hover {
+			div {
+				border-color: ${colors.grayBorder};
+		}
 		}
 	}
 `;
