@@ -5,12 +5,14 @@
 					title     : string,
 					subTitle  : string,
 					cover: string,
+					descPage: string,
 					}} Content
  */
 /** @type {Content} */
 export const ReplayBotData = {
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
+	descPage: './replaybot',
 	buttons: [
 		{
 			btnName: 'Github',
@@ -43,21 +45,25 @@ export const ReplayBotData = {
 	notes: [
 		{
 			title: 'Stateless',
+			type: 'feature',
 			text:
 				'Stateless operation not only makes the bot more resilient, it allows for easy scaling, a seamless user experience and a faster development cycle.',
 		},
 		{
 			title: 'Scalability and Performance',
+			type: 'feature',
 			text:
 				'Vertical Scaling is very easy due to the stateless nature. Functions running on each request are de-branched for maximum performance.',
 		},
 		{
 			title: 'Data Aggregation',
+			type: 'feature',
 			text:
 				'Provides meaningful insight into the coaches performance and students behaviour, assisting management in making unbiased decisions.',
 		},
 		{
 			title: 'Clean, Straightforward UI',
+			type: 'feature',
 			text:
 				'Familiarity and ease of use through implementation of common Discord Bot patterns.',
 		},
@@ -65,6 +71,6 @@ export const ReplayBotData = {
 };
 
 /** @type {Content[]} */
-export default [ReplayBotData];
+export default [ReplayBotData, ReplayBotData];
 import React from 'react';
 import { svgs } from '../styles/globalStyle';

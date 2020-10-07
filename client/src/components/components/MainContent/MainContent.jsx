@@ -149,6 +149,9 @@ var ButtonS = css`
 	}
 	font-size: max(calc(${fontSizes.text} - 0.3rem), 16px);
 	${styles.outline};
+	${[mq[1]]} {
+		width: 100%;
+	}
 `;
 
 var Button = styled.button`
@@ -158,7 +161,7 @@ var Button = styled.button`
 var MainTitle = styled.h1`
 	font-weight: 700;
 	font-size: clamp(35px, 3vw, 60px);
-	letter-spacing: 0.145em;
+	letter-spacing: 0.05em;
 `;
 
 var MainSubtitle = styled.h2`
@@ -223,11 +226,11 @@ var FeatureDescBtnWrap = styled.div`
 `;
 
 var FeatureImg = styled.img`
-	width: clamp(200px, 30%, 600px);
-	height: clamp(calc(200px * 0.5625), calc(30% * 0.5625), calc(600px * 0.5625));
+	width: 35%;
+	align-self: flex-start;
+	min-width: 35%;
 	${[mq[1]]} {
 		width: 100%;
-		height: calc(30% * 0.5625);
 	}
 `;
 
@@ -252,6 +255,7 @@ var FeatureWrap = styled.div`
 	}
 `;
 
+export var Separator = styled.div`
 	${styles.customOutline(1)};
 	width: 100vw;
 	align-self: center;
@@ -264,6 +268,7 @@ var VertSeparator = styled.div`
 
 var Main = styled.article`
 	background: ${colors.darkestInfill};
+	overflow: hidden;
 	margin-top: 4rem;
 	max-width: 65vw;
 	${styles.outline};
@@ -271,7 +276,6 @@ var Main = styled.article`
 		max-width: var(--trueWidth);
 		${styles.customOutline(1, 0, 1, 1)}
 	}
-	${globalStyle.styles.outline};
 `;
 
 var ButtonList = styled.section`
@@ -293,7 +297,8 @@ var ButtonList = styled.section`
 `;
 
 var ButtonListWrapper = styled.a`
-	${globalStyle.styles.outline};
+	${ButtonS};
+	text-decoration: none;
 	:not(:first-child) {
 		margin-top: -1px;
 	}
@@ -313,10 +318,14 @@ var ButtonListWrapper = styled.a`
 		}
 	}
 	${[mq[1]]} {
+		border: 0 !important;
+		margin: 0 !important;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 		:hover {
 			div {
 				border-color: ${colors.grayBorder};
-		}
+			}
 		}
 	}
 `;
@@ -324,6 +333,10 @@ var ButtonListWrapper = styled.a`
 var ButtonListButton = styled.div`
 	margin-left: 2rem;
 	margin-right: 2rem;
+	${[mq[1]]} {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
 `;
 
 var ButtonIconWrap = styled.div`
