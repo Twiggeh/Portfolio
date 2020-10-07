@@ -2,11 +2,11 @@ const Navigation = () => (
 	<div
 		css={{
 			fontFamily: 'Montserrat',
-			backgroundColor: globalStyle.colors.bgInfill,
-			color: globalStyle.colors.whiteText,
-			a: { color: globalStyle.colors.whiteText },
+			backgroundColor: colors.bgInfill,
+			color: colors.whiteText,
+			a: { color: colors.whiteText },
 			// TODO : re-enable
-			//overflow: 'hidden',
+			//overflow: hidden,
 		}}>
 		<BrowserRouter>
 			<NewLinks />
@@ -28,7 +28,7 @@ const Navigation = () => (
 export default Navigation;
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import globalStyle from '../../styles/globalStyle';
+import { colors } from '../../styles/globalStyle';
 import AboutPage from '../About';
 import ArtPage from '../Art';
 import ProjectsPage from '../Projects';

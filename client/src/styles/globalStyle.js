@@ -112,14 +112,14 @@ const cross = (
 	</svg>
 );
 
-const colors = {
+export const colors = {
 	grayBorder: '#3F3F3F',
 	darkestInfill: '#17181A',
 	bgInfill: '#1D2024',
 	whiteText: '#EAEAEA',
 };
 
-const fonts = {
+export const fonts = {
 	mainFont: 'Montserrat',
 	fallback: 'Roboto',
 };
@@ -149,13 +149,16 @@ const mainQueries = numQueries.map(query => `@media (max-width: ${query}px)`);
 export const styles = {
 	outline,
 	customOutline,
-	subtitleFontSize: 'clamp(16px, 1.4vw, 50px)',
-	midtitleFontSize: 'clamp(30px, 2vw, 60px)',
-	titleFontSize: 'clamp(35px, 2.8vw, 60px)',
-	navElFontSize: 'clamp(20px, 2vw, 2vw)',
-	navTitleFontSize: 'clamp(25px, 2.2vw, 2.2vw)',
-	text: 'clamp(18px, 1.2vw, 35px)',
 	contentPaddingSides: '3rem',
+};
+
+export const fontSizes = {
+	sideTitle: 'clamp(35px, 2.8vw, 60px)',
+	sideSubTitle: 'clamp(16px, 1.4vw, 50px)',
+	mainNoteTitle: 'clamp(30px, 2vw, 60px)',
+	navEl: 'clamp(20px, 2vw, 2vw)',
+	navTitle: 'clamp(25px, 2.2vw, 2.2vw)',
+	text: 'clamp(18px, 1.2vw, 35px)',
 };
 
 export const svgs = {

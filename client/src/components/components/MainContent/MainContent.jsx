@@ -24,7 +24,7 @@
  * @typedef {number} Phone - The phone breakpoint in px
  * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
  */
-const mq = globalStyle.queries.mainQueries;
+const mq = queries.mainQueries;
 
 const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 	const { setModal } = useContext(ModalContext);
@@ -130,14 +130,14 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
 var ButtonS = css`
-	font-family: ${globalStyle.fonts.mainFont};
-	color: ${globalStyle.colors.whiteText};
+	font-family: ${fonts.mainFont};
+	color: ${colors.whiteText};
 	text-align: center;
 	padding-top: 1em;
 	padding-bottom: 1em;
 	padding-left: 1.7em;
 	padding-right: 1.7em;
-	background-color: ${globalStyle.colors.darkestInfill};
+	background-color: ${colors.darkestInfill};
 	letter-spacing: 0.265em;
 	&:hover {
 		svg {
@@ -145,8 +145,8 @@ var ButtonS = css`
 		}
 		color: hotpink;
 	}
-	font-size: max(calc(${globalStyle.styles.text} - 0.3rem), 16px);
-	${globalStyle.styles.outline};
+	font-size: max(calc(${fontSizes.text} - 0.3rem), 16px);
+	${styles.outline};
 `;
 
 var Button = styled.button`
@@ -169,9 +169,12 @@ var MainSubtitle = styled.h2`
 var MainTitleWrapper = styled.div`
 	padding-top: clamp(30px, 4vw, 40px);
 	padding-bottom: clamp(30px, 4vw, 40px);
-	padding-right: ${globalStyle.styles.contentPaddingSides};
-	padding-left: ${globalStyle.styles.contentPaddingSides};
-	${globalStyle.styles.customOutline(0, 1, 1)};
+	padding-right: ${styles.contentPaddingSides};
+	padding-left: ${styles.contentPaddingSides};
+	${styles.customOutline(0, 1, 1)};
+	${[mq[1]]} {
+		${styles.customOutline(0, 0, 1)};
+	}
 	flex-grow: 9;
 `;
 
@@ -186,7 +189,7 @@ var MainHeaderWrapper = styled.div`
 
 var FeatureTitle = styled.h1`
 	font-weight: 700;
-	font-size: ${globalStyle.styles.midtitleFontSize};
+	font-size: ${fontSizes.mainNoteTitle};
 	letter-spacing: 0.2rem;
 	padding-top: 3.2rem;
 	padding-bottom: 2.2rem;
@@ -194,7 +197,7 @@ var FeatureTitle = styled.h1`
 
 var FeatureDesc = styled.div`
 	margin-bottom: 1rem;
-	font-size: ${globalStyle.styles.text};
+	font-size: ${fontSizes.text};
 	letter-spacing: 0.165rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -248,8 +251,7 @@ var FeatureWrap = styled.div`
 	}
 `;
 
-var Separator = styled.div`
-	${globalStyle.styles.customOutline(1)};
+	${styles.customOutline(1)};
 	width: 100vw;
 	align-self: center;
 `;
@@ -260,11 +262,12 @@ var VertSeparator = styled.div`
 `;
 
 var Main = styled.article`
-	background: ${globalStyle.colors.darkestInfill};
+	background: ${colors.darkestInfill};
 	margin-top: 4rem;
 	max-width: 65vw;
+	${styles.outline};
 	${[mq[0]]} {
-		max-width: 100%;
+		${styles.customOutline(1, 0, 1, 1)}
 	}
 	${globalStyle.styles.outline};
 `;
@@ -278,7 +281,7 @@ var ButtonList = styled.section`
 	padding-bottom: clamp(30px, 4vw, 40px);
 	padding-left: clamp(40px, 6vw, 60px);
 	padding-right: clamp(40px, 6vw, 60px);
-	${globalStyle.styles.customOutline(0, 0, 1)};
+	${styles.customOutline(0, 0, 1)};
 	${[mq[1]]} {
 		flex-direction: row;
 		justify-content: space-between;
@@ -326,6 +329,12 @@ var ButtonIconWrap = styled.div`
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import globalStyle from '../../../styles/globalStyle.js';
+import {
+	colors,
+	fonts,
+	fontSizes,
+	queries,
+	styles,
+} from '../../../styles/globalStyle.js';
 import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';

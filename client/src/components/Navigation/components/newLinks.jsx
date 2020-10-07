@@ -19,15 +19,13 @@ const NewLinks = () => {
 					</NavLi>
 				</NavUl>
 				{width > nq[1] ? (
-					<TopRight href={'https://github.com/Twiggeh'}>
-						{globalStyle.svgs.githubLogo}
-					</TopRight>
+					<TopRight href={'https://github.com/Twiggeh'}>{svgs.githubLogo}</TopRight>
 				) : (
 					<TopRight
 						onClick={() => {
 							setOpen(c => !c);
 						}}>
-						{globalStyle.svgs.hamburgerMenu}
+						{svgs.hamburgerMenu}
 					</TopRight>
 				)}
 				<SideSlideNav open={open}>
@@ -37,7 +35,7 @@ const NewLinks = () => {
 							onClick={() => {
 								setOpen(c => !c);
 							}}>
-							{globalStyle.svgs.cross()}
+							{svgs.cross()}
 						</a>
 					</li>
 					<li>
@@ -57,16 +55,16 @@ const NewLinks = () => {
 
 export default NewLinks;
 
-var mq = globalStyle.queries.mainQueries;
-var nq = globalStyle.queries.numQueries;
+var mq = queries.mainQueries;
+var nq = queries.numQueries;
 
 var Nav = styled.nav`
 	display: flex;
 	width: 100vw;
 	align-items: center;
 	justify-content: space-between;
-	background-color: ${globalStyle.colors.darkestInfill};
-	${globalStyle.styles.customOutline(0, 0, 1)};
+	background-color: ${colors.darkestInfill};
+	${styles.customOutline(0, 0, 1)};
 	a,
 	svg {
 		text-decoration: none;
@@ -92,10 +90,10 @@ var Nav = styled.nav`
 `;
 
 var NavTitle = styled.div`
-	padding-left: ${globalStyle.styles.contentPaddingSides};
+	padding-left: ${styles.contentPaddingSides};
 	a {
 		font-weight: 700;
-		font-size: ${globalStyle.styles.navTitleFontSize};
+		font-size: ${fontSizes.navTitle};
 	}
 `;
 
@@ -104,7 +102,7 @@ var NavUl = styled.ul`
 	padding-top: 2em;
 	padding-bottom: 2em;
 	a {
-		font-size: ${globalStyle.styles.navElFontSize};
+		font-size: ${fontSizes.navEl};
 	}
 	/* traditional way of hiding elements, doesn't work with screen readers
 	TODO replace with useDisplayTrans 
@@ -129,12 +127,12 @@ var NavLi = styled.li`
 var TopRight = styled.a`
 	margin-right: 1.5rem;
 	svg {
-		height: clamp(calc(${globalStyle.styles.navElFontSize} * 1.5), 3vw, 3vw);
+		height: clamp(calc(${fontSizes.navEl} * 1.5), 3vw, 3vw);
 	}
 `;
 
 var SideSlideNav = styled.nav`
-	background-color: ${globalStyle.colors.darkestInfill};
+	background-color: ${colors.darkestInfill};
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -145,9 +143,9 @@ var SideSlideNav = styled.nav`
 	transition: transform 0.5s ease;
 	padding-top: 1.5rem;
 	padding-left: 0.7rem;
-	${globalStyle.styles.customOutline(0, 0, 0, 1)}
+	${styles.customOutline(0, 0, 0, 1)}
 	a {
-		font-size: ${globalStyle.styles.navElFontSize};
+		font-size: ${fontSizes.navEl};
 	}
 	li {
 		padding: 1rem;
@@ -159,7 +157,7 @@ var SideSlideNav = styled.nav`
 		display: none;
 	}
 	a > svg {
-		height: ${globalStyle.styles.navElFontSize};
+		height: ${fontSizes.navEl};
 	}
 	li:first-child > a:first-child {
 		margin-right: 5rem;
@@ -169,5 +167,5 @@ var SideSlideNav = styled.nav`
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import globalStyle from '../../../styles/globalStyle';
+import { colors, fontSizes, queries, styles, svgs } from '../../../styles/globalStyle';
 import useScreenSize from './hooks/useScreensize';
