@@ -1,10 +1,11 @@
 const mq = globalStyle.queries.mainQueries;
 
-const SidebarContents = () => {
+const SidebarContents = ({ content = 'art' }) => {
+	const renderThis = allData[content];
 	return (
 		<SidebarWrapper>
-			<SidebarTitle title={'art'} subTitle={'Highlighting some of my paintings'} />
-			{allData.map((data, i) => (
+			<SidebarTitle title={content} subTitle={'Highlighting some of my paintings'} />
+			{renderThis.map((data, i) => (
 				<SidebarContent key={i} data={data} />
 			))}
 		</SidebarWrapper>
@@ -18,11 +19,16 @@ var SidebarWrapper = styled.div`
 		display: none;
 	}
 `;
+SidebarContents.propTypes = {
+	content: PropTypes.string,
+};
 
 export default SidebarContents;
+
 import React from 'react';
 import SidebarContent from './SidebarContent';
 import SidebarTitle from './SidebarTitle';
 import allData from '../../../static/Projects';
 import globalStyle from '../../../styles/globalStyle';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';

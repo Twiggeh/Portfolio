@@ -1,6 +1,7 @@
 const ArtPage = () => {
-	return <div></div>;
+	return <SideAndMainPage main={'art'} side={'projects'} />;
 };
 
 export default ArtPage;
 import React from 'react';
+import SideAndMainPage from '../Projects';

@@ -9,7 +9,7 @@
 					}} Content
  */
 /** @type {Content} */
-export const ReplayBotData = {
+const ReplayBotData = {
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
 	descPage: './replaybot',
@@ -70,7 +70,31 @@ export const ReplayBotData = {
 	],
 };
 
+/** @type {Content} */
+export const Jessie = {
+	// TODO : change the interface so that I can provide props and tell what component to use.
+	title: 'Jane',
+	subTitle: 'Digital Painting from imagination',
+	descPage: './paintings/jane',
+	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
+	notes: [
+		{
+			title: 'Description',
+			type: 'description',
+			text:
+				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
+		},
+		{
+			title: 'Recording',
+			type: 'Hero',
+			text: 'This will have a video in it.',
+		},
+	],
+};
+
 /** @type {Content[]} */
-export default [ReplayBotData, ReplayBotData];
+export const projects = [ReplayBotData];
+export const art = [Jessie];
+export default { art, projects };
 import React from 'react';
 import { svgs } from '../styles/globalStyle';
