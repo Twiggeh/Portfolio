@@ -1,29 +1,4 @@
 /* eslint-disable indent */
-/**
- * @typedef {object} note - Notes are the messages attached
- * @prop {string} notes.title - The title of the sidebar header
- * @prop {string} notes.img - The path relative to src to get to the image / url
- * @prop {string} notes.alt - The fallback path relative to src to get to the image / url
- * @prop {string} notes.text - The small description of the feature
- * @prop {string} notes.btnUrl - The url of the bigger description of the feature
- * @prop {"hero" | "feature" | "video"} feature.type - Whether the feature is a hero type or a feature type. Affects rendering.
- *
- * @typedef {object} button
- * @prop {string} button.btnName - The name of the buttons feature
- * @prop {string} button.btnUrl - The url the button points to
- * @prop {string} button.btnIcn - The path relative to src to get to the image / url
- * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
- * @prop {JSX.Element} button.svg - The svg icon for the button
- * @prop {import("../../Modals/modal_index").Modal} [button.modal] - A modal that can pop up if defined
- *
- * @param {{notes: note[]}} param0
- */
-
-/**
- * @typedef {number} Tablet - The tablet breakpoint in px
- * @typedef {number} Phone - The phone breakpoint in px
- * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
- */
 const mq = queries.mainQueries;
 
 const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
@@ -96,7 +71,7 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrapper>
-				{getBtns(buttons)}
+				{buttons ? getBtns(buttons) : null}
 			</MainHeaderWrapper>
 			{getFeatures(notes)}
 		</Main>
@@ -355,3 +330,28 @@ import {
 } from '../../../styles/globalStyle.js';
 import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
+
+/**
+ * @typedef {object} note - Notes are the messages attached
+ * @prop {string} notes.title - The title of the sidebar header
+ * @prop {string} notes.img - The path relative to src to get to the image / url
+ * @prop {string} notes.alt - The fallback path relative to src to get to the image / url
+ * @prop {string} notes.text - The small description of the feature
+ * @prop {string} notes.btnUrl - The url of the bigger description of the feature
+ * @prop {"hero" | "feature" | "video" | "description"} feature.type - Whether the feature is a hero type or a feature type. Affects rendering.
+ *
+ * @typedef {object} button
+ * @prop {string} button.btnName - The name of the buttons feature
+ * @prop {string} button.btnUrl - The url the button points to
+ * @prop {string} button.btnIcn - The path relative to src to get to the image / url
+ * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
+ * @prop {JSX.Element} button.svg - The svg icon for the button
+ * @prop {import("../../Modals/modal_index").Modal} [button.modal] - A modal that can pop up if defined
+ *
+ */
+
+/**
+ * @typedef {number} Tablet - The tablet breakpoint in px
+ * @typedef {number} Phone - The phone breakpoint in px
+ * @type {[Tablet, Phone]} - The breakpoints accessible with [0] or [1]
+ */

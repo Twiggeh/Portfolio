@@ -11,7 +11,7 @@ const SidebarContent = ({
 	if (!title) return null;
 	return (
 		<div>
-			{
+			{buttons === undefined ? null : (
 				<SideBtnWrap>
 					{buttons.map(({ btnIcn, btnIcnFallback, btnName, btnUrl, svg, modal }, i) => (
 						<SideButton
@@ -27,12 +27,13 @@ const SidebarContent = ({
 						</SideButton>
 					))}
 				</SideBtnWrap>
-			}
-			<SideWrapper href={descPage} src={cover}>
-				<div
-					css={css`
-						position: relative;
-					`}>
+			)}
+			<SideWrapper href={descPage}>
+				<div css={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+					<GradientSvg>
+						{GradientDef}
+						<GradientRect></GradientRect>
+					</GradientSvg>
 					<SideImg src={cover} />
 				</div>
 				<SideTitle>{title}</SideTitle>
@@ -42,6 +43,32 @@ const SidebarContent = ({
 	);
 };
 
+var GradientSvg = styled.svg`
+	height: 100%;
+	width: 100%;
+	position: absolute;
+`;
+
+var GradientRect = styled.rect`
+	display: none;
+	width: 100%;
+	height: 100%;
+	fill: ${'url(#pinkGrad)'};
+`; //TODO : change the fill variable in hover to a new gradient
+
+var GradientDef = (
+	<defs>
+		<linearGradient id={'pinkGrad'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
+			<stop offset={'0%'} css={{ stopColor: 'hotpink', stopOpacity: 0.5 }} />
+			<stop offset={'100%'} css={{ stopOpacity: 0 }} />
+		</linearGradient>
+		<linearGradient id={'darkGrad'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
+			<stop offset={'0%'} css={{ stopColor: colors.darkestInfill, stopOpacity: 0.5 }} />
+			<stop offset={'100%'} css={{ stopOpacity: 0 }} />
+		</linearGradient>
+	</defs>
+);
+
 var SideBtnWrap = styled.div`
 	display: flex;
 	justify-content: flex-end;
@@ -49,17 +76,17 @@ var SideBtnWrap = styled.div`
 	align-items: center;
 	margin-top: calc(var(--SidebarWidth) * 0.04);
 	min-width: var(--SidebarWidth);
+	pointer-events: none;
 `;
 
-var SideImg = styled.div`
-	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent),
-		url(${({ src }) => src});
-	background-size: cover;
-	background-position: bottom center;
-	padding-bottom: calc(100% * 0.5625);
+var SideImg = styled.img`
+	max-width: 100%;
+	min-width: calc(100% - 2vw);
+	height: auto;
 `;
 
 var SideButton = styled.a`
+	pointer-events: all;
 	display: flex;
 	justify-content: center;
 	${styles.outline};
@@ -89,14 +116,8 @@ var SideWrapper = styled.a`
 	:hover {
 		color: hotpink;
 		border-color: hotpink;
-		${SideImg} {
-			background-image: linear-gradient(to bottom, rgba(255, 50, 200, 0.3), transparent),
-				url(${({ src }) => src});
-		}
-	}
-	${SideButton}:hover {
-		${SideImg} {
-			background-image: url(${({ src }) => src});
+		${GradientRect} {
+			display: block;
 		}
 	}
 `;
@@ -105,15 +126,17 @@ var SideTitle = styled.h4`
 	font-size: calc(${fontSizes.text} * 1.2);
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	margin-top: 1rem;
-	margin-left: 1rem;
+	margin-top: 2rem;
+	margin-left: 1vw;
+	margin-right: 1vw;
 `;
 
 var SideSubTitle = styled.h5`
 	font-size: ${fontSizes.text};
 	letter-spacing: 0.1em;
 	margin-top: 0.7rem;
-	margin-left: 1rem;
+	margin-left: 1vw;
+	margin-right: 1vw;
 	margin-bottom: 0.7rem;
 `;
 
