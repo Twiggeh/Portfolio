@@ -82,7 +82,6 @@ var SideBtnWrap = styled.div`
 var SideImg = styled.img`
 	max-width: 100%;
 	min-width: calc(100% - 2vw);
-	height: auto;
 `;
 
 var SideButton = styled.a`
