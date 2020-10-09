@@ -1,13 +1,3 @@
-/**
- * @typedef {{
-					notes  : import("../components/components/MainContent/MainContent").note[], 
-					buttons   : import("../components/components/MainContent/MainContent").button[],
-					title     : string,
-					subTitle  : string,
-					cover: string,
-					descPage: string,
-					}} Content
- */
 /** @type {Content} */
 const ReplayBotData = {
 	title: 'Replay Bot',
@@ -79,22 +69,70 @@ export const Jessie = {
 	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
 	notes: [
 		{
-			title: 'Description',
 			type: 'description',
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
 		{
-			title: 'Recording',
-			type: 'Hero',
-			text: 'This will have a video in it.',
+			type: 'hero',
 		},
 	],
 };
 
-/** @type {Content[]} */
 export const projects = [ReplayBotData];
 export const art = [Jessie];
 export default { art, projects };
 import React from 'react';
 import { svgs } from '../styles/globalStyle';
+
+/**
+ * @typedef {object} FeatureNote - Notes are the messages attached
+ * @prop {string} FeatureNote.title - The title of the feature
+ * @prop {string} FeatureNote.img - The path relative to src to get to the image / url
+ * @prop {string} FeatureNote.alt - The fallback path relative to src to get to the image / url
+ * @prop {string} FeatureNote.text - The small description of the feature
+ * @prop {string} FeatureNote.btnUrl - The url of the bigger description of the feature
+ * @prop {"feature"} FeatureNote.type - The type of the feature
+ *
+ * @typedef {object} DescriptionNote - Notes are the messages attached
+ * @prop {string} [DescriptionNote.title] - The title of the description
+ * @prop {string} [DescriptionNote.btnUrl] - The Url to more information / other stuff
+ * @prop {string} DescriptionNote.text - Description
+ * @prop {"description"} DescriptionNote.type - The type of the feature
+ *
+ * @typedef {object} HeroNote - Notes are the messages attached
+ * @prop {string} HeroNote.img - The path relative to src to get to the image / url
+ * @prop {string} [HeroNote.title] - Title to be displayed
+ * @prop {string} HeroNote.url - The url of when a user clicks on the hero
+ * @prop {"hero"} HeroNote.type - The type of the feature
+ *
+ * @typedef {object} VideoNote - Notes are the messages attached
+ * @prop {string} VideoNote.url - The url of the video
+ * @prop {string} [VideoNote.title] - Title to be displayed
+ * @prop {string} [VideoNote.text] - The description for the video  
+ * @prop {"video" } VideoNote.type - The type of the feature
+ *
+ * @typedef {
+			FeatureNote
+			| DescriptionNote
+			| HeroNote
+			| VideoNote
+		} Note
+ * 
+ * @typedef {object} Button
+ * @prop {string} button.btnName - The name of the buttons feature
+ * @prop {string} button.btnUrl - The url the button points to
+ * @prop {string} button.btnIcn - The path relative to src to get to the image / url
+ * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
+ * @prop {JSX.Element} button.svg - The svg icon for the button
+ * @prop {import('../components/Modals/modal_index').Modal} [button.modal] - A modal that can pop up if defined
+ *
+ * @typedef {{
+	notes     : Note[]
+	buttons   : Button[],
+	title     : string,
+	subTitle  : string,
+	cover: string,
+	descPage: string,
+	}} Content
+ */
