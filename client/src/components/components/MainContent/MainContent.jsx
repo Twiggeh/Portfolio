@@ -1,69 +1,8 @@
-/* eslint-disable indent */
 const mq = queries.mainQueries;
 
+/** @param {MainContentInput} param0 */
 const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 	const { setModal } = useContext(ModalContext);
-
-	/** @param {note[]} notes*/
-	const getFeatures = notes => {
-		const featureList = notes.map((note, i) => {
-			const { title, img = './static/khala_close.jpg', alt, text, btnUrl } = note;
-			return (
-				<FeatureWrap key={i}>
-					<a href={btnUrl}>
-						<FeatureTitle>{title}</FeatureTitle>
-					</a>
-					<FeatureContentWrap>
-						<FeatureImg src={img} alt={alt} />
-						<FeatureDescBtnWrap>
-							<FeatureDesc>{text}</FeatureDesc>
-							<Button href={btnUrl}>More</Button>
-						</FeatureDescBtnWrap>
-					</FeatureContentWrap>
-					{i + 1 !== notes.length ? <Separator /> : null}
-				</FeatureWrap>
-			);
-		});
-		return featureList;
-	};
-
-	/** @param {button[]} buttons*/
-	const getBtns = buttons => {
-		const formatButton = (btnName, svg = false, btnImg = false, btnImgAlt = false) => {
-			if (svg || btnImg || btnImgAlt) {
-				return (
-					<>
-						<ButtonIconWrap>
-							{svg ? svg : <img src={btnImg} alt={btnImgAlt} />}
-						</ButtonIconWrap>
-						<VertSeparator />
-						<ButtonListButton>{btnName}</ButtonListButton>
-					</>
-				);
-			}
-			return <ButtonListButton>{btnName}</ButtonListButton>;
-		};
-
-		const buttonList = buttons.map((button, i) => {
-			const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
-			return (
-				<ButtonListWrapper
-					key={i}
-					href={btnUrl}
-					onClick={e => {
-						if (modal) {
-							e.preventDefault();
-							setModal(modal);
-						}
-					}}>
-					{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
-				</ButtonListWrapper>
-			);
-		});
-
-		return <ButtonList>{buttonList}</ButtonList>;
-	};
-
 	return (
 		<Main>
 			<MainHeaderWrapper>
@@ -71,67 +10,74 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrapper>
-				{buttons ? getBtns(buttons) : null}
+				{buttons ? getBtns(buttons, setModal) : null}
 			</MainHeaderWrapper>
-			{getFeatures(notes)}
+			<NoteRenderer notes={notes}/>
 		</Main>
 	);
 };
 
 MainContent.propTypes = {
-	data: {
-		notes: PropTypes.exact({
-			title: PropTypes.string.isRequired,
-			img: PropTypes.string.isRequired,
-			alt: PropTypes.string.isRequired,
-			text: PropTypes.string.isRequired,
-			type: PropTypes.string.isRequired,
-		}),
+	data: PropTypes.exact({
+		descPage: PropTypes.string,
+		cover: PropTypes.string,
+		notes: PropTypes.array,
 		title: PropTypes.string,
 		subTitle: PropTypes.string,
-		buttons: PropTypes.exact([
-			{
+		buttons: PropTypes.arrayOf(
+			PropTypes.exact({
 				btnName: PropTypes.string.isRequired,
-				btnLink: PropTypes.string.isRequired,
-				btnIcn: PropTypes.string.isRequired,
-				btnIcnFallback: PropTypes.string.isRequired,
-			},
-		]),
-	},
+				btnUrl: PropTypes.string.isRequired,
+				btnIcn: PropTypes.string,
+				svg: PropTypes.object,
+				modal: PropTypes.object,
+			}),
+		),
+	}),
 };
 export default MainContent;
 
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
-var ButtonS = css`
-	font-family: ${fonts.mainFont};
-	color: ${colors.whiteText};
-	text-align: center;
-	padding-top: 1em;
-	padding-bottom: 1em;
-	padding-left: 1.7em;
-	padding-right: 1.7em;
-	background-color: ${colors.darkestInfill};
-	letter-spacing: 0.265em;
-	&:hover {
-		svg {
-			fill: hotpink;
+/**
+ * @param {button[]} buttons
+ * @param {function} setModal
+ */
+var getBtns = (buttons, setModal) => {
+	const formatButton = (btnName, svg = false, btnImg = false, btnImgAlt = false) => {
+		if (svg || btnImg || btnImgAlt) {
+			return (
+				<>
+					<ButtonIconWrap>
+						{svg ? svg : <img src={btnImg} alt={btnImgAlt} />}
+					</ButtonIconWrap>
+					<VertSeparator />
+					<ButtonListButton>{btnName}</ButtonListButton>
+				</>
+			);
 		}
-		color: hotpink;
-		cursor: pointer;
-		border-color: hotpink;
-	}
-	font-size: max(calc(${fontSizes.text} - 0.3rem), 16px);
-	${styles.outline};
-	${[mq[1]]} {
-		width: 100%;
-	}
-`;
+		return <ButtonListButton>{btnName}</ButtonListButton>;
+	};
 
-var Button = styled.button`
-	${ButtonS}
-`;
+	const buttonList = buttons.map((button, i) => {
+		const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
+		return (
+			<ButtonListWrapper
+				key={i}
+				href={btnUrl}
+				onClick={e => {
+					if (modal) {
+						e.preventDefault();
+						setModal(modal);
+					}
+				}}>
+				{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
+			</ButtonListWrapper>
+		);
+	});
+
+	return <ButtonList>{buttonList}</ButtonList>;
+};
 
 var MainTitle = styled.h1`
 	font-weight: 700;
@@ -165,75 +111,6 @@ var MainHeaderWrapper = styled.div`
 	${[mq[1]]} {
 		flex-direction: column;
 	}
-`;
-
-var FeatureTitle = styled.h1`
-	font-weight: 700;
-	font-size: ${fontSizes.mainNoteTitle};
-	letter-spacing: 0.2rem;
-	padding-top: 3.2rem;
-	padding-bottom: 2.2rem;
-`;
-
-var FeatureDesc = styled.div`
-	margin-bottom: 1rem;
-	font-size: ${fontSizes.text};
-	letter-spacing: 0.165rem;
-	font-weight: 400;
-	line-height: 1.5;
-	margin-top: -0.35em;
-`;
-
-var FeatureDescBtnWrap = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: space-between;
-	padding-left: 2.5rem;
-	padding-right: 3rem;
-	flex: 0 1 auto;
-	${[mq[1]]} {
-		padding-left: 0;
-		padding-right: 0;
-		padding-top: 2rem;
-		min-width: 90%;
-	}
-`;
-
-var FeatureImg = styled.img`
-	width: 35%;
-	align-self: flex-start;
-	min-width: 35%;
-	${[mq[1]]} {
-		width: 100%;
-	}
-`;
-
-var FeatureContentWrap = styled.div`
-	display: flex;
-	padding-bottom: 1.5rem;
-	${[mq[1]]} {
-		flex-wrap: wrap;
-	}
-`;
-
-var FeatureWrap = styled.div`
-	display: flex;
-	flex-direction: column;
-	padding-left: ${styles.contentPaddingSides};
-	padding-right: ${styles.contentPaddingSides};
-	:nth-child(even) > ${FeatureContentWrap} {
-		div {
-			padding-left: 0;
-		}
-		flex-direction: row-reverse;
-	}
-`;
-
-export var Separator = styled.div`
-	${styles.customOutline(1)};
-	width: 100vw;
-	align-self: center;
 `;
 
 var VertSeparator = styled.div`
@@ -274,7 +151,7 @@ var ButtonList = styled.section`
 var ButtonListWrapper = styled.a`
 	${ButtonS};
 	text-decoration: none;
-	:not(:first-child) {
+	:not(:first-of-type) {
 		margin-top: -1px;
 	}
 	padding: 0;
@@ -282,7 +159,7 @@ var ButtonListWrapper = styled.a`
 	display: flex;
 	align-items: center;
 	overflow: hidden;
-	&:nth-child(even) {
+	:nth-of-type(even) {
 		flex-direction: row-reverse;
 	}
 	:hover {
@@ -321,34 +198,21 @@ var ButtonIconWrap = styled.div`
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-	colors,
-	fonts,
-	fontSizes,
-	queries,
-	styles,
-} from '../../../styles/globalStyle.js';
+import { colors, queries, styles } from '../../../styles/globalStyle.js';
 import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
+import ButtonS from './components/ButtonStyle.js';
+import NoteRenderer from './components/NoteRenderer.jsx';
 
-/**
- * @typedef {object} note - Notes are the messages attached
- * @prop {string} notes.title - The title of the sidebar header
- * @prop {string} notes.img - The path relative to src to get to the image / url
- * @prop {string} notes.alt - The fallback path relative to src to get to the image / url
- * @prop {string} notes.text - The small description of the feature
- * @prop {string} notes.btnUrl - The url of the bigger description of the feature
- * @prop {"hero" | "feature" | "video" | "description"} feature.type - Whether the feature is a hero type or a feature type. Affects rendering.
- *
- * @typedef {object} button
- * @prop {string} button.btnName - The name of the buttons feature
- * @prop {string} button.btnUrl - The url the button points to
- * @prop {string} button.btnIcn - The path relative to src to get to the image / url
- * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
- * @prop {JSX.Element} button.svg - The svg icon for the button
- * @prop {import("../../Modals/modal_index").Modal} [button.modal] - A modal that can pop up if defined
- *
- */
+
+/** @typedef {{
+	data: {
+		title: string,
+		subTitle: string,
+		notes: note[],
+		buttons: button[]
+	}
+}} MainContentInput */
 
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
