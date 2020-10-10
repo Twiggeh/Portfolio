@@ -57,8 +57,7 @@ var FeatureDescBtnWrap = styled.div`
 
 var FeatureImg = styled.img`
 	align-self: flex-start;
-	width: ${({ precedence }) => (precedence === 'text' ? '20vw' : '40vw')};
-	min-width: 300px;
+	width: max(300px, ${({ precedence }) => (precedence === 'text' ? '20vw' : '40vw')});
 	${[mq[1]]} {
 		width: 100%;
 	}

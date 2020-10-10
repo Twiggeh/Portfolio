@@ -6,7 +6,7 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 	return (
 		<Main>
 			<MainHeaderWrapper>
-				<MainTitleWrapper>
+				<MainTitleWrapper buttons={!!buttons}>
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrapper>
@@ -97,7 +97,7 @@ var MainTitleWrapper = styled.div`
 	padding-bottom: clamp(30px, 4vw, 40px);
 	padding-right: ${styles.contentPaddingSides};
 	padding-left: ${styles.contentPaddingSides};
-	${styles.customOutline(0, 1, 1)};
+	${({ buttons }) => styles.customOutline(0, buttons ? 1 : 0, 1)};
 	${[mq[1]]} {
 		${styles.customOutline(0, 0, 1)};
 	}
