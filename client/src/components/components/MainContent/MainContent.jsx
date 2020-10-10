@@ -12,7 +12,7 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 				</MainTitleWrapper>
 				{buttons ? getBtns(buttons, setModal) : null}
 			</MainHeaderWrapper>
-			<NoteRenderer notes={notes}/>
+			<NoteRenderer notes={notes} />
 		</Main>
 	);
 };
@@ -31,7 +31,7 @@ MainContent.propTypes = {
 				btnIcn: PropTypes.string,
 				svg: PropTypes.object,
 				modal: PropTypes.object,
-			}),
+			})
 		),
 	}),
 };
@@ -201,9 +201,8 @@ import PropTypes from 'prop-types';
 import { colors, queries, styles } from '../../../styles/globalStyle.js';
 import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
-import ButtonS from './components/ButtonStyle.js';
 import NoteRenderer from './components/NoteRenderer.jsx';
-
+import ButtonS from './components/components/ButtonStyle.js';
 
 /** @typedef {{
 	data: {
