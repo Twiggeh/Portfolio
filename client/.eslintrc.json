@@ -17,15 +17,20 @@
 		"ecmaVersion": 2018,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "react-hooks"],
+	"plugins": ["react", "react-hooks", "emotion"],
 	"rules": {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
+		"flatTernaryExpressions": 0,
 		"no-unused-vars": [
 			1,
-			{ "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+			{
+				"vars": "all",
+				"args": "after-used",
+				"ignoreRestSiblings": false
+			}
 		],
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn"
