@@ -4,7 +4,7 @@ const SidebarTitle = ({ title, subTitle = '', picture = './static/khala_close.jp
 			<AsideImage picture={picture} />
 			<AsideTitle>{title}</AsideTitle>
 			<AsideSubtitle>{subTitle}</AsideSubtitle>
-			<Separator></Separator>
+			<Separator />
 		</header>
 	);
 };
@@ -40,6 +40,7 @@ var AsideTitle = styled.h1({
 
 var AsideSubtitle = styled.h2({
 	fontSize: fontSizes.sideSubTitle,
+	lineHeight: '1.4em',
 	letterSpacing: '0.265rem',
 	marginBottom: '2rem',
 });
@@ -48,4 +49,4 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fontSizes } from '../../../styles/globalStyle';
 import styled from '@emotion/styled';
-import { Separator } from '../MainContent/MainContent.jsx';
+import { Separator } from '../MainContent/components/NoteRenderer';

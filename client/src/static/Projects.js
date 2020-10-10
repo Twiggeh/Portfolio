@@ -69,12 +69,23 @@ export const Jessie = {
 	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
 	notes: [
 		{
+			type: 'hero',
+			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
+		},
+		{
 			type: 'description',
+			btnUrl: './paintings/jane',
+			btnText: 'Read More',
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
 		{
-			type: 'hero',
+			type: 'feature',
+			btnUrl: './paintings/jane',
+			precedence: 'img',
+			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
+			text:
+				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
 	],
 };
@@ -87,16 +98,18 @@ import { svgs } from '../styles/globalStyle';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
- * @prop {string} FeatureNote.title - The title of the feature
+ * @prop {string} [FeatureNote.title] - The title of the feature
+ * @prop {"img" | "text"} [FeatureNote.precedence="text"] - The element to take precedence over the other elements
  * @prop {string} FeatureNote.img - The path relative to src to get to the image / url
  * @prop {string} FeatureNote.alt - The fallback path relative to src to get to the image / url
- * @prop {string} FeatureNote.text - The small description of the feature
- * @prop {string} FeatureNote.btnUrl - The url of the bigger description of the feature
+ * @prop {string} [FeatureNote.text] - The small description of the feature
+ * @prop {string} [FeatureNote.btnUrl] - The url of the bigger description of the feature
  * @prop {"feature"} FeatureNote.type - The type of the feature
  *
  * @typedef {object} DescriptionNote - Notes are the messages attached
  * @prop {string} [DescriptionNote.title] - The title of the description
  * @prop {string} [DescriptionNote.btnUrl] - The Url to more information / other stuff
+ * @prop {string} [DescriptionNote.btnText] - The text of the button
  * @prop {string} DescriptionNote.text - Description
  * @prop {"description"} DescriptionNote.type - The type of the feature
  *

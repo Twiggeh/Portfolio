@@ -1,5 +1,3 @@
-import { css } from '@emotion/core';
-
 /** @param {{
 						data:import('../../../static/Projects').Content
   					}} param0 */
@@ -133,6 +131,7 @@ var SideTitle = styled.h4`
 var SideSubTitle = styled.h5`
 	font-size: ${fontSizes.text};
 	letter-spacing: 0.1em;
+	line-height: 1.4em;
 	margin-top: 0.7rem;
 	margin-left: 1vw;
 	margin-right: 1vw;
