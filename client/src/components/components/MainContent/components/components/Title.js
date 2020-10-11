@@ -5,7 +5,7 @@ const Title = styled.h1`
 	font-weight: 700;
 	font-size: ${fontSizes.mainNoteTitle};
 	letter-spacing: 0.2rem;
-	padding-top: 3.2rem;
+	margin-bottom: ${({ bigGap }) => (bigGap ? '2.2rem' : '1.6rem')};
 `;
 
 export default Title;

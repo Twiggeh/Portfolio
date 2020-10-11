@@ -20,7 +20,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 		<FeatureWrapper>
 			{title ? (
 				<a href={btnUrl}>
-					<Title>{title}</Title>
+					<Title bigGap={!renderReverse}>{title}</Title>
 				</a>
 			) : null}
 			<FeatureContentWrap reverse={renderReverse}>
@@ -35,6 +35,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 };
 
 var FeatureWrapper = styled.div`
+	padding-top: 2.5em;
 	display: flex;
 	flex-direction: column;
 `;
@@ -65,11 +66,9 @@ var FeatureImg = styled.img`
 
 var FeatureContentWrap = styled.div`
 	display: flex;
-	margin-top: 2.2rem;
 	${({ reverse }) =>
 		reverse
 			? `flex-direction: row-reverse;
-			margin-top: 1.6rem;
 			div {
 				padding-left: 0;
 			}`
