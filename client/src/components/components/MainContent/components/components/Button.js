@@ -1,4 +1,4 @@
-const Button = styled.button`
+const Button = styled.a`
 	${ButtonS}
 `;
 

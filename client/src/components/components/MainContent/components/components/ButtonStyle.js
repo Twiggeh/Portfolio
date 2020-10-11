@@ -11,6 +11,8 @@ var ButtonS = css`
 	font-family: ${fonts.mainFont};
 	color: ${colors.whiteText};
 	text-align: center;
+	box-sizing: border-box;
+	text-decoration: none;
 	padding-top: 1em;
 	padding-bottom: 1em;
 	padding-left: 1.7em;
