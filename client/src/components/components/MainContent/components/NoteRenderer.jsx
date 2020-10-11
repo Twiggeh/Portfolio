@@ -2,14 +2,31 @@
  * @param {{notes: import('../../../../static/Projects').Note[]}} param0
  */
 const NoteRenderer = ({ notes }) => {
-	let renderReverse = false;
+	let reverse = false;
+
+	const checkPrevReverse = i => {
+		const prevType = notes[i - 1]?.type;
+		if (prevType === 'feature' || prevType === 'video') reverse = !reverse;
+	};
+
+	const checkNextReverse = i => {
+		const nextType = notes[i + 1]?.type;
+		if (nextType !== 'feature' && nextType !== 'video') reverse = false;
+	};
+
 	const result = [];
 	notes.forEach((note, i) => {
 		switch (note.type) {
 			case 'feature': {
-				if (notes[Math.max(0, i - 1)]?.type === 'feature') renderReverse = !renderReverse;
-				result.push(<FeatureNote note={note} key={i} renderReverse={renderReverse} />);
-				if (notes[Math.max(0, i + 1)]?.type !== 'feature') renderReverse = false;
+				checkPrevReverse(i);
+				result.push(<FeatureNote note={note} key={i} renderReverse={reverse} />);
+				checkNextReverse(i);
+				break;
+			}
+			case 'video': {
+				checkPrevReverse(i);
+				result.push(<VideoNote note={note} key={i} reverse={reverse} />);
+				checkNextReverse(i);
 				break;
 			}
 			case 'description': {
@@ -18,6 +35,7 @@ const NoteRenderer = ({ notes }) => {
 			}
 			case 'hero': {
 				result.push(<HeroNote note={note} key={i} />);
+				break;
 			}
 		}
 		if (i + 1 !== notes.length) result.push(<Separator key={i + '1'} />);
@@ -42,6 +60,7 @@ import styled from '@emotion/styled';
 import { styles } from '../../../../styles/globalStyle';
 import DescriptionNote from './DescriptionNote';
 import HeroNote from './HeroNote';
+import VideoNote from './VideoNote';
 
 export var Separator = styled.div`
 	${styles.customOutline(1)};
