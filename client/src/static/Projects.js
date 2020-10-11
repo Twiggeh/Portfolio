@@ -61,7 +61,7 @@ const ReplayBotData = {
 };
 
 /** @type {Content} */
-export const Jessie = {
+const Jessie = {
 	// TODO : change the interface so that I can provide props and tell what component to use.
 	title: 'Jane',
 	subTitle: 'Digital Painting from imagination',
@@ -69,23 +69,21 @@ export const Jessie = {
 	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
 	notes: [
 		{
-			type: 'hero',
-			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
-		},
-		{
-			type: 'description',
-			btnUrl: './paintings/jane',
-			btnText: 'Read More',
-			text:
-				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
-		},
-		{
 			type: 'feature',
-			btnUrl: './paintings/jane',
+			btnUrl: './static/Art/Portraits/Jessie/lowResJane.jpg',
+			btnText: 'Download',
 			precedence: 'img',
 			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
+		},
+		{
+			type: 'video',
+			title: 'Speedpaint',
+			text: 'Fast-forwarded recording of the painting process',
+			aspect: 16 / 9,
+			base: '40vw',
+			src: 'https://www.youtube-nocookie.com/embed/Gl6COzf3YjE',
 		},
 	],
 };
@@ -104,6 +102,7 @@ import { svgs } from '../styles/globalStyle';
  * @prop {string} FeatureNote.alt - The fallback path relative to src to get to the image / url
  * @prop {string} [FeatureNote.text] - The small description of the feature
  * @prop {string} [FeatureNote.btnUrl] - The url of the bigger description of the feature
+ * @prop {string} [FeatureNote.btnText] - The text of the button
  * @prop {"feature"} FeatureNote.type - The type of the feature
  *
  * @typedef {object} DescriptionNote - Notes are the messages attached
@@ -120,7 +119,9 @@ import { svgs } from '../styles/globalStyle';
  * @prop {"hero"} HeroNote.type - The type of the feature
  *
  * @typedef {object} VideoNote - Notes are the messages attached
- * @prop {string} VideoNote.url - The url of the video
+ * @prop {string} VideoNote.src - The url of the video
+ * @prop {string} [VideoNote.base="30vw"] - The base width of the iframe should take up. 
+ * @prop {number} [VideoNote.aspect=16/9] - The aspect ratio of the iframe. 
  * @prop {string} [VideoNote.title] - Title to be displayed
  * @prop {string} [VideoNote.text] - The description for the video  
  * @prop {"video" } VideoNote.type - The type of the feature
