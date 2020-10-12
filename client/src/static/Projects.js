@@ -7,7 +7,7 @@ const ReplayBotData = {
 		{
 			btnName: 'Github',
 			btnUrl: 'https:github.com/Twiggeh',
-			svg: svgs.githubLogo,
+			svg: svgs.newGitLogo,
 			modal: {
 				content: (
 					<div css={{ padding: '1em', paddingTop: '0' }}>
@@ -28,7 +28,7 @@ const ReplayBotData = {
 		},
 		{
 			btnName: 'Hosted',
-			svg: svgs.discordLogo,
+			svg: svgs.newDiscordLogo,
 			btnUrl: 'https:discord.gg/f5gQQPP',
 		},
 	],
@@ -62,20 +62,42 @@ const ReplayBotData = {
 
 /** @type {Content} */
 const Jessie = {
-	// TODO : change the interface so that I can provide props and tell what component to use.
 	title: 'Jane',
 	subTitle: 'Digital Painting from imagination',
-	descPage: './paintings/jane',
 	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
 	notes: [
 		{
 			type: 'feature',
-			btnUrl: './static/Art/Portraits/Jessie/lowResJane.jpg',
+			btnUrl: './static/Art/Portraits/Jessie/normalResJane.jpg',
 			btnText: 'Download',
 			precedence: 'img',
 			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
+		},
+	],
+};
+
+/** @type {Content} */
+const Esmeralda = {
+	title: 'Esmeralda',
+	subTitle: 'Digital Portrait Painting',
+	cover: './static/Art/Portraits/Esmeralda/lowResEsmeralda.webp',
+	buttons: [
+		{
+			svg: svgs.reference,
+			btnName: 'Reference',
+			btnUrl: './static/Art/Portraits/Esmeralda/reference.png',
+		},
+	],
+	notes: [
+		{
+			type: 'feature',
+			btnUrl: './static/Art/Portraits/Esmeralda/mediumResEsmeralda.webp',
+			btnText: 'Download',
+			precedence: 'img',
+			img: './static/Art/Portraits/Esmeralda/mediumResEsmeralda.webp',
+			text: 'A one day painting exercise, origin of the reference is unknown.',
 		},
 		{
 			type: 'video',
@@ -88,8 +110,26 @@ const Jessie = {
 	],
 };
 
+/** @type {Content} */
+const RoyalBird = {
+	title: 'Royal Bird',
+	subTitle: 'Character Bust',
+	cover: './static/Art/Creatures/RoyalBird/lowResRoyalBird.webp',
+	descPage: './art#royalBird',
+	notes: [
+		{
+			type: 'feature',
+			btnUrl: './static/Art/Creatures/RoyalBird/mediumResRoyalBird.webp',
+			btnText: 'Download',
+			precedence: 'img',
+			img: './static/Art/Creatures/RoyalBird/mediumResRoyalBird.webp',
+			text: '35min Speed Painting, pushing my rendering ability beyond its limits',
+		},
+	],
+};
+
 export const projects = [ReplayBotData];
-export const art = [Jessie];
+export const art = [Jessie, Esmeralda, RoyalBird];
 export default { art, projects };
 import React from 'react';
 import { svgs } from '../styles/globalStyle';
