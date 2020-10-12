@@ -11,14 +11,17 @@ const Navigation = () => (
 		<BrowserRouter>
 			<NewLinks />
 			<Switch>
-				<Route path='/about'>
-					<AboutPage />
-				</Route>
 				<Route path='/art'>
 					<ArtPage />
 				</Route>
 				<Route path='/projects'>
 					<ProjectsPage />
+				</Route>
+				<Route exact path='/'>
+					<ProjectsPage />
+				</Route>
+				<Route path='/contact'>
+					<Contact />
 				</Route>
 			</Switch>
 		</BrowserRouter>
@@ -29,7 +32,7 @@ export default Navigation;
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { colors } from '../../styles/globalStyle';
-import AboutPage from '../About';
 import ArtPage from '../Art';
+import Contact from '../Contact/contact_index';
 import ProjectsPage from '../Projects';
 import NewLinks from './components/newLinks';

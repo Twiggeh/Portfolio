@@ -5,7 +5,7 @@ const NewLinks = () => {
 		<>
 			<Nav>
 				<NavTitle>
-					<Link to='/art'>Twiggeh&apos;s Portfolio</Link>
+					<Link to='/'>Twiggeh&apos;s Portfolio</Link>
 				</NavTitle>
 				<NavUl>
 					<NavLi>
@@ -15,7 +15,7 @@ const NewLinks = () => {
 						<Link to='/projects'>Projects</Link>
 					</NavLi>
 					<NavLi>
-						<Link to='/about'>Contact</Link>
+						<Link to='/contact'>Contact</Link>
 					</NavLi>
 				</NavUl>
 				{width > nq[1] ? (
@@ -42,7 +42,7 @@ const NewLinks = () => {
 						<Link to='/projects'>Projects</Link>
 					</li>
 					<li>
-						<Link to='/about'>Contact</Link>
+						<Link to='/contact'>Contact</Link>
 					</li>
 					<li>
 						<a href='https://github.com/Twiggeh'>GitHub</a>
