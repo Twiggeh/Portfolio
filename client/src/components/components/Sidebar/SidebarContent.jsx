@@ -86,6 +86,7 @@ var SideButton = styled.a`
 	pointer-events: all;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	${styles.outline};
 	svg {
 		width: 2vw;
@@ -96,6 +97,7 @@ var SideButton = styled.a`
 	background: ${colors.darkestInfill};
 	z-index: 2;
 	:hover {
+		path,
 		svg {
 			fill: hotpink;
 		}

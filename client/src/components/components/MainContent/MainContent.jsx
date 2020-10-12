@@ -168,6 +168,9 @@ var ButtonListWrapper = styled.a`
 		div {
 			border-color: hotpink;
 		}
+		path {
+			fill: hotpink;
+		}
 	}
 	${[mq[1]]} {
 		border: 0 !important;
@@ -192,7 +195,7 @@ var ButtonListButton = styled.div`
 `;
 
 var ButtonIconWrap = styled.div`
-	width: max(2vw, 20px);
+	display: flex;
 	padding: 1em;
 `;
 
