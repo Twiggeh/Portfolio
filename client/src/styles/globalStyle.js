@@ -78,12 +78,18 @@ export const fontSizes = {
 	text: 'clamp(18px, 1.2vw, 35px)',
 };
 
+import githubLogo from 'icons/githubLogo.svg';
+import discordLogo from 'icons/discordLogo.svg';
+import hamburgerMenu from 'icons/hamburger.svg';
+import download from 'icons/download.svg';
+import Reference from 'icons/reference.svg';
+
 export const svgs = {
 	githubLogo,
 	discordLogo,
 	hamburgerMenu,
 	download,
-	reference,
+	Reference,
 	cross,
 };
 
@@ -99,9 +105,3 @@ export default {
 	svgs,
 	queries,
 };
-
-import githubLogo from 'icons/githubLogo.svg';
-import discordLogo from 'icons/discordLogo.svg';
-import hamburgerMenu from 'icons/hamburger.svg';
-import download from 'icons/download.svg';
-import reference from 'icons/reference.svg';

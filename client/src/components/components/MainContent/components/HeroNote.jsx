@@ -2,7 +2,7 @@
 	note: import('../../../../static/Projects').HeroNote,
 	nextNote: import('../../../../static/Projects').Note 
 }} param0 */
-const HeroNote = ({ note: { img = './static/khala_close.jpg', title, url } }) => {
+const HeroNote = ({ note: { img = khala, title, url } }) => {
 	return (
 		<HeroNoteWrapper>
 			<HeroImg src={img}></HeroImg>
@@ -30,3 +30,4 @@ export default HeroNote;
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import khala from '../../../../assets/khala_close.jpg';

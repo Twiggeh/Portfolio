@@ -1,7 +1,7 @@
 import { Global, css } from '@emotion/core';
 import { hot } from 'react-hot-loader/root';
 // TODO : Figure out how to deal with this
-import '../public/static/global.css';
+import './assets/global.css';
 
 const mq = queries.mainQueries;
 

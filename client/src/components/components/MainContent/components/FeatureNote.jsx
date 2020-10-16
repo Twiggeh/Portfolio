@@ -1,5 +1,4 @@
 const mq = queries.mainQueries;
-
 // TODO : Allow to rename the button
 
 /** @param {{
@@ -10,7 +9,7 @@ const mq = queries.mainQueries;
 const FeatureNote = ({ note, renderReverse }) => {
 	const {
 		title,
-		img = './static/khala_close.jpg',
+		img = khala,
 		alt,
 		text,
 		btnUrl,
@@ -25,7 +24,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 				</a>
 			) : null}
 			<FeatureContentWrap reverse={renderReverse}>
-				<FeatureImg {...{ precedence }} src={img} alt={alt} />
+				<FeatureImg {...{ precedence }} src={img} alt={alt} loading='lazy' />
 				<FeatureDescBtnWrap>
 					{text ? <Description>{text}</Description> : null}
 					{btnUrl ? <Button href={btnUrl}>{btnText}</Button> : null}
@@ -96,3 +95,4 @@ import PropTypes from 'prop-types';
 import Button from './components/Button';
 import Description from './components/Description';
 import Title from './components/Title';
+import khala from '../../../../assets/khala_close.jpg';

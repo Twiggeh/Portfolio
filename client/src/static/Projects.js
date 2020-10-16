@@ -85,7 +85,7 @@ const Esmeralda = {
 	cover: './static/Art/Portraits/Esmeralda/lowResEsmeralda.webp',
 	buttons: [
 		{
-			svg: svgs.reference,
+			svg: svgs.Reference,
 			btnName: 'Reference',
 			btnUrl: './static/Art/Portraits/Esmeralda/reference.png',
 		},

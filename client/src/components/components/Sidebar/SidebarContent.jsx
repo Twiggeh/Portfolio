@@ -11,19 +11,21 @@ const SidebarContent = ({
 		<div>
 			{buttons === undefined ? null : (
 				<SideBtnWrap>
-					{buttons.map(({ btnIcn, btnIcnFallback, btnName, btnUrl, svg, modal }, i) => (
-						<SideButton
-							key={i}
-							href={btnUrl}
-							onClick={e => {
-								if (modal) {
-									e.preventDefault();
-									setModal(modal);
-								}
-							}}>
-							{svg ? svg : btnIcn}
-						</SideButton>
-					))}
+					{buttons.map(
+						({ btnIcn, btnIcnFallback, btnName, btnUrl, svg: SVGEL, modal }, i) => (
+							<SideButton
+								key={i}
+								href={btnUrl}
+								onClick={e => {
+									if (modal) {
+										e.preventDefault();
+										setModal(modal);
+									}
+								}}>
+								{SVGEL ? <SVGEL /> : btnIcn}
+							</SideButton>
+						)
+					)}
 				</SideBtnWrap>
 			)}
 			<SideWrapper href={descPage}>
