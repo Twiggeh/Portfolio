@@ -10,6 +10,24 @@
 			"url": "http://localhost:8080",
 			"webRoot": "${workspaceFolder}/client",
 			"postDebugTask": "Linux kill webpack"
+		},
+		{
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"name": "server",
+			"program": "${workspaceFolder}/server/app.js",
+			"request": "launch",
+			"restart": true,
+			"runtimeExecutable": "/home/twiggeh/.yarn/bin/nodemon",
+			"skipFiles": ["<node_internals>/**"],
+			"type": "pwa-node"
+		},
+		{
+			"name": "Attach",
+			"port": 9229,
+			"request": "attach",
+			"skipFiles": ["<node_internals>/**"],
+			"type": "pwa-node"
 		}
 	],
 	"compounds": [
