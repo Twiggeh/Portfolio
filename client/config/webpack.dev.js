@@ -86,6 +86,8 @@ module.exports = {
 		alias: {
 			'react-dom': '@hot-loader/react-dom',
 			icons: path.resolve(curProcess, './src/assets/icons'),
+			assets: path.resolve(curProcess, './src/assets'),
+			pictures: path.resolve(curProcess, './src/static/Pictures.js'),
 		},
 		modules: ['src', 'node_modules'],
 		extensions: ['*', '.js', '.jsx'],

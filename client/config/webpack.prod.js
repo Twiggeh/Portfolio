@@ -2,15 +2,29 @@ const path = require('path');
 const process = require('process');
 require('dotenv').config();
 const mode = process.env.NODE_ENV;
+const analyze = process.env.ANALYZE;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 console.log(mode);
 const curProcess = process.cwd();
 
 module.exports = {
-	entry: path.resolve(curProcess, 'src'),
+	entry: {
+		main: path.resolve(curProcess, 'src/index.js'),
+		vendor: [
+			'react',
+			'react-dom',
+			'scheduler',
+			'object-assign',
+			'@emotion/styled',
+			'prop-types',
+		],
+	},
 	output: {
 		path: path.resolve(curProcess, './dist'),
 		publicPath: '/',
@@ -20,12 +34,6 @@ module.exports = {
 	mode: 'production',
 	module: {
 		rules: [
-			{
-				enforce: 'pre',
-				exclude: /node_modules/,
-				test: /\.(js|jsx)$/,
-				loader: [{ loader: 'eslint-loader' }],
-			},
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
@@ -44,15 +52,14 @@ module.exports = {
 			{
 				test: /\.css$/i,
 				use: [
-					MiniCssExtractPlugin.loader,
 					{
-						loader: 'css-loader',
+						loader: MiniCssExtractPlugin.loader,
 						options: {
-							sourceMap: true,
+							publicPath: '../../',
 						},
 					},
 					{
-						loader: 'resolve-url-loader',
+						loader: 'css-loader',
 						options: {
 							sourceMap: true,
 						},
@@ -100,14 +107,34 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			'react-dom': '@hot-loader/react-dom',
-			icons: path.resolve(process.cwd(), './src/assets/icons'),
+			icons: path.resolve(curProcess, './src/assets/icons'),
+			assets: path.resolve(curProcess, './src/assets'),
+			pictures: path.resolve(curProcess, './src/static/Pictures.js'),
 		},
 		modules: ['src', 'node_modules'],
 		extensions: ['*', '.js', '.jsx'],
 	},
+	optimization: {
+		minimizer: [new OptimizeCssAssetsPlugin()],
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					chunks: 'initial',
+					test: 'vendor',
+					name: 'vendor',
+					enforce: true,
+				},
+			},
+		},
+	},
 	node: { curProcess: true, __filename: true }, // to get correct curProcess and __filename
+	// prettier-ignore
 	plugins: [
+		analyze === 'true'
+			? new BundleAnalyzerPlugin({
+				analyzerMode: 'server',
+			})
+			: false,
 		new UglifyJSPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'public/css/[name]-[contenthash:8].css',
@@ -118,5 +145,5 @@ module.exports = {
 			filename: 'index.html',
 		}),
 		new CleanWebpackPlugin(),
-	],
+	].filter(Boolean),
 };
