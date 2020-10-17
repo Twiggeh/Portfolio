@@ -2,7 +2,7 @@
 						data:import('../../../static/Projects').Content
   					}} param0 */
 const SidebarContent = ({
-	data: { title, cover = './static/khala_close.jpg', subTitle, buttons, notes, descPage },
+	data: { title, cover = khala, subTitle, buttons, notes, descPage },
 }) => {
 	const { setModal } = useContext(ModalContext);
 	// TODO: finish btnIcon support & btnName as hover
@@ -12,7 +12,7 @@ const SidebarContent = ({
 			{buttons === undefined ? null : (
 				<SideBtnWrap>
 					{buttons.map(
-						({ btnIcn, btnIcnFallback, btnName, btnUrl, svg: SVGEL, modal }, i) => (
+						({ btnIcn, btnIcnFallback, btnName, btnUrl, svg: SVG, modal }, i) => (
 							<SideButton
 								key={i}
 								href={btnUrl}
@@ -22,7 +22,7 @@ const SidebarContent = ({
 										setModal(modal);
 									}
 								}}>
-								{SVGEL ? <SVGEL /> : btnIcn}
+								{SVG ? <SVG /> : btnIcn}
 							</SideButton>
 						)
 					)}
@@ -154,3 +154,4 @@ import styled from '@emotion/styled';
 import { colors, fontSizes, styles } from '../../../styles/globalStyle';
 import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider';
+import { khala } from 'pictures';

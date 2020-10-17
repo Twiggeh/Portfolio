@@ -29,7 +29,7 @@ MainContent.propTypes = {
 				btnName: PropTypes.string.isRequired,
 				btnUrl: PropTypes.string.isRequired,
 				btnIcn: PropTypes.string,
-				svg: PropTypes.object,
+				svg: PropTypes.func,
 				modal: PropTypes.object,
 			})
 		),
@@ -44,12 +44,12 @@ import styled from '@emotion/styled';
  * @param {function} setModal
  */
 var getBtns = (buttons, setModal) => {
-	const formatButton = (btnName, svg = false, btnImg = false, btnImgAlt = false) => {
-		if (svg || btnImg || btnImgAlt) {
+	const formatButton = (btnName, SVG, btnImg = false, btnImgAlt = false) => {
+		if (SVG || btnImg || btnImgAlt) {
 			return (
 				<>
 					<ButtonIconWrap>
-						{svg ? svg : <img src={btnImg} alt={btnImgAlt} />}
+						{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}
 					</ButtonIconWrap>
 					<VertSeparator />
 					<ButtonListButton>{btnName}</ButtonListButton>
@@ -197,6 +197,9 @@ var ButtonListButton = styled.div`
 var ButtonIconWrap = styled.div`
 	display: flex;
 	padding: 1em;
+	svg {
+		width: 2em;
+	}
 `;
 
 import React from 'react';

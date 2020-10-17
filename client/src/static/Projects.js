@@ -7,7 +7,7 @@ const ReplayBotData = {
 		{
 			btnName: 'Github',
 			btnUrl: 'https:github.com/Twiggeh',
-			svg: svgs.newGitLogo,
+			svg: svgs.GithubLogo,
 			modal: {
 				content: (
 					<div css={{ padding: '1em', paddingTop: '0' }}>
@@ -28,7 +28,7 @@ const ReplayBotData = {
 		},
 		{
 			btnName: 'Hosted',
-			svg: svgs.newDiscordLogo,
+			svg: svgs.DiscordLogo,
 			btnUrl: 'https:discord.gg/f5gQQPP',
 		},
 	],
@@ -61,17 +61,17 @@ const ReplayBotData = {
 };
 
 /** @type {Content} */
-const Jessie = {
+const Jane = {
 	title: 'Jane',
 	subTitle: 'Digital Painting from imagination',
-	cover: './static/Art/Portraits/Jessie/lowResJane.jpg',
+	cover: lowJane,
 	notes: [
 		{
 			type: 'feature',
-			btnUrl: './static/Art/Portraits/Jessie/normalResJane.jpg',
+			btnUrl: medJane,
 			btnText: 'Download',
 			precedence: 'img',
-			img: './static/Art/Portraits/Jessie/normalResJane.jpg',
+			img: medJane,
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
@@ -82,21 +82,21 @@ const Jessie = {
 const Esmeralda = {
 	title: 'Esmeralda',
 	subTitle: 'Digital Portrait Painting',
-	cover: './static/Art/Portraits/Esmeralda/lowResEsmeralda.webp',
+	cover: lowEsmeralda,
 	buttons: [
 		{
 			svg: svgs.Reference,
 			btnName: 'Reference',
-			btnUrl: './static/Art/Portraits/Esmeralda/reference.png',
+			btnUrl: refEsmeralda,
 		},
 	],
 	notes: [
 		{
 			type: 'feature',
-			btnUrl: './static/Art/Portraits/Esmeralda/mediumResEsmeralda.webp',
+			btnUrl: medEsmeralda,
 			btnText: 'Download',
 			precedence: 'img',
-			img: './static/Art/Portraits/Esmeralda/mediumResEsmeralda.webp',
+			img: medEsmeralda,
 			text: 'A one day painting exercise, origin of the reference is unknown.',
 		},
 		{
@@ -114,25 +114,34 @@ const Esmeralda = {
 const RoyalBird = {
 	title: 'Royal Bird',
 	subTitle: 'Character Bust',
-	cover: './static/Art/Creatures/RoyalBird/lowResRoyalBird.webp',
+	cover: lowRoyalBird,
 	descPage: './art#royalBird',
 	notes: [
 		{
 			type: 'feature',
-			btnUrl: './static/Art/Creatures/RoyalBird/mediumResRoyalBird.webp',
+			btnUrl: medRoyalBird,
 			btnText: 'Download',
 			precedence: 'img',
-			img: './static/Art/Creatures/RoyalBird/mediumResRoyalBird.webp',
+			img: medRoyalBird,
 			text: '35min Speed Painting, pushing my rendering ability beyond its limits',
 		},
 	],
 };
 
 export const projects = [ReplayBotData];
-export const art = [Jessie, Esmeralda, RoyalBird];
+export const art = [Jane, Esmeralda, RoyalBird];
 export default { art, projects };
 import React from 'react';
 import { svgs } from '../styles/globalStyle';
+import {
+	lowEsmeralda,
+	lowJane,
+	lowRoyalBird,
+	medEsmeralda,
+	medJane,
+	medRoyalBird,
+	refEsmeralda,
+} from './Pictures';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached

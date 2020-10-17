@@ -19,13 +19,13 @@ const NewLinks = () => {
 					</NavLi>
 				</NavUl>
 				{width > nq[1] ? (
-					<TopRight href={'https://github.com/Twiggeh'}>{svgs.githubLogo}</TopRight>
+					<TopRight href={'https://github.com/Twiggeh'}>{<svgs.GithubLogo />}</TopRight>
 				) : (
 					<TopRight
 						onClick={() => {
 							setOpen(c => !c);
 						}}>
-						{svgs.hamburgerMenu}
+						{<svgs.HamburgerMenu />}
 					</TopRight>
 				)}
 				<SideSlideNav open={open}>

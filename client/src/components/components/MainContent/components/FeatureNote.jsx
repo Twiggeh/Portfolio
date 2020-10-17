@@ -95,4 +95,4 @@ import PropTypes from 'prop-types';
 import Button from './components/Button';
 import Description from './components/Description';
 import Title from './components/Title';
-import khala from '../../../../assets/khala_close.jpg';
+import { khala } from 'pictures';

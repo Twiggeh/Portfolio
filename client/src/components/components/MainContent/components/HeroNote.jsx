@@ -30,4 +30,4 @@ export default HeroNote;
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import khala from '../../../../assets/khala_close.jpg';
+import { khala } from 'pictures';
