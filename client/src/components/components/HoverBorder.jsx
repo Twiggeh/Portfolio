@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const HoverBorder = ({ hoverGradient = false }) => {
+const HoverBorder = ({ hoverGradient = false, customCss = '' }) => {
 	return (
-		<HoverSvg fill='url(#largeGradient)'>
+		<HoverSvg fill='url(#largeGradient)' customCss={customCss}>
 			<line id='topLine' x1='0' y1='0' x2='100%' y2='0' />
 			<line id='rightLine' x1='100%' y1='0%' x2='100%' y2='100%' />
 			<line id='botLine' x1='100%' y1='100%' x2='0' y2='100%' />
@@ -92,10 +92,12 @@ var HoverSvg = styled.svg`
 		transform: scaleY(0);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(0)};
 	}
+	${({ customCss }) => customCss}
 `;
 
 HoverBorder.propTypes = {
 	hoverGradient: PropTypes.bool,
+	customCss: PropTypes.any,
 };
 
 export default HoverBorder;

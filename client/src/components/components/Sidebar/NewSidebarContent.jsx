@@ -1,3 +1,5 @@
+import { css } from '@emotion/core';
+
 /** @param {{
 						data:import('../../../static/Projects').Content
   					}} param0 */
@@ -22,6 +24,12 @@ const NewSidebarContent = ({
 										setModal(modal);
 									}
 								}}>
+								<HoverBorder
+									customCss={css`
+										width: calc(100% + 3px) !important;
+										height: calc(100% + 3px) !important;
+									`}
+								/>
 								{SVG ? <SVG /> : btnIcn}
 							</SideButton>
 						)
@@ -29,7 +37,7 @@ const NewSidebarContent = ({
 				</SideBtnWrap>
 			)}
 			<SideWrapper href={descPage}>
-				<HoverBorder />
+				<HoverBorder hoverGradient={true} />
 				<SideImgContainer>
 					<SideImg src={cover} />
 				</SideImgContainer>
@@ -40,24 +48,10 @@ const NewSidebarContent = ({
 	);
 };
 
-const transitionTime = '100ms';
-
 var SideImgContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	position: relative;
-	::before {
-		content: '';
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		transition: opacity ${transitionTime} ease-in;
-		background-image: linear-gradient(rgba(255, 105, 180, 0.3), 10%, transparent);
-	}
-	:hover::before {
-		opacity: 1;
-	}
 `;
 
 var SideBtnWrap = styled.div`
@@ -78,6 +72,7 @@ var SideImg = styled.img`
 var SideButton = styled.a`
 	pointer-events: all;
 	display: flex;
+	position: relative;
 	justify-content: center;
 	align-items: center;
 	${styles.outline};
@@ -92,9 +87,9 @@ var SideButton = styled.a`
 	:hover {
 		path,
 		svg {
+			transition: all 250ms ease-in-out;
 			fill: hotpink;
 		}
-		border-color: hotpink;
 	}
 `;
 
@@ -106,6 +101,7 @@ var SideWrapper = styled.a`
 	${styles.outline};
 	background-color: ${colors.darkestInfill};
 	text-decoration: none;
+	transition: color 250ms ease-in-out;
 	:hover {
 		color: hotpink;
 	}
