@@ -111,19 +111,19 @@ var SideTitle = styled.h4`
 	font-size: calc(${fontSizes.text} * 1.2);
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	margin-top: 2rem;
-	margin-left: 1vw;
-	margin-right: 1vw;
+	margin-top: 1.5rem;
+	margin-left: 1.2vw;
+	margin-right: 1.2vw;
+	margin-bottom: 1.2rem;
 `;
 
 var SideSubTitle = styled.h5`
 	font-size: ${fontSizes.text};
 	letter-spacing: 0.1em;
 	line-height: 1.4em;
-	margin-top: 0.7rem;
-	margin-left: 1vw;
-	margin-right: 1vw;
-	margin-bottom: 0.7rem;
+	margin-left: 1.2vw;
+	margin-right: 1.2vw;
+	margin-bottom: 1.2rem;
 `;
 
 NewSidebarContent.propTypes = {
