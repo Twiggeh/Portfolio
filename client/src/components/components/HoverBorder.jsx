@@ -42,8 +42,10 @@ var HoverSvg = styled.svg`
 		}
 	}
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100% !important;
 	z-index: 1;
 	line {
 		stroke: hotpink;
