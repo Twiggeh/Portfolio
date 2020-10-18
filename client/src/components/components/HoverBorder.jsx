@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 
 const HoverBorder = ({ hoverGradient = false }) => {
 	return (
+		<HoverSvg fill='url(#largeGradient)'>
+			<line id='topLine' x1='0' y1='0' x2='100%' y2='0' />
+			<line id='rightLine' x1='100%' y1='0%' x2='100%' y2='100%' />
+			<line id='botLine' x1='100%' y1='100%' x2='0' y2='100%' />
+			<line id='leftLine' x1='0' y1='100%' x2='0' y2='0' />
 			{hoverGradient ? (
 				<>
 					<rect id='myRect' width='100%' height='100%' />
@@ -28,11 +33,6 @@ const HoverBorder = ({ hoverGradient = false }) => {
 
 var getTransTime = (mag = 1, ms = 150) => `${mag * ms}ms`;
 
-var TopLine = styled.line``;
-var BottomLine = styled.line``;
-var RightLine = styled.line``;
-var LeftLine = styled.line``;
-
 var HoverSvg = styled.svg`
 	#myRect {
 		opacity: 0;
@@ -49,21 +49,21 @@ var HoverSvg = styled.svg`
 		stroke: hotpink;
 		stroke-width: 3;
 	}
-	:hover ${TopLine} {
+	:hover #topLine {
 		transform: scaleX(1);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(0)};
 	}
-	:hover ${RightLine} {
+	:hover #rightLine {
 		transform-origin: top;
 		transform: scaleY(1);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(1)};
 	}
-	:hover ${BottomLine} {
+	:hover #botLine {
 		transform-origin: right;
 		transform: scaleX(1);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(2)};
 	}
-	:hover ${LeftLine} {
+	:hover #leftLine {
 		transform-origin: bottom;
 		transform: scaleY(1);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(3)};
@@ -71,21 +71,21 @@ var HoverSvg = styled.svg`
 	:hover line {
 		transform: scaleX(1);
 	}
-	${TopLine} {
+	#topLine {
 		transform: scaleX(0);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(3)};
 	}
-	${RightLine} {
+	#rightLine {
 		transform-origin: top;
 		transform: scaleY(0);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(2)};
 	}
-	${BottomLine} {
+	#botLine {
 		transform-origin: right;
 		transform: scaleX(0);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(1)};
 	}
-	${LeftLine} {
+	#leftLine {
 		transform-origin: bottom;
 		transform: scaleY(0);
 		transition: transform ${getTransTime()} ease-in ${getTransTime(0)};
