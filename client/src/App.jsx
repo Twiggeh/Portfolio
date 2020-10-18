@@ -13,7 +13,7 @@ const App = () => {
 			<Global styles={globalStyle} />
 			<ModalContext.Provider value={{ modal, setModal }}>
 				<Modals />
-				<Navigation />
+				<Body />
 			</ModalContext.Provider>
 		</>
 	);
@@ -22,7 +22,7 @@ const App = () => {
 export default hot(App);
 
 import React, { useState } from 'react';
-import Navigation from './components/Navigation';
+import Body from './components/Body/body_index';
 import Modals from './components/Modals/modal_index';
 import ModalContext from './components/Providers/modalProvider';
 import { queries, colors, styles } from './styles/globalStyle';

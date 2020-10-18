@@ -1,10 +1,14 @@
-const Navigation = () => (
+const Body = () => (
 	<div
 		css={{
 			fontFamily: 'Montserrat',
 			backgroundColor: colors.bgInfill,
 			color: colors.whiteText,
 			a: { color: colors.whiteText },
+			minHeight: '100vh',
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'space-between',
 			// TODO : re-enable
 			//overflow: hidden,
 		}}>
@@ -25,10 +29,11 @@ const Navigation = () => (
 				</Route>
 			</Switch>
 		</BrowserRouter>
+		<Footer />
 	</div>
 );
 
-export default Navigation;
+export default Body;
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { colors } from '../../styles/globalStyle';
@@ -36,3 +41,4 @@ import ArtPage from '../Art';
 import Contact from '../Contact/contact_index';
 import ProjectsPage from '../Projects';
 import NewLinks from './components/newLinks';
+import Footer from '../Footer/footer_index';
