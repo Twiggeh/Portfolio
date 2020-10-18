@@ -5,7 +5,7 @@ const DescriptionNote = ({ note: { title, text, btnUrl, btnText = 'More' } }) =>
 			{title ? <Title>{title}</Title> : null}
 			<BtnDescWrapper>
 				<Description>{text}</Description>
-				{btnUrl ? <Button href={btnUrl}>{btnText}</Button> : null}
+				{btnUrl ? <Button href={btnUrl} content={btnText}></Button> : null}
 			</BtnDescWrapper>
 		</>
 	);

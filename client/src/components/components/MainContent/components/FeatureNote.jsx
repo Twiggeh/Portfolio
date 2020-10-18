@@ -27,7 +27,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 				<FeatureImg {...{ precedence }} src={img} alt={alt} loading='lazy' />
 				<FeatureDescBtnWrap>
 					{text ? <Description>{text}</Description> : null}
-					{btnUrl ? <Button href={btnUrl}>{btnText}</Button> : null}
+					{btnUrl ? <Button href={btnUrl} content={btnText} /> : null}
 				</FeatureDescBtnWrap>
 			</FeatureContentWrap>
 		</FeatureWrapper>

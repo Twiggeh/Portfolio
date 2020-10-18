@@ -8,6 +8,7 @@ import {
 } from '../../../../../styles/globalStyle';
 
 var ButtonS = css`
+	position: relative;
 	font-family: ${fonts.mainFont};
 	color: ${colors.whiteText};
 	text-align: center;
@@ -19,13 +20,10 @@ var ButtonS = css`
 	padding-right: 1.7em;
 	background-color: ${colors.darkestInfill};
 	letter-spacing: 0.265em;
-	&:hover {
-		svg {
-			fill: hotpink;
-		}
+	transition: color 250ms ease-in-out, fill 250ms ease-in-out;
+	:hover {
 		color: hotpink;
 		cursor: pointer;
-		border-color: hotpink;
 	}
 	font-size: max(calc(${fontSizes.text} - 0.3rem), 16px);
 	${styles.outline};

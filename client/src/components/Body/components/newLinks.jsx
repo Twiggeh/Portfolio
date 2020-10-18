@@ -59,6 +59,7 @@ var mq = queries.mainQueries;
 var nq = queries.numQueries;
 
 var Nav = styled.nav`
+	z-index: 10;
 	display: flex;
 	width: var(--trueWidth);
 	align-items: center;
