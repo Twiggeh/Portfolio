@@ -6,7 +6,7 @@ const SidebarContents = ({ content = 'art' }) => {
 		<SidebarWrapper>
 			<SidebarTitle title={content} subTitle={'Highlighting some of my paintings'} />
 			{renderThis.map((data, i) => (
-				<SidebarContent key={i} data={data} />
+				<NewSidebarContent key={i} data={data} />
 			))}
 		</SidebarWrapper>
 	);
@@ -26,7 +26,7 @@ SidebarContents.propTypes = {
 export default SidebarContents;
 
 import React from 'react';
-import SidebarContent from './SidebarContent';
+import NewSidebarContent from './NewSidebarContent';
 import SidebarTitle from './SidebarTitle';
 import allData from '../../../static/Projects';
 import globalStyle from '../../../styles/globalStyle';
