@@ -146,7 +146,7 @@ SidebarContent.propTypes = {
 	data: PropTypes.object,
 };
 
-export default SidebarContent;
+// export default SidebarContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
