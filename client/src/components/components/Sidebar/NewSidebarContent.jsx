@@ -26,8 +26,10 @@ const NewSidebarContent = ({
 								}}>
 								<HoverBorder
 									customCss={css`
-										width: calc(100% + 3px) !important;
-										height: calc(100% + 3px) !important;
+										width: calc(100% + 2px) !important;
+										height: calc(100% + 2px) !important;
+										top: -1px;
+										left: -1px;
 									`}
 								/>
 								{SVG ? <SVG /> : btnIcn}
