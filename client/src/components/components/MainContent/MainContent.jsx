@@ -5,37 +5,17 @@ const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
 	const { setModal } = useContext(ModalContext);
 	return (
 		<Main>
-			<MainHeaderWrapper>
-				<MainTitleWrapper buttons={!!buttons}>
+			<MainHeadWrap>
+				<MainTitleWrap buttons={!!buttons}>
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
-				</MainTitleWrapper>
+				</MainTitleWrap>
 				{buttons ? getBtns(buttons, setModal) : null}
-			</MainHeaderWrapper>
+			</MainHeadWrap>
 			<NoteRenderer notes={notes} />
 		</Main>
 	);
 };
-
-MainContent.propTypes = {
-	data: PropTypes.exact({
-		descPage: PropTypes.string,
-		cover: PropTypes.string,
-		notes: PropTypes.array,
-		title: PropTypes.string,
-		subTitle: PropTypes.string,
-		buttons: PropTypes.arrayOf(
-			PropTypes.exact({
-				btnName: PropTypes.string.isRequired,
-				btnUrl: PropTypes.string.isRequired,
-				btnIcn: PropTypes.string,
-				svg: PropTypes.func,
-				modal: PropTypes.object,
-			})
-		),
-	}),
-};
-export default MainContent;
 
 import styled from '@emotion/styled';
 
@@ -48,21 +28,23 @@ var getBtns = (buttons, setModal) => {
 		if (SVG || btnImg || btnImgAlt) {
 			return (
 				<>
+					<BtnIcoWrap>{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}</BtnIcoWrap>
 					<ButtonIconWrap>
 						{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}
 					</ButtonIconWrap>
 					<VertSeparator />
 					<ButtonListButton>{btnName}</ButtonListButton>
+					<BtnListBtn>{btnName}</BtnListBtn>
 				</>
 			);
 		}
-		return <ButtonListButton>{btnName}</ButtonListButton>;
+		return <BtnListBtn>{btnName}</BtnListBtn>;
 	};
 
-	const buttonList = buttons.map((button, i) => {
+	const btnList = buttons.map((button, i) => {
 		const { btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false } = button;
 		return (
-			<ButtonListWrapper
+			<BtnListWrap
 				key={i}
 				href={btnUrl}
 				onClick={e => {
@@ -72,11 +54,11 @@ var getBtns = (buttons, setModal) => {
 					}
 				}}>
 				{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
-			</ButtonListWrapper>
+			</BtnListWrap>
 		);
 	});
 
-	return <ButtonList>{buttonList}</ButtonList>;
+	return <BtnList>{btnList}</BtnList>;
 };
 
 var MainTitle = styled.h1`
@@ -92,7 +74,7 @@ var MainSubtitle = styled.h2`
 	font-size: clamp(20px, 2vw, 35px);
 `;
 
-var MainTitleWrapper = styled.div`
+var MainTitleWrap = styled.div`
 	padding-top: clamp(30px, 4vw, 40px);
 	padding-bottom: clamp(30px, 4vw, 40px);
 	padding-right: ${styles.contentPaddingSides};
@@ -104,7 +86,7 @@ var MainTitleWrapper = styled.div`
 	flex-grow: 9;
 `;
 
-var MainHeaderWrapper = styled.div`
+var MainHeadWrap = styled.div`
 	display: flex;
 	align-content: center;
 	align-items: stretch;
@@ -114,7 +96,7 @@ var MainHeaderWrapper = styled.div`
 `;
 
 var VertSeparator = styled.div`
-	height: 100vh;
+	height: 100%;
 	${styles.customOutline(0, 1)};
 `;
 
@@ -130,7 +112,7 @@ var Main = styled.article`
 	}
 `;
 
-var ButtonList = styled.section`
+var BtnList = styled.section`
 	display: flex;
 	flex-grow: 0;
 	flex-direction: column;
@@ -148,7 +130,7 @@ var ButtonList = styled.section`
 	}
 `;
 
-var ButtonListWrapper = styled.a`
+var BtnListWrap = styled.a`
 	${ButtonS};
 	text-decoration: none;
 	:not(:first-of-type) {
@@ -185,7 +167,7 @@ var ButtonListWrapper = styled.a`
 	}
 `;
 
-var ButtonListButton = styled.div`
+var BtnListBtn = styled.div`
 	margin-left: 2rem;
 	margin-right: 2rem;
 	${[mq[1]]} {
@@ -194,13 +176,33 @@ var ButtonListButton = styled.div`
 	}
 `;
 
-var ButtonIconWrap = styled.div`
+var BtnIcoWrap = styled.div`
 	display: flex;
 	padding: 1em;
 	svg {
 		width: 2em;
 	}
 `;
+
+MainContent.propTypes = {
+	data: PropTypes.exact({
+		descPage: PropTypes.string,
+		cover: PropTypes.string,
+		notes: PropTypes.array,
+		title: PropTypes.string,
+		subTitle: PropTypes.string,
+		buttons: PropTypes.arrayOf(
+			PropTypes.exact({
+				btnName: PropTypes.string.isRequired,
+				btnUrl: PropTypes.string.isRequired,
+				btnIcn: PropTypes.string,
+				svg: PropTypes.func,
+				modal: PropTypes.object,
+			})
+		),
+	}),
+};
+export default MainContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
