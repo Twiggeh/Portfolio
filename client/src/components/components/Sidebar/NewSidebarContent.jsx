@@ -15,7 +15,7 @@ const NewSidebarContent = ({
 				<SideBtnWrap>
 					{buttons.map(
 						({ btnIcn, btnIcnFallback, btnName, btnUrl, svg: SVG, modal }, i) => (
-							<SideButton
+							<SideBtn
 								key={i}
 								href={btnUrl}
 								onClick={e => {
@@ -33,7 +33,7 @@ const NewSidebarContent = ({
 									`}
 								/>
 								{SVG ? <SVG /> : btnIcn}
-							</SideButton>
+							</SideBtn>
 						)
 					)}
 				</SideBtnWrap>
@@ -71,7 +71,7 @@ var SideImg = styled.img`
 	min-width: calc(100% - 2vw);
 `;
 
-var SideButton = styled.a`
+var SideBtn = styled.a`
 	pointer-events: all;
 	display: flex;
 	position: relative;
@@ -86,10 +86,13 @@ var SideButton = styled.a`
 	margin-right: 4%;
 	background: ${colors.darkestInfill};
 	z-index: 2;
+	path,
+	svg {
+		transition: all 250ms ease-in-out;
+	}
 	:hover {
 		path,
 		svg {
-			transition: all 250ms ease-in-out;
 			fill: hotpink;
 		}
 	}
