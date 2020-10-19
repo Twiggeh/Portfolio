@@ -1,3 +1,5 @@
+import { css } from '@emotion/core';
+
 const mq = queries.mainQueries;
 
 /** @param {MainContentInput} param0 */
@@ -28,17 +30,42 @@ var getBtns = (buttons, setModal) => {
 		if (SVG || btnImg || btnImgAlt) {
 			return (
 				<>
+					<HoverBorder
+						customCss={css`
+							width: calc(100% + 2px) !important;
+							height: calc(100% + 2px) !important;
+							top: -1px;
+							left: -1px;
+						`}
+					/>
 					<BtnIcoWrap>{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}</BtnIcoWrap>
-					<ButtonIconWrap>
-						{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}
-					</ButtonIconWrap>
-					<VertSeparator />
-					<ButtonListButton>{btnName}</ButtonListButton>
+					<VertSepColor />
 					<BtnListBtn>{btnName}</BtnListBtn>
 				</>
 			);
 		}
 		return <BtnListBtn>{btnName}</BtnListBtn>;
+	};
+
+	var VertSepColor = () => {
+		const ColorSep = styled.div`
+			height: 100%;
+			width: 1px;
+			margin-left: -1px;
+			background-color: hotpink;
+			transform: scaleY(0);
+			transition: transform 150ms ease-in;
+		`;
+		const VertSep = styled.div`
+			height: 100%;
+			${styles.customOutline(0, 1)};
+		`;
+		return (
+			<>
+				<ColorSep id='VertColorSep'></ColorSep>
+				<VertSep id='VertSep'></VertSep>
+			</>
+		);
 	};
 
 	const btnList = buttons.map((button, i) => {
@@ -95,11 +122,6 @@ var MainHeadWrap = styled.div`
 	}
 `;
 
-var VertSeparator = styled.div`
-	height: 100%;
-	${styles.customOutline(0, 1)};
-`;
-
 var Main = styled.article`
 	background: ${colors.darkestInfill};
 	overflow: hidden;
@@ -139,19 +161,34 @@ var BtnListWrap = styled.a`
 	padding: 0;
 	height: max(2.5em, 3vw);
 	display: flex;
+	position: relative;
 	align-items: center;
-	overflow: hidden;
-	:nth-of-type(even) {
-		flex-direction: row-reverse;
+	transition: color 250ms ease-in-out;
+	path {
+		transition: fill 250ms ease-in-out;
 	}
 	:hover {
-		border-color: hotpink;
 		z-index: 1;
-		div {
-			border-color: hotpink;
+		#VertColorSep {
+			transform: scaleY(1);
+			transition: transform 150ms ease-in;
 		}
 		path {
 			fill: hotpink;
+		}
+	}
+	#VertColorSep {
+		transform-origin: top;
+		transition: transform 150ms ease-in 150ms;
+	}
+	:nth-of-type(even) {
+		flex-direction: row-reverse;
+		// longer duration cuz btn => | More Text | icn |
+		:hover #VertColorSep {
+			transition: transform 150ms ease-in calc(150ms * 0.75);
+		}
+		#VertColorSep {
+			transition: transform 150ms ease-in 300ms;
 		}
 	}
 	${[mq[1]]} {
@@ -211,6 +248,7 @@ import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
 import NoteRenderer from './components/NoteRenderer.jsx';
 import ButtonS from './components/components/ButtonStyle.js';
+import HoverBorder from '../HoverBorder.jsx';
 
 /** @typedef {{
 	data: {
