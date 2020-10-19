@@ -66,17 +66,20 @@ var Nav = styled.nav`
 	justify-content: space-between;
 	background-color: ${colors.darkestInfill};
 	${styles.customOutline(0, 0, 1)};
-	a,
-	svg {
+	a {
+		transition: color 250ms ease-in-out;
 		text-decoration: none;
 		text-transform: uppercase;
 		letter-spacing: 0.135rem;
-		&:hover {
+		line {
+			transition: stroke 250ms ease-in-out;
+		}
+		:hover {
 			color: hotpink;
 			fill: hotpink;
 			cursor: pointer;
 			line {
-				stroke: hotpink !important;
+				stroke: hotpink;
 			}
 		}
 	}
@@ -128,7 +131,16 @@ var NavLi = styled.li`
 var TopRight = styled.a`
 	margin-right: 1.5rem;
 	svg {
-		height: clamp(calc(${fontSizes.navEl} * 1.5), 3vw, 3vw);
+		height: clamp(calc(${fontSizes.navEl} * 1.5), 2vw, 2vw);
+		stroke-width: 2;
+		path {
+			transition: fill 250ms ease-in-out;
+		}
+		:hover {
+			path {
+				fill: hotpink;
+			}
+		}
 	}
 `;
 
