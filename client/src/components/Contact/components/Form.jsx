@@ -1,12 +1,10 @@
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import React, { useEffect, useReducer } from 'react';
-import { useState } from 'react';
+import React, { useReducer } from 'react';
 import { colors, fontSizes, styles } from '../../../styles/globalStyle';
 import HoverBorder from '../../components/HoverBorder';
 import Button from '../../components/MainContent/components/components/Button';
-import PropTypes from 'prop-types';
-import { useRef } from 'react';
+import WrapInHover from './WrapInHover';
 
 const Form = () => {
 	const selectInit = {
@@ -35,38 +33,11 @@ const Form = () => {
 		</Option>
 	);
 
-	const Input = ({ children = null }) => {
-		const Input = styled.input`
-			display: block;
-			padding: 1rem;
-			${FormInputCss}
-		`;
-		const Wrapper = styled.div`
-			position: relative;
-		`;
-
-		const inputRef = useRef();
-
-		return (
-			<Wrapper>
-				{children}
-				<Input ref={inputRef}></Input>
-			</Wrapper>
-		);
-	};
-
-	Input.propTypes = {
-		initContent: PropTypes.any,
-		children: PropTypes.any,
-	};
-
 	return (
 		<FormEl>
 			<FormTitle>Contact me</FormTitle>
 			<Label htmlFor='email'>Email</Label>
-			<Input>
-				<HoverBorder />
-			</Input>
+			<WrapInHover elements={<Input key='ContactEmailInput' type='email' required />} />
 			<Label htmlFor='subject' onClick={() => selectDispatch({ type: 'toggle' })}>
 				Subject
 			</Label>
@@ -104,9 +75,7 @@ const Form = () => {
 				) : null}
 			</Select>
 			<Label htmlFor='message'>Message</Label>
-			<TextArea contentEditable='true' name='message'>
-				<HoverBorder />
-			</TextArea>
+			<WrapInHover elements={<TextArea key='ContactMessageTextArea' name='message' />} />
 			<Button
 				content='Send'
 				customCss={css`
@@ -130,6 +99,12 @@ const FormInputCss = css`
 	max-width: var(--formWidth);
 	min-width: var(--formWidth);
 	box-sizing: border-box;
+`;
+
+var Input = styled.input`
+	display: block;
+	padding: 1rem;
+	${FormInputCss}
 `;
 
 var FormTitle = styled.div`
@@ -157,7 +132,7 @@ var Option = styled.div`
 var Select = styled.div``;
 
 // Normal TextAreas cannot have children.
-var TextArea = styled.div`
+var TextArea = styled.textarea`
 	${FormInputCss}
 	resize: vertical;
 	position: relative;
