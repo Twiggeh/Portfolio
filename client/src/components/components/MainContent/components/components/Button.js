@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ content = '', href = '' }) => {
+const Button = ({ content = '', href = '', customCss = '' }) => {
+	const StyledButton = styled.a`
+		${ButtonS};
+		${customCss};
+	`;
 	return (
 		<StyledButton href={href}>
 			<HoverBorder></HoverBorder>
@@ -10,11 +14,11 @@ const Button = ({ content = '', href = '' }) => {
 	);
 };
 
-var StyledButton = styled.a`
-	${ButtonS};
-`;
-
-Button.propTypes = { content: PropTypes.string, href: PropTypes.string };
+Button.propTypes = {
+	content: PropTypes.string,
+	href: PropTypes.string,
+	customCss: PropTypes.any,
+};
 
 export default Button;
 
