@@ -1,64 +1,56 @@
 /* eslint-disable indent */
+/* eslint-disable react/prop-types */
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useContext } from 'react';
 import HoverBorder from '../../components/HoverBorder';
 import FormInputCss from './FormInputCss';
-import PropTypes from 'prop-types';
-import { useContext } from 'react';
-import SelectStateContext from './SelectStateContext';
+import SelectContext from './SelectContext';
 
-const Option = ({ txt, value, onClick, index = 0 }) => {
-	const { open, selected } = useContext(SelectStateContext);
+const StyledOption = styled.div`
+	${FormInputCss};
+	position: relative;
+	transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
+	padding-bottom: 1em;
+	${({ state, value, index }) => {
+		const closedCondition = !state.open && state.selected !== value;
+		const persistCond = state.selected === value && !state.open;
+		return `
+          z-index: ${closedCondition && !persistCond ? -1 : 0};
+          opacity: ${closedCondition && !persistCond ? 0 : 1};
+          transform: ${
+						closedCondition || persistCond
+							? `translateY(calc(-100% * ${index}))`
+							: 'translateY(0)'
+					};
+          ${persistCond ? 'margin-bottom: 0' : ''};
+        `;
+	}};
+	${({ customCss }) => customCss}
+`;
 
-	//	${({ open, selected, value, index }) => {
-	//		if (!open && selected !== value) {
-	//			return css`
-	//				// z-index: -1;
-	//				transform: translateY(calc(-100% * ${index}));
-	//				margin-bottom: 0;
-	//			`;
-	//		}
-	//		if (selected === value && !open) {
-	//			return css`
-	//				transform: translateY(calc(-100% * ${index}));
-	//				margin-bottom: 0;
-	//			`;
-	//		}
-	//	}};
-
-	const StyledOption = styled.div`
-		${FormInputCss};
-		position: relative;
-		z-index: 0;
-		transform: translateY(0px);
-		opacity: 1;
-		transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
-		padding-bottom: 1em;
-		${() => {
-			if (!open && selected !== value) {
-				return css`
-					transform: translateY(calc(-100% * ${index}));
-					opacity: 0;
-					margin-bottom: 0;
-				`;
-			}
-		}}
-	`;
-
+const Option = ({ txt, value, customCss, index = 0, action }) => {
+	const { dispatch, open, selected, initial } = useContext(SelectContext);
+	const state = { open, selected, initial };
 	return (
-		<StyledOption onClick={onClick}>
-			{open && selected === value ? null : <HoverBorder />}
+		<StyledOption
+			onClick={() => dispatch(action ? action : { type: 'select', selected: value })}
+			state={state}
+			value={value}
+			index={index}
+			customCss={customCss}>
+			<HoverBorder
+				customCss={
+					open && selected === value
+						? css`
+								display: none;
+						  `
+						: ''
+				}
+			/>
 			{txt}
 		</StyledOption>
 	);
-};
-
-Option.propTypes = {
-	txt: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
-	onClick: PropTypes.func.isRequired,
-	index: PropTypes.number,
 };
 
 export default Option;

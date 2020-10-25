@@ -4,20 +4,16 @@ import React from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
 import FormInputCss from './FormInputCss';
-import useSelect from './useSelect';
+import Select from './Select';
 import WrapInHover from './WrapInHover';
 
 const Form = () => {
-	const [Select, selectDispatch] = useSelect();
-
 	return (
 		<FormEl>
 			<FormTitle>Contact me</FormTitle>
 			<Label htmlFor='email'>Email</Label>
 			<WrapInHover elements={<Input key='ContactEmailInput' type='email' required />} />
-			<Label htmlFor='subject' onClick={() => selectDispatch({ type: 'toggle' })}>
-				Subject
-			</Label>
+			<Label htmlFor='subject'>Subject</Label>
 			<Select />
 			<Label htmlFor='message'>Message</Label>
 			<WrapInHover elements={<TextArea key='ContactMessageTextArea' name='message' />} />
@@ -50,7 +46,6 @@ var FormEl = styled.div`
 	width: var(--formWidth);
 `;
 
-// Normal TextAreas cannot have children.
 var TextArea = styled.textarea`
 	${FormInputCss}
 	resize: vertical;
