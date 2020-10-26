@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 /* eslint-disable react/prop-types */
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import React, { useContext } from 'react';
 import HoverBorder from '../../components/HoverBorder';
@@ -12,11 +11,11 @@ const StyledOption = styled.div`
 	position: relative;
 	transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
 	padding-bottom: 1em;
-	${({ state, value, index }) => {
-		const closedCondition = !state.open && state.selected !== value;
-		const persistCond = state.selected === value && !state.open;
+	${({ value, index, open, selected }) => {
+		const closedCondition = !open && selected !== value;
+		const persistCond = selected === value && !open;
 		return `
-          z-index: ${closedCondition && !persistCond ? -1 : 0};
+          z-index: ${closedCondition && !persistCond ? 0 : 1};
           opacity: ${closedCondition && !persistCond ? 0 : 1};
           transform: ${
 						closedCondition || persistCond
@@ -26,28 +25,21 @@ const StyledOption = styled.div`
           ${persistCond ? 'margin-bottom: 0' : ''};
         `;
 	}};
-	${({ customCss }) => customCss}
+	// ${({ customCss }) => customCss}
 `;
 
+/** @param {import('./Select').Option} param0 */
 const Option = ({ txt, value, customCss, index = 0, action }) => {
-	const { dispatch, open, selected, initial } = useContext(SelectContext);
-	const state = { open, selected, initial };
+	const { dispatch, open, selected } = useContext(SelectContext);
 	return (
 		<StyledOption
 			onClick={() => dispatch(action ? action : { type: 'select', selected: value })}
-			state={state}
+			open={open}
+			selected={selected}
 			value={value}
 			index={index}
 			customCss={customCss}>
-			<HoverBorder
-				customCss={
-					open && selected === value
-						? css`
-								display: none;
-						  `
-						: ''
-				}
-			/>
+			{open && selected === value ? null : <HoverBorder />}
 			{txt}
 		</StyledOption>
 	);

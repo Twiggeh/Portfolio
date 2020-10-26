@@ -3,9 +3,11 @@ import React from 'react';
 
 /**
  * @param {object} props
- * @param {OptData[]} props.optList
+ * @param {import('./Select').Option[]} props.options
  */
-const OptionList = ({ optList }) =>
-	optList.map(({ txt, value, onClick }, i) => (
-		<Option onClick={onClick} txt={txt} value={value} index={i} key={i} />
+const OptionList = ({ options }) =>
+	options.map(({ txt, value }, i) => (
+		<Option txt={txt} value={value} index={i} key={value} />
 	));
+
+export default OptionList;
