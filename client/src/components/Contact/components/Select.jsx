@@ -9,16 +9,6 @@ const defaultOption = {
 	value: 'please select',
 };
 
-const selectInit = {
-	open: false,
-	initial: true,
-	selected: defaultOption.value,
-};
-
-const StyledSelect = styled.div`
-	position: relative;
-`;
-
 const options = [
 	{ txt: 'Build my Idea !', value: 'software' },
 	{ txt: 'I want you to paint something !', value: 'art' },
@@ -32,6 +22,17 @@ const options = [
 	},
 	{ txt: 'Other ...', value: 'other' },
 ];
+
+/** @type {import('./SelectContext').SelectState} */
+const selectInit = {
+	open: false,
+	initial: true,
+	selected: defaultOption.value,
+};
+
+const StyledSelect = styled.div`
+	position: relative;
+`;
 
 const Select = () => {
 	const selectReducer = (state, action) => {
@@ -79,11 +80,8 @@ const Select = () => {
 export default Select;
 
 /**
- * @typedef SelectState
- * @prop {boolean} open - Whether the Option is in the open state
- * @prop {string} selected - The selected options name
  *
- * @typedef {{type: "select", selected: String}} SelectAction
+ * @typedef {{type: "select", selected: String, selectedIndex: Number}} SelectAction
  * @typedef {{type: "toggle"}} ToggleAction
  * @typedef {ToggleAction | SelectAction} OptionActions
  *

@@ -7,7 +7,8 @@ const FormInputCss = css`
 	background: ${colors.darkestInfill};
 	color: white;
 	${styles.outline};
-	font-size: calc(${fontSizes.text}*.8);
+	--font-size: calc(${fontSizes.text}*.8);
+	font-size: var(--font-size);
 	display: block;
 	max-width: var(--formWidth);
 	min-width: var(--formWidth);

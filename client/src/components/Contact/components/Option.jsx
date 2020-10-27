@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 /* eslint-disable indent */
 /* eslint-disable react/prop-types */
 import styled from '@emotion/styled';
@@ -10,38 +11,55 @@ const StyledOption = styled.div`
 	${FormInputCss};
 	position: relative;
 	transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
-	padding-bottom: 1em;
-	${({ value, index, open, selected }) => {
-		const closedCondition = !open && selected !== value;
-		const persistCond = selected === value && !open;
+	--padding: 1em;
+	padding: var(--padding);
+	max-height: calc(var(--padding) * 2 + var(--font-size));
+	margin: 0;
+	box-sizing: border-box;
+	${({ index, open, selected, selectedIndex: SI }) => {
 		return `
-          z-index: ${closedCondition && !persistCond ? 0 : 1};
-          opacity: ${closedCondition && !persistCond ? 0 : 1};
+          z-index: ${!open && !selected ? 0 : 1};
+          opacity: ${!open && !selected ? 0 : 1};
           transform: ${
-						closedCondition || persistCond
-							? `translateY(calc(-100% * ${index}))`
+						!open && !selected
+							? `translateY(calc(-100% * ${index - SI}))`
 							: 'translateY(0)'
 					};
-          ${persistCond ? 'margin-bottom: 0' : ''};
+					${open ? 'margin-bottom: 2em;' : ''}
         `;
 	}};
-	// ${({ customCss }) => customCss}
+	${({ customCss }) => customCss}
 `;
 
 /** @param {import('./Select').Option} param0 */
 const Option = ({ txt, value, customCss, index = 0, action }) => {
-	const { dispatch, open, selected } = useContext(SelectContext);
+	const { dispatch, open, selected, selectedIndex } = useContext(SelectContext);
 	return (
-		<StyledOption
-			onClick={() => dispatch(action ? action : { type: 'select', selected: value })}
-			open={open}
-			selected={selected}
-			value={value}
-			index={index}
-			customCss={customCss}>
-			{open && selected === value ? null : <HoverBorder />}
-			{txt}
-		</StyledOption>
+		<>
+			<StyledOption
+				onClick={() =>
+					dispatch(
+						action ? action : { type: 'select', selected: value, selectedIndex: index }
+					)
+				}
+				open={open}
+				selected={selected === value}
+				selectedIndex={selectedIndex}
+				index={index}
+				customCss={customCss}>
+				{open && selected === value ? null : <HoverBorder />}
+				{txt}
+				<div
+					css={css`
+						position: absolute;
+						top: 0;
+						left: 100%;
+						z-index: 10;
+					`}>
+					{JSON.stringify({ open, selected: value === selected })}
+				</div>
+			</StyledOption>
+		</>
 	);
 };
 

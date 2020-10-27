@@ -7,7 +7,13 @@ import React from 'react';
  */
 const OptionList = ({ options }) =>
 	options.map(({ txt, value }, i) => (
-		<Option txt={txt} value={value} index={i} key={value} />
+		<Option
+			txt={txt}
+			value={value}
+			index={i}
+			key={value}
+			action={{ type: 'select', selected: value }}
+		/>
 	));
 
 export default OptionList;
