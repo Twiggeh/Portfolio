@@ -32,21 +32,27 @@ const selectInit = {
 
 const StyledSelect = styled.div`
 	position: relative;
+	${({ open }) => {}}
 `;
 
 const Select = () => {
+	/** @param {import('./SelectContext').SelectState} state
+	 *  @param {OptionActions} action
+	 */
 	const selectReducer = (state, action) => {
 		switch (action.type) {
 			case 'toggle': {
 				return { ...state, open: !state.open };
 			}
 			case 'select': {
-				return {
+				const data = {
 					...state,
 					selected: action.selected,
+					selectedIndex: action.selectedIndex,
 					open: !state.open,
 					initial: false,
 				};
+				return data;
 			}
 			default:
 				throw new Error('error');
@@ -62,6 +68,7 @@ const Select = () => {
 				initial: state.initial,
 				open: state.open,
 				selected: state.selected,
+				selectedIndex: state.selectedIndex,
 			}}>
 			<StyledSelect>
 				<OptionList options={options} />
