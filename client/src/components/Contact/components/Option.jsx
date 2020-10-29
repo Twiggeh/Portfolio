@@ -17,12 +17,14 @@ const StyledOption = styled.div`
 	margin-bottom: var(--margin);
 	box-sizing: border-box;
 	transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
-	${({ index, open, selected, selectedIndex = 4 }) => {
-		let delay = 250 * Math.max(1, Math.abs(index - selectedIndex));
+	${({ index, open, selected, selectedIndex, length }) => {
+		selectedIndex = selectedIndex ? selectedIndex : length;
+		const dur = 250 * Math.max(1, Math.abs(index - selectedIndex));
+		const closeDel = 250 * (length - 1 - Math.abs(index - selectedIndex));
 		return `
 			z-index: ${!open && !selected ? 0 : 1};
 			opacity: ${!open && !selected ? 0 : 1};
-			transition: transform ${delay}ms ease-in-out, opacity ${delay}ms ease-in-out;
+			transition: transform ${dur}ms ease-in-out, opacity ${dur}ms ease-in-out;
 			transform: ${
 				// prettier-ignore
 				!open && !selected
@@ -34,7 +36,7 @@ const StyledOption = styled.div`
 			};
 			${
 				!open
-					? `transition: transform ${delay}ms ease-in-out ${2000}ms, opacity ${delay}ms ease-in-out ${2000}ms;`
+					? `transition: transform ${dur}ms ease-in-out ${closeDel}ms, opacity ${dur}ms ease-in-out ${closeDel}ms;`
 					: ''
 			}
 		`;
@@ -43,7 +45,7 @@ const StyledOption = styled.div`
 `;
 
 /** @param {import('./Select').Option} param0 */
-const Option = ({ txt, value, customCss, index = 0, action }) => {
+const Option = ({ txt, value, customCss, index = 0, listLength = 1, action }) => {
 	const context = useContext(SelectContext);
 	const { dispatch, open, selected, selectedIndex } = context;
 	return (
@@ -58,7 +60,8 @@ const Option = ({ txt, value, customCss, index = 0, action }) => {
 				selected={selected === value}
 				selectedIndex={selectedIndex}
 				index={index}
-				customCss={customCss}>
+				customCss={customCss}
+				length={listLength}>
 				{open && selected === value ? null : <HoverBorder />}
 				{txt}
 				<div

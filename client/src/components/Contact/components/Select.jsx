@@ -96,6 +96,7 @@ export default Select;
  * @prop {string} value - The value of the actual Option element
  * @prop {string} txt - The displayed text of the actual Option element
  * @prop {number} [index=0] - The index of the Option Element
+ * @prop {number} [listLength=1]
  * @prop {OptionActions} [action=SelectAction] - Optional Action for the element
  * @prop {import('@emotion/core').SerializedStyles} [customCss] - Custom Css
  */
