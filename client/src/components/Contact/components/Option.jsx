@@ -7,6 +7,7 @@ import HoverBorder from '../../components/HoverBorder';
 import FormInputCss from './FormInputCss';
 import SelectContext from './SelectContext';
 
+const time = 200;
 const StyledOption = styled.div`
 	${FormInputCss};
 	position: relative;
@@ -16,15 +17,21 @@ const StyledOption = styled.div`
 	max-height: calc(var(--padding) * 2 + var(--font-size));
 	margin-bottom: var(--margin);
 	box-sizing: border-box;
-	transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
+	transition: transform ${time}ms linear, opacity ${time}ms ease-in-out;
 	${({ index, open, selected, selectedIndex, length }) => {
-		selectedIndex = selectedIndex ? selectedIndex : length;
-		const dur = 250 * Math.max(1, Math.abs(index - selectedIndex));
-		const closeDel = 250 * (length - 1 - Math.abs(index - selectedIndex));
+		selectedIndex = selectedIndex === undefined ? length - 1 : selectedIndex;
+
+		const lengthBtm = length - 1 - selectedIndex;
+		const lengthTop = length - 1 - lengthBtm;
+		const dist = Math.abs(selectedIndex - index);
+		const dur = time * Math.max(1, dist);
+
+		const closeDel = time * (Math.max(lengthBtm, lengthTop) - dist);
+
 		return `
 			z-index: ${!open && !selected ? 0 : 1};
 			opacity: ${!open && !selected ? 0 : 1};
-			transition: transform ${dur}ms ease-in-out, opacity ${dur}ms ease-in-out;
+			transition: transform ${dur}ms ease-in-out, opacity ${time}ms ease-in-out;
 			transform: ${
 				// prettier-ignore
 				!open && !selected
@@ -36,7 +43,7 @@ const StyledOption = styled.div`
 			};
 			${
 				!open
-					? `transition: transform ${dur}ms ease-in-out ${closeDel}ms, opacity ${dur}ms ease-in-out ${closeDel}ms;`
+					? `transition: transform ${dur}ms ease-in-out ${closeDel}ms, opacity ${time}ms ease-in-out ${closeDel}ms;`
 					: ''
 			}
 		`;
