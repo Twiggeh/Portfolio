@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 import React, { useState } from 'react';
-const WrapInHover = ({ elements }) => {
+const WrapInHover = ({ children }) => {
 	const [hover, setHover] = useState(false);
 	return (
 		<div
@@ -13,13 +13,13 @@ const WrapInHover = ({ elements }) => {
 			onMouseLeave={() => {
 				setHover(false);
 			}}>
-			{elements}
+			{children}
 			<HoverBorder hover={hover} />
 		</div>
 	);
 };
 WrapInHover.propTypes = {
-	elements: PropTypes.any,
+	children: PropTypes.any,
 };
 
 export default WrapInHover;

@@ -10,19 +10,30 @@ import WrapInHover from './WrapInHover';
 const Form = () => {
 	return (
 		<FormEl>
-			<FormTitle>Contact me</FormTitle>
-			<Label htmlFor='email'>Email</Label>
-			<WrapInHover elements={<Input key='ContactEmailInput' type='email' required />} />
-			<Label htmlFor='subject'>Subject</Label>
-			<Select />
-			<Label htmlFor='message'>Message</Label>
-			<WrapInHover elements={<TextArea key='ContactMessageTextArea' name='message' />} />
-			<Button
-				content='Send'
-				customCss={css`
-					display: block;
-				`}
-			/>
+				<FormTitle key='FormTitle'>Contact me</FormTitle>
+				<Label htmlFor='email' key='Email'>
+					Email
+				</Label>
+				<WrapInHover key='HoverWrapEmail'>
+					<Input key='ContactEmailInput' type='email' required />
+				</WrapInHover>
+				<Label htmlFor='subject' key='HoverWrapSubject'>
+					Subject
+				</Label>
+				<Select key='Select' />
+				<Label htmlFor='message' key='LabelMessage'>
+					Message
+				</Label>
+				<WrapInHover key='HoverWrapMessage'>
+					<TextArea key='ContactMessageTextArea' name='message' />
+				</WrapInHover>
+				<Button
+					key='SubmitButton'
+					content='Send'
+					customCss={css`
+						display: block;
+					`}
+				/>
 		</FormEl>
 	);
 };
