@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
+import Animator from './Animator';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
@@ -10,6 +11,7 @@ import WrapInHover from './WrapInHover';
 const Form = () => {
 	return (
 		<FormEl>
+			<Animator>
 				<FormTitle key='FormTitle'>Contact me</FormTitle>
 				<Label htmlFor='email' key='Email'>
 					Email
@@ -34,6 +36,7 @@ const Form = () => {
 						display: block;
 					`}
 				/>
+			</Animator>
 		</FormEl>
 	);
 };
