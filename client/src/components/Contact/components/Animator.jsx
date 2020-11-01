@@ -51,48 +51,65 @@ const Animator = ({ children }) => {
 	 * @return {AnimatorTree}
 	 */
 	const buildTreeSat = (children, parent) => {
-		const addTreeEntry = (tree, name, parentRef, children, AnimationState = '') => {
-			const entry = {
-				parent: parentRef,
-				children,
-				AnimationState,
-			};
+		const entryFactory = (parent, children, key, AnimationState = '') => ({
+			parent,
+			key,
+			children,
+			AnimationState,
+		});
+
+		const addEntryToTree = (tree, name, entry) => {
 			if (tree[name]?.children) {
 				entry.children = { ...tree[name].children, ...entry.children };
 			}
 			tree[name] = entry;
+			return entry;
 		};
 
-		const buildTree = (children, parent) => {
-			const tree = {};
+		const addTreeEntry = (tree, name, parent, children, AnimationState) => {
+			const entry = entryFactory(parent, children, name, AnimationState);
+			return addEntryToTree(tree, name, entry);
+		};
+
+		const buildTree = (children, parent, tree = {}) => {
+			// if children not array make them to an array
+			if (!Array.isArray(children)) children = [children];
+			// get each child
 
 			for (let child of children) {
 				if (typeof child.props.children === 'object') {
-					// TODO : Add ChildrenOrder
-					const subTree = buildTree(child.props.children, tree);
-					addTreeEntry(tree, child.key, parent, subTree);
+					// create new entry in the tree, so that a correct parent can be passed to the sub tree
+					const entry = addTreeEntry(tree, child.key, parent);
+					// create the children of the current child
+					const subTree = buildTree(child.props.children, entry);
+					// assign the children of the previously created entry
+					entry.children = subTree;
 					continue;
 				}
+				// if child doesnt have children we just append the child to the current tree
 				addTreeEntry(tree, child.key, parent);
 			}
-
 			return tree;
 		};
 
-		let rootIsFirstElement = false;
+		let firstElIsRoot = false;
+		let injectRoot = false;
 
-		const root = { root: { children: {}, AnimationState: '', ChildrenOrder: [] } };
+		const root = { children: {}, AnimationState: '', ChildrenOrder: [], key: 'root' };
 
 		if (!Array.isArray(children)) children = [children];
 		if (children.length === 0) throw new Error('Cannot animate 0 elements');
-		if (!parent && children.length !== 1) parent = root;
-		if (!parent && children.length === 1) rootIsFirstElement = true;
+		if (!parent && children.length !== 1) {
+			injectRoot = true;
+			parent = root;
+		}
+		if (!parent && children.length === 1) firstElIsRoot = true;
 
 		const result = buildTree(children, parent);
 
-		if (rootIsFirstElement) {
-			result[children[0].key].parent = result;
-		}
+		// Set roots
+		if (firstElIsRoot) result[children[0].key].parent = result;
+		if (injectRoot) root.children = result;
 
 		return result;
 	};
@@ -139,12 +156,14 @@ const Animator = ({ children }) => {
 		switch (action.type) {
 			case 'setSiblings': {
 				const element = findElement(animTree, action.key)[action.key];
-				element.parent[];
+				console.log(element);
 				return { ...animTree };
 			}
 			case 'setParent': {
+				return;
 			}
 			case 'setChildren': {
+				return;
 			}
 			default:
 				throw new Error(`Unsupported action type ${action.type}`);
