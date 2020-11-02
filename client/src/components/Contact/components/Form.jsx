@@ -1,17 +1,32 @@
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useContext } from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
-import Animator from './Animator';
+import AnimatorChildren from './AnimatorChildren';
+import AnimatorContext from './AnimatorContext';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
 
+const options = [
+	{ txt: 'Build my Idea !', value: 'software' },
+	{ txt: 'I want you to paint something !', value: 'art' },
+	{
+		txt: 'I want to know how to create Illustrations !',
+		value: 'art training',
+	},
+	{
+		txt: 'I want help with the software that I am writing !',
+		value: 'software training',
+	},
+	{ txt: 'Other ...', value: 'other' },
+];
+
 const Form = () => {
+	const data = useContext(AnimatorContext);
 	return (
 		<FormEl>
-			<Animator>
+			<AnimatorChildren parentKey='ContactForm'>
 				<FormTitle key='FormTitle'>Contact me</FormTitle>
 				<Label htmlFor='email' key='Email'>
 					Email
@@ -22,21 +37,21 @@ const Form = () => {
 				<Label htmlFor='subject' key='HoverWrapSubject'>
 					Subject
 				</Label>
-				<Select key='Select' />
-				<Label htmlFor='message' key='LabelMessage'>
+				<Select key='Select' options={options} />
+				<Label htmlFor='message' key='LabelMessage' customCss={''}>
 					Message
 				</Label>
-				<WrapInHover key='HoverWrapMessage'>
+				<WrapInHover key='HoverWrapMessage' customCss={''}>
 					<TextArea key='ContactMessageTextArea' name='message' />
 				</WrapInHover>
 				<Button
 					key='SubmitButton'
 					content='Send'
-					customCss={css`
+					customCss={`
 						display: block;
 					`}
 				/>
-			</Animator>
+			</AnimatorChildren>
 		</FormEl>
 	);
 };
@@ -58,6 +73,10 @@ var FormEl = styled.div`
 	margin: ${styles.contentPaddingSides};
 	--formWidth: 35vw;
 	width: var(--formWidth);
+	--padding-Option: 1rem;
+	--margin-Option: 2rem;
+	--font-size: calc(${fontSizes.text}*.8);
+	--max-height: calc(var(--padding-Option) * 2 + var(--font-size));
 `;
 
 var TextArea = styled.textarea`
@@ -74,4 +93,5 @@ var Label = styled.label`
 	font-weight: 500;
 	padding-bottom: 1rem;
 	position: relative;
+	${({ customCss }) => customCss};
 `;

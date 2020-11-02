@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import { colors, fontSizes, styles } from '../../../styles/globalStyle';
+import { colors, styles } from '../../../styles/globalStyle';
 
 const FormInputCss = css`
 	margin-bottom: 2rem;
@@ -7,7 +7,6 @@ const FormInputCss = css`
 	background: ${colors.darkestInfill};
 	color: white;
 	${styles.outline};
-	--font-size: calc(${fontSizes.text}*.8);
 	font-size: var(--font-size);
 	display: block;
 	max-width: var(--formWidth);

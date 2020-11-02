@@ -1,7 +1,10 @@
 import React, { useReducer } from 'react';
+import AnimatorContext from './AnimatorContext';
 import PropTypes from 'prop-types';
 
 const Animator = ({ children }) => {
+	// !!! DOESNT work because React kills of maps in props.children.
+	if (!Array.isArray(children)) children = [children];
 	children.forEach(child => {
 		if (child.key === null) {
 			console.log('Does not contain a key', child);
@@ -9,39 +12,33 @@ const Animator = ({ children }) => {
 		}
 	});
 
-	/**@type {AnimatorTree} */
-	const reference = {
-		Form: {
-			children: {
-				Label: {
-					children: undefined,
-					AnimationState: {
-						customCss: 'transition: transform 250ms ease-in-out',
-					},
-				},
-				Select: {
-					children: {
-						SelectorsSelect: {
-							children: undefined,
-							AnimationState: {
-								customCss: 'transition: transform 250ms ease-in-out',
-							},
-							ChildrenOrder: [],
-						},
-					},
-					AnimationState: {
-						customCss: 'transition: transform 250ms ease-in-out',
-					},
-					ChildrenOrder: [],
-				},
-			},
-			parent: undefined,
-			ChildrenOrder: ['hello'],
-			AnimationState: {
-				customCss: 'transition: transform 250ms ease-in-out',
-			},
-		},
-		// TODO : Maybe add a map to find elements faster map : { Label : ["Form"], SelectorsSelect : ["Form", "Select"] }
+	// TODO : Maybe add a map to find elements faster map : { Label : ["Form"], SelectorsSelect : ["Form", "Select"] }
+
+	const entryFactory = (parent, children, key, AnimationState = '') => ({
+		parent,
+		key,
+		children,
+		AnimationState,
+	});
+
+	const addEntryToTree = (tree, name, entry) => {
+		if (tree[name]?.children) {
+			entry.children = { ...tree[name].children, ...entry.children };
+		}
+		tree[name] = entry;
+		return entry;
+	};
+
+	/**
+	 * @param {AnimatorTree} tree
+	 * @param {String} name
+	 * @param {AnimatorTree} parent
+	 * @param {AnimatorTree} children
+	 * @param {String} AnimationState
+	 */
+	const addTreeEntry = (tree, name, parent, children, AnimationState) => {
+		const entry = entryFactory(parent, children, name, AnimationState);
+		return addEntryToTree(tree, name, entry);
 	};
 
 	/**
@@ -50,27 +47,7 @@ const Animator = ({ children }) => {
 	 * @param {Object | undefined} parent
 	 * @return {AnimatorTree}
 	 */
-	const buildTreeSat = (children, parent) => {
-		const entryFactory = (parent, children, key, AnimationState = '') => ({
-			parent,
-			key,
-			children,
-			AnimationState,
-		});
-
-		const addEntryToTree = (tree, name, entry) => {
-			if (tree[name]?.children) {
-				entry.children = { ...tree[name].children, ...entry.children };
-			}
-			tree[name] = entry;
-			return entry;
-		};
-
-		const addTreeEntry = (tree, name, parent, children, AnimationState) => {
-			const entry = entryFactory(parent, children, name, AnimationState);
-			return addEntryToTree(tree, name, entry);
-		};
-
+	const buildTree = (children, parent) => {
 		const buildTree = (children, parent, tree = {}) => {
 			// if children not array make them to an array
 			if (!Array.isArray(children)) children = [children];
@@ -114,7 +91,7 @@ const Animator = ({ children }) => {
 		return result;
 	};
 
-	const initialAnimTree = buildTreeSat(children);
+	const initialAnimTree = buildTree(children);
 
 	/**
 	 * @param {AnimatorTree} tree
@@ -146,6 +123,7 @@ const Animator = ({ children }) => {
 
 		const result = recursiveSearch(tree);
 		if (!result) throw new Error(`Could not find key: ${key}`);
+		return result;
 	};
 
 	/**
@@ -155,8 +133,8 @@ const Animator = ({ children }) => {
 	const reducer = (animTree, action) => {
 		switch (action.type) {
 			case 'setSiblings': {
-				const element = findElement(animTree, action.key)[action.key];
-				console.log(element);
+				const element = findElement(animTree, action.key);
+
 				return { ...animTree };
 			}
 			case 'setParent': {
@@ -165,26 +143,29 @@ const Animator = ({ children }) => {
 			case 'setChildren': {
 				return;
 			}
+			case 'addChildrenToTree': {
+				const parent = findElement(animTree, action.parentKey);
+				// create custom component that will wrap child elements. This will call this function then.
+				const childTree = buildTree(action.children, parent);
+				console.log(childTree);
+				return { ...animTree };
+			}
 			default:
 				throw new Error(`Unsupported action type ${action.type}`);
 		}
 	};
 
 	const [animTree, animate] = useReducer(reducer, initialAnimTree);
-
-	// return useAnimator hook
+	//return [AnimatorContext.Provider, { animTree, animate }];
 	return (
-		<>
-			{children.map(child => {
-				console.log(child);
-			})}
+		<AnimatorContext.Provider value={{ animTree, animate }}>
 			{children}
-		</>
+		</AnimatorContext.Provider>
 	);
 };
 
 Animator.propTypes = {
-	children: PropTypes.array,
+	children: PropTypes.any,
 };
 
 export default Animator;
@@ -202,9 +183,14 @@ export default Animator;
 			ChildrenOrder: Array.<AnimatorElKey> | undefined,
 			key: AnimatorElKey,
 		}>} AnimatorTree
+	* @typedef {{
+		type: "addChildrenToTree",
+		parentKey: AnimaterElKey,
+		children: Array
+	}} AnimatorAddChild 
 	*	@typedef {
-			{ type: "setSiblings" | "setParent" | "setChildren",
+			{ type: "setSiblings" | "setParent" | "setChildren" | ,
 			customCss: String,
-			key: AnimatorElKey
-			}} AnimatorAction
+			key: AnimatorElKey,
+			} | AnimatorAddChild } AnimatorAction
  */

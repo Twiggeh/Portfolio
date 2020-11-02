@@ -3,25 +3,12 @@ import React, { useReducer } from 'react';
 import Option from './Option';
 import OptionList from './OptionList';
 import SelectContext from './SelectContext';
+import PropTypes from 'prop-types';
 
 const defaultOption = {
 	txt: 'Please Select A Subject',
 	value: 'please select',
 };
-
-const options = [
-	{ txt: 'Build my Idea !', value: 'software' },
-	{ txt: 'I want you to paint something !', value: 'art' },
-	{
-		txt: 'I want to know how to create Illustrations !',
-		value: 'art training',
-	},
-	{
-		txt: 'I want help with the software that I am writing !',
-		value: 'software training',
-	},
-	{ txt: 'Other ...', value: 'other' },
-];
 
 /** @type {import('./SelectContext').SelectState} */
 const selectInit = {
@@ -32,10 +19,15 @@ const selectInit = {
 
 const StyledSelect = styled.div`
 	position: relative;
-	${({ open }) => {}}
+	${({ customCss, optLength }) =>
+		`transform: translateY(
+				calc((var(--margin-Option) + var(--max-height)) * -${optLength})
+			);
+			${customCss};
+		`};
 `;
 
-const Select = () => {
+const Select = ({ options }) => {
 	/** @param {import('./SelectContext').SelectState} state
 	 *  @param {OptionActions} action
 	 */
@@ -70,18 +62,23 @@ const Select = () => {
 				selected: state.selected,
 				selectedIndex: state.selectedIndex,
 			}}>
-			<StyledSelect>
+			<StyledSelect optLength={options.length} customCss={''}>
 				<OptionList options={options} />
 				{!state.open && state.initial ? (
 					<Option
 						txt={defaultOption.txt}
 						value={defaultOption.value}
 						action={{ type: 'toggle' }}
+						listLength={options.length}
 					/>
 				) : null}
 			</StyledSelect>
 		</SelectContext.Provider>
 	);
+};
+
+Select.propTypes = {
+	options: PropTypes.array,
 };
 
 export default Select;
