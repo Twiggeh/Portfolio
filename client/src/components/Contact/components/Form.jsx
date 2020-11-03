@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useContext } from 'react';
+import React from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
-import AnimatorChildren from './AnimatorChildren';
-import AnimatorContext from './AnimatorContext';
+import useAnimator from './components/Animator';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
@@ -22,11 +21,35 @@ const options = [
 	{ txt: 'Other ...', value: 'other' },
 ];
 
+const getRef = (tree, path) => {
+	if (path === undefined) return tree;
+	if (!Array.isArray(path)) path = [path];
+	let result = tree;
+	path.forEach(path => {
+		result = result[path];
+	});
+	return result;
+};
+
+const tree = {
+	FormTitle: {
+		parent: tree,
+	},
+	HoverWrapEmail: {
+		parent: tree,
+		children: {
+			ContactEmailInput: {
+				parent: () => getRef(tree, 'HoverWrapEmail'),
+			},
+		},
+	},
+};
+
 const Form = () => {
-	const data = useContext(AnimatorContext);
+	const { AnimatorData, state, dispatch } = useAnimator(tree);
 	return (
-		<FormEl>
-			<AnimatorChildren parentKey='ContactForm'>
+		<AnimatorData value={{ state, dispatch }}>
+			<FormEl>
 				<FormTitle key='FormTitle'>Contact me</FormTitle>
 				<Label htmlFor='email' key='Email'>
 					Email
@@ -51,8 +74,14 @@ const Form = () => {
 						display: block;
 					`}
 				/>
-			</AnimatorChildren>
-		</FormEl>
+			</FormEl>
+			<button
+				onClick={() => {
+					dispatch();
+				}}>
+				Animate !
+			</button>
+		</AnimatorData>
 	);
 };
 

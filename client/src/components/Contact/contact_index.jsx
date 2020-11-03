@@ -1,13 +1,8 @@
 import React from 'react';
-import Animator from './components/Animator';
 import Form from './components/Form';
 
 const Contact = () => {
-	return (
-		<Animator>
-			<Form key='ContactForm'></Form>
-		</Animator>
-	);
+	return <Form></Form>;
 };
 
 export default Contact;
