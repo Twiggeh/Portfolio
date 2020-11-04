@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
-import useAnimator from './components/Animator';
+import useAnimator from './components/useAnimator';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
@@ -21,34 +21,17 @@ const options = [
 	{ txt: 'Other ...', value: 'other' },
 ];
 
-const getRef = (tree, path) => {
-	if (path === undefined) return tree;
-	if (!Array.isArray(path)) path = [path];
-	let result = tree;
-	path.forEach(path => {
-		result = result[path];
-	});
-	return result;
-};
-
-const tree = {
-	FormTitle: {
-		parent: tree,
-	},
-	HoverWrapEmail: {
-		parent: tree,
-		children: {
-			ContactEmailInput: {
-				parent: () => getRef(tree, 'HoverWrapEmail'),
-			},
-		},
+/** @type {import('./components/useAnimator').AnimStore} */
+const initAnimStore = {
+	bSel: {
+		default: '',
 	},
 };
 
 const Form = () => {
-	const { AnimatorData, state, dispatch } = useAnimator(tree);
+	const { AnimatorData, animStore, animate, getCss } = useAnimator(initAnimStore);
 	return (
-		<AnimatorData value={{ state, dispatch }}>
+		<AnimatorData value={{ animStore, animate, getCss }}>
 			<FormEl>
 				<FormTitle key='FormTitle'>Contact me</FormTitle>
 				<Label htmlFor='email' key='Email'>
@@ -61,10 +44,10 @@ const Form = () => {
 					Subject
 				</Label>
 				<Select key='Select' options={options} />
-				<Label htmlFor='message' key='LabelMessage' customCss={''}>
+				<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
 					Message
 				</Label>
-				<WrapInHover key='HoverWrapMessage' customCss={''}>
+				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
 					<TextArea key='ContactMessageTextArea' name='message' />
 				</WrapInHover>
 				<Button
@@ -72,12 +55,17 @@ const Form = () => {
 					content='Send'
 					customCss={`
 						display: block;
+						${getCss('bSel')}
 					`}
 				/>
 			</FormEl>
 			<button
 				onClick={() => {
-					dispatch();
+					animate({
+						type: 'addAnimation',
+						css: 'transform: translateY(100%)',
+						key: 'bSel',
+					});
 				}}>
 				Animate !
 			</button>
