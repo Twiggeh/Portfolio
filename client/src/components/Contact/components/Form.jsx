@@ -22,8 +22,20 @@ const options = [
 	{ txt: 'Other ...', value: 'other' },
 ];
 
+const defBSel = {
+	type: 'setDefault',
+	key: 'bSel',
+	default: `
+		transition: transform 200ms linear;
+		transform: translateY(
+			calc((var(--max-height) + var(--margin-Option)) * -${options.length})
+		);
+	`,
+};
+
 const Form = () => {
 	const { animate, getCss } = useContext(AnimatorData);
+	animate(defBSel);
 	return (
 		<FormEl>
 			<FormTitle key='FormTitle'>Contact me</FormTitle>
@@ -51,17 +63,6 @@ const Form = () => {
 						${getCss('bSel')}
 					`}
 			/>
-			<button
-				onClick={() => {
-					animate({ type: 'debug' });
-					animate({
-						type: 'addAnimation',
-						css: 'transform: translateY(100%)',
-						key: 'bSel',
-					});
-				}}>
-				Animate !
-			</button>
 		</FormEl>
 	);
 };

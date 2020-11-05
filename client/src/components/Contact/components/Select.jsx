@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer } from 'react';
 import Option from './Option';
 import OptionList from './OptionList';
 import SelectContext from './SelectContext';
 import PropTypes from 'prop-types';
+import AnimatorData from './components/AnimatorContext';
 
 const defaultOption = {
 	txt: 'Please Select A Subject',
@@ -31,9 +32,11 @@ const Select = ({ options }) => {
 	/** @param {import('./SelectContext').SelectState} state
 	 *  @param {OptionActions} action
 	 */
+	const { animate } = useContext(AnimatorData);
 	const selectReducer = (state, action) => {
 		switch (action.type) {
 			case 'toggle': {
+				animate({ type: 'setAnimation', key: 'bSel', css: 'transform: translateY(0)' });
 				return { ...state, open: !state.open };
 			}
 			case 'select': {
@@ -44,6 +47,13 @@ const Select = ({ options }) => {
 					open: !state.open,
 					initial: false,
 				};
+				animate({
+					type: 'setAnimation',
+					key: 'bSel',
+					css: data.open ? 'transform: translateY(0)' : '',
+				});
+				// TODO : doesn't animate back .
+				animate({ type: 'debug' });
 				return data;
 			}
 			default:

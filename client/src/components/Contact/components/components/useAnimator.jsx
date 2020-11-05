@@ -10,25 +10,33 @@ const useAnimator = initAnimStore => {
 	 */
 	const reducer = (animStore, action) => {
 		switch (action.type) {
-			case 'addAnimation': {
+			case 'setAnimation': {
 				const assignee = {};
 				action.css ? (assignee.css = action.css) : '';
 				action.default ? (assignee.default = action.default) : '';
 				return { ...animStore, [action.key]: assignee };
 			}
+			case 'setDefault': {
+				const existing = animStore[action.key];
+				if (existing.default === action.default) return animStore;
+				return { ...animStore, [action.key]: { ...existing, default: action.default } };
+			}
 			case 'debug':
-				console.log(JSON.stringify(animStore));
+				console.log(animStore);
 				return animStore;
 			default:
 				throw new Error(`${action.type} is not supported by useAnimator.`);
 		}
 	};
 
-	const [animStore, animate] = useReducer(reducer, initAnimStore ? initAnimStore : {});
+	const [animStore, setAnimStore] = useReducer(
+		reducer,
+		initAnimStore ? initAnimStore : {}
+	);
 
 	const getCss = key => {
 		const getValue = input => {
-			if (input === undefined) return '';
+			if (input === undefined || input === '') return '';
 			if (!input.endsWith(';')) return input + ';';
 			return input;
 		};
@@ -39,7 +47,7 @@ const useAnimator = initAnimStore => {
 
 	return {
 		animStore,
-		animate,
+		animate: args => setTimeout(() => setAnimStore(args), 0),
 		getCss,
 	};
 };
@@ -50,8 +58,9 @@ const useAnimator = initAnimStore => {
  * @prop {String} css
  * @typedef {Object.<string, AnimLeaf>} AnimStore
  * @typedef {{
-		type: "addAnimation", key: String} & AnimLeaf
+		type: "setAnimation", key: String} & AnimLeaf
 		| {type: "debug"}
+		| {type: "setDefault", key: String, default: String}
 		} AnimActions
  * */
 export default useAnimator;
