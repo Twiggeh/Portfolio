@@ -1,22 +1,9 @@
-import { createContext, useReducer } from 'react';
+import { useReducer } from 'react';
 
-/** 
-  @type {{
-    animStore: AnimStore,
-		animate: function(AnimStore, AnimActions):void,
-		getCss: function(string):string
-	}}  
-	*/
-const DEFAUTLT_ANIMATOR_DATA = {
-	animStore: {},
-	animate: () => {},
-	getCss: () => {},
-};
 // TODO : Extract into its own component - otherwise it wont render correctly https://hswolff.com/blog/how-to-usecontext-with-usereducer/
-const AnimatorData = createContext(DEFAUTLT_ANIMATOR_DATA);
 
-/** @param {AnimStore} animStore */
-const useAnimator = animStore => {
+/** @param {AnimStore} initAnimStore */
+const useAnimator = initAnimStore => {
 	/**
 	 * @param {AnimStore} animStore
 	 * @param {AnimActions} action
@@ -27,13 +14,7 @@ const useAnimator = animStore => {
 				const assignee = {};
 				action.css ? (assignee.css = action.css) : '';
 				action.default ? (assignee.default = action.default) : '';
-
-				animStore[action.key] = {
-					...animStore[action.key],
-					...assignee,
-				};
-
-				return animStore;
+				return { ...animStore, [action.key]: assignee };
 			}
 			case 'debug':
 				console.log(JSON.stringify(animStore));
@@ -43,7 +24,7 @@ const useAnimator = animStore => {
 		}
 	};
 
-	const [state, dispatch] = useReducer(reducer, animStore ? animStore : {});
+	const [animStore, animate] = useReducer(reducer, initAnimStore ? initAnimStore : {});
 
 	const getCss = key => {
 		const getValue = input => {
@@ -57,9 +38,8 @@ const useAnimator = animStore => {
 	};
 
 	return {
-		animStore: state,
-		animate: dispatch,
-		AnimatorData: AnimatorData.Provider,
+		animStore,
+		animate,
 		getCss,
 	};
 };

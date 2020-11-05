@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { useContext } from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
-import useAnimator from './components/useAnimator';
+import AnimatorData from './components/AnimatorContext';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
@@ -21,46 +22,38 @@ const options = [
 	{ txt: 'Other ...', value: 'other' },
 ];
 
-/** @type {import('./components/useAnimator').AnimStore} */
-const initAnimStore = {
-	bSel: {
-		default: '',
-	},
-};
-
 const Form = () => {
-	const { AnimatorData, animStore, animate, getCss } = useAnimator(initAnimStore);
+	const { animate, getCss } = useContext(AnimatorData);
 	return (
-		<AnimatorData value={{ animStore, animate, getCss }}>
-			<FormEl>
-				<FormTitle key='FormTitle'>Contact me</FormTitle>
-				<Label htmlFor='email' key='Email'>
-					Email
-				</Label>
-				<WrapInHover key='HoverWrapEmail'>
-					<Input key='ContactEmailInput' type='email' required />
-				</WrapInHover>
-				<Label htmlFor='subject' key='HoverWrapSubject'>
-					Subject
-				</Label>
-				<Select key='Select' options={options} />
-				<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
-					Message
-				</Label>
-				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
-					<TextArea key='ContactMessageTextArea' name='message' />
-				</WrapInHover>
-				<Button
-					key='SubmitButton'
-					content='Send'
-					customCss={`
+		<FormEl>
+			<FormTitle key='FormTitle'>Contact me</FormTitle>
+			<Label htmlFor='email' key='Email'>
+				Email
+			</Label>
+			<WrapInHover key='HoverWrapEmail'>
+				<Input key='ContactEmailInput' type='email' required />
+			</WrapInHover>
+			<Label htmlFor='subject' key='HoverWrapSubject'>
+				Subject
+			</Label>
+			<Select key='Select' options={options} />
+			<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
+				Message
+			</Label>
+			<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
+				<TextArea key='ContactMessageTextArea' name='message' />
+			</WrapInHover>
+			<Button
+				key='SubmitButton'
+				content='Send'
+				customCss={`
 						display: block;
 						${getCss('bSel')}
 					`}
-				/>
-			</FormEl>
+			/>
 			<button
 				onClick={() => {
+					animate({ type: 'debug' });
 					animate({
 						type: 'addAnimation',
 						css: 'transform: translateY(100%)',
@@ -69,7 +62,7 @@ const Form = () => {
 				}}>
 				Animate !
 			</button>
-		</AnimatorData>
+		</FormEl>
 	);
 };
 
