@@ -1,7 +1,5 @@
 import { useReducer } from 'react';
 
-// TODO : Extract into its own component - otherwise it wont render correctly https://hswolff.com/blog/how-to-usecontext-with-usereducer/
-
 /** @param {AnimStore} initAnimStore */
 const useAnimator = initAnimStore => {
 	/**
@@ -11,10 +9,10 @@ const useAnimator = initAnimStore => {
 	const reducer = (animStore, action) => {
 		switch (action.type) {
 			case 'setAnimation': {
-				const assignee = {};
-				action.css ? (assignee.css = action.css) : '';
-				action.default ? (assignee.default = action.default) : '';
-				return { ...animStore, [action.key]: assignee };
+				return {
+					...animStore,
+					[action.key]: { ...animStore[action.key], css: action.css },
+				};
 			}
 			case 'setDefault': {
 				const existing = animStore[action.key];
@@ -35,8 +33,10 @@ const useAnimator = initAnimStore => {
 	);
 
 	const getCss = key => {
+		/** @param {string} input */
 		const getValue = input => {
 			if (input === undefined || input === '') return '';
+			input = input.trim();
 			if (!input.endsWith(';')) return input + ';';
 			return input;
 		};
