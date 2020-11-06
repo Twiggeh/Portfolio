@@ -2,11 +2,17 @@ import React from 'react';
 import AnimatorData from './components/components/AnimatorContext';
 import useAnimator from './components/components/useAnimator';
 import Form from './components/Form';
+import SelectOpts from './components/SelectOpts';
 
-/** @type {import('./components/useAnimator').AnimStore} */
+/** @type {import('./components/components/useAnimator').AnimStore} */
 const initAnimStore = {
 	bSel: {
-		default: '',
+		default: `
+		transform: translateY(
+			calc((var(--max-height) + var(--margin-Option)) * -${SelectOpts.length})
+		);
+		transition: transform 200ms linear;
+	`,
 	},
 };
 

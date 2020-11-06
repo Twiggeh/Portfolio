@@ -7,35 +7,10 @@ import AnimatorData from './components/AnimatorContext';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
-
-const options = [
-	{ txt: 'Build my Idea !', value: 'software' },
-	{ txt: 'I want you to paint something !', value: 'art' },
-	{
-		txt: 'I want to know how to create Illustrations !',
-		value: 'art training',
-	},
-	{
-		txt: 'I want help with the software that I am writing !',
-		value: 'software training',
-	},
-	{ txt: 'Other ...', value: 'other' },
-];
-
-const defBSel = {
-	type: 'setDefault',
-	key: 'bSel',
-	default: `
-		transition: transform 200ms linear;
-		transform: translateY(
-			calc((var(--max-height) + var(--margin-Option)) * -${options.length})
-		);
-	`,
-};
+import SelectOpts from './SelectOpts';
 
 const Form = () => {
-	const { animate, getCss } = useContext(AnimatorData);
-	animate(defBSel);
+	const { getCss } = useContext(AnimatorData);
 	return (
 		<FormEl>
 			<FormTitle key='FormTitle'>Contact me</FormTitle>
@@ -48,7 +23,7 @@ const Form = () => {
 			<Label htmlFor='subject' key='HoverWrapSubject'>
 				Subject
 			</Label>
-			<Select key='Select' options={options} />
+			<Select key='Select' options={SelectOpts} />
 			<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
 				Message
 			</Label>
