@@ -1,6 +1,12 @@
 import { useReducer } from 'react';
 
-/** @param {AnimStore} initAnimStore */
+/** @param {AnimStore} initAnimStore
+ * 	@returns {{
+		animStore: AnimStore,
+		animate: (action: AnimActions)=>void,
+		getCss: (key: AnimKey)=>string,
+	}}
+ */
 const useAnimator = initAnimStore => {
 	/**
 	 * @param {AnimStore} animStore
@@ -47,7 +53,7 @@ const useAnimator = initAnimStore => {
 
 	return {
 		animStore,
-		animate: args => setTimeout(() => setAnimStore(args), 0),
+		animate: args => void setTimeout(() => setAnimStore(args), 0),
 		getCss,
 	};
 };
@@ -56,11 +62,12 @@ const useAnimator = initAnimStore => {
  * @typedef AnimLeaf
  * @prop {String} default
  * @prop {String} css
+ * @typedef {string} AnimKey
  * @typedef {Object.<string, AnimLeaf>} AnimStore
  * @typedef {{
-		type: "setAnimation", key: String} & AnimLeaf
+		type: "setAnimation", key: AnimKey, css: Array<import('@emotion/core').Interpolation>} 
 		| {type: "debug"}
-		| {type: "setDefault", key: String, default: String}
+		| {type: "setDefault", key: AnimKey, default: import('@emotion/core').Interpolation}
 		} AnimActions
  * */
 export default useAnimator;
