@@ -7,10 +7,10 @@ import AnimatorData from './components/AnimatorContext';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
 import WrapInHover from './WrapInHover';
-import SelectOpts from './SelectOpts';
 
 const Form = () => {
 	const { getCss } = useContext(AnimatorData);
+
 	return (
 		<FormEl>
 			<FormTitle key='FormTitle'>Contact me</FormTitle>
@@ -23,7 +23,7 @@ const Form = () => {
 			<Label htmlFor='subject' key='HoverWrapSubject'>
 				Subject
 			</Label>
-			<Select key='Select' options={SelectOpts} />
+			<Select key='Select' />
 			<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
 				Message
 			</Label>

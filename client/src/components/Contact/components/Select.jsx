@@ -1,10 +1,11 @@
+/* eslint-disable indent */
 import styled from '@emotion/styled';
 import React, { useContext, useReducer } from 'react';
 import Option from './Option';
 import OptionList from './OptionList';
 import SelectContext from './SelectContext';
-import PropTypes from 'prop-types';
 import AnimatorData from './components/AnimatorContext';
+import SelectOpts from './SelectOpts';
 
 const defaultOption = {
 	txt: 'Please Select A Subject',
@@ -19,24 +20,40 @@ const selectInit = {
 };
 
 const StyledSelect = styled.div`
-	position: relative;
-	${({ customCss, optLength }) =>
-		`transform: translateY(
-				calc((var(--margin-Option) + var(--max-height)) * -${optLength})
-			);
-			${customCss};
-		`};
+	${({ customCss }) => customCss}
 `;
 
-const Select = ({ options }) => {
+const Select = () => {
+	const time = 200;
+	const { animate } = useContext(AnimatorData);
 	/** @param {import('./SelectContext').SelectState} state
 	 *  @param {OptionActions} action
 	 */
-	const { animate } = useContext(AnimatorData);
 	const selectReducer = (state, action) => {
+		const transition = (delayMul = 0, transMul = 0) => `
+				transition: transform ${transMul * time}ms ${delayMul * time}ms linear;
+			`;
+
+		const _selectedIndex = action.selectedIndex;
+		const selectedIndex = _selectedIndex === undefined ? SelectOpts.length - 1 : _selectedIndex;
+
+		const lengthBtm = SelectOpts.length - 1 - selectedIndex;
+		const lengthTop = SelectOpts.length - 1 - lengthBtm;
+
 		switch (action.type) {
 			case 'toggle': {
-				animate({ type: 'setAnimation', key: 'bSel', css: 'transform: translateY(0)' });
+				animate({
+					type: 'setAnimation',
+					key: 'bSel',
+					css: `${transition};
+								transform: translateY(0)`,
+				});
+				animate({
+					type: 'setAnimation',
+					key: 'Sel',
+					css: `${transition};
+								transform: translateY(0)`,
+				});
 				return { ...state, open: !state.open };
 			}
 			case 'select': {
@@ -47,22 +64,42 @@ const Select = ({ options }) => {
 					open: !state.open,
 					initial: false,
 				};
+
 				animate({
 					type: 'setAnimation',
 					key: 'bSel',
-					css: data.open ? 'transform: translateY(0)' : '',
+					css: data.open
+						? `${transition};
+							transform: translateY(0);`
+						: `${transition};
+							transform: translateY(calc((var(--margin-Option) + var(--max-height)) * -${
+								SelectOpts.length - 1
+							}))
+						`,
 				});
-				// TODO : doesn't animate back .
-				animate({ type: 'debug' });
+
+				animate({
+					type: 'setAnimation',
+					key: 'Sel',
+					css: `
+					${transition};
+					${
+						data.open
+							? 'transform: translateY(0);'
+							: `transform: translateY(
+								calc((var(--margin-Option) + var(--max-height)) * -${action.selectedIndex})
+							);`
+					}`,
+				});
 				return data;
 			}
 			default:
-				throw new Error('error');
+				throw new Error(`${action.type} is not supported by selectReducer`);
 		}
 	};
 
 	const [state, dispatch] = useReducer(selectReducer, selectInit);
-
+	const { getCss } = useContext(AnimatorData);
 	return (
 		<SelectContext.Provider
 			value={{
@@ -72,23 +109,19 @@ const Select = ({ options }) => {
 				selected: state.selected,
 				selectedIndex: state.selectedIndex,
 			}}>
-			<StyledSelect optLength={options.length} customCss={''}>
-				<OptionList options={options} />
+			<StyledSelect optLength={SelectOpts.length} customCss={getCss('Sel')}>
+				<OptionList options={SelectOpts} />
 				{!state.open && state.initial ? (
 					<Option
 						txt={defaultOption.txt}
 						value={defaultOption.value}
 						action={{ type: 'toggle' }}
-						listLength={options.length}
+						listLength={SelectOpts.length}
 					/>
 				) : null}
 			</StyledSelect>
 		</SelectContext.Provider>
 	);
-};
-
-Select.propTypes = {
-	options: PropTypes.array,
 };
 
 export default Select;
