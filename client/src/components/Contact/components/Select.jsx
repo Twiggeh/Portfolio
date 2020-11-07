@@ -24,21 +24,23 @@ const StyledSelect = styled.div`
 `;
 
 const Select = () => {
-	const time = 200;
+	const time = 150;
 	const { animate } = useContext(AnimatorData);
 	/** @param {import('./SelectContext').SelectState} state
 	 *  @param {OptionActions} action
 	 */
 	const selectReducer = (state, action) => {
-		const transition = (delayMul = 0, transMul = 0) => `
+		const transition = (transMul = 0, delayMul = 0) => `
 				transition: transform ${transMul * time}ms ${delayMul * time}ms linear;
 			`;
 
 		const _selectedIndex = action.selectedIndex;
-		const selectedIndex = _selectedIndex === undefined ? SelectOpts.length - 1 : _selectedIndex;
+		const selectedIndex =
+			_selectedIndex === undefined ? SelectOpts.length - 1 : _selectedIndex;
 
 		const lengthBtm = SelectOpts.length - 1 - selectedIndex;
 		const lengthTop = SelectOpts.length - 1 - lengthBtm;
+		const longerLength = Math.max(lengthBtm, lengthTop);
 
 		switch (action.type) {
 			case 'toggle': {
@@ -67,29 +69,29 @@ const Select = () => {
 
 				animate({
 					type: 'setAnimation',
-					key: 'bSel',
+					key: 'Sel',
 					css: data.open
-						? `${transition};
-							transform: translateY(0);`
-						: `${transition};
-							transform: translateY(calc((var(--margin-Option) + var(--max-height)) * -${
-								SelectOpts.length - 1
-							}))
-						`,
+						? `${transition(lengthTop)};
+								transform: translateY(0);`
+						: `${transition(selectedIndex, Math.max(lengthBtm - lengthTop, 0))};
+								transform: translateY(
+									calc(
+										(var(--margin-Option) + var(--max-height)) * -${action.selectedIndex}
+									)
+								);`,
 				});
 
 				animate({
 					type: 'setAnimation',
-					key: 'Sel',
-					css: `
-					${transition};
-					${
-						data.open
-							? 'transform: translateY(0);'
-							: `transform: translateY(
-								calc((var(--margin-Option) + var(--max-height)) * -${action.selectedIndex})
-							);`
-					}`,
+					key: 'bSel',
+					css: data.open
+						? `${transition(lengthTop)};
+							transform: translateY(0);`
+						: `${transition(longerLength)};
+							transform: translateY(calc((var(--margin-Option) + var(--max-height)) * -${
+								SelectOpts.length - 1
+							}))
+						`,
 				});
 				return data;
 			}
