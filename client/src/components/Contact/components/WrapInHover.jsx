@@ -22,6 +22,7 @@ WrapInHover.propTypes = {
 
 var StyledWrapInHover = styled.div`
 	position: relative;
+	z-index: 1;
 	${({ customCss }) => customCss}
 `;
 
