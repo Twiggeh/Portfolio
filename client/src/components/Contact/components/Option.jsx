@@ -23,8 +23,7 @@ const StyledOption = styled.div`
 			transform: ${
 				// prettier-ignore
 				!open && !selected
-					? `translateY(calc(${index - selectedIndex} * (-100% - var(--margin-Option))));
-						`
+					? `translateY(calc(${index - selectedIndex } * (-100% - var(--margin-Option) ) ));`
 					: 'translateY(0)'
 			};
 			${
@@ -43,7 +42,7 @@ const Option = ({ txt, value, customCss, index = 0, listLength = 1, action }) =>
 		SelectContext
 	);
 
-	const selectedIndex = _selectedIndex === undefined ? listLength - 1 : _selectedIndex;
+	const selectedIndex = _selectedIndex === undefined ? 0 : _selectedIndex;
 
 	const lengthBtm = listLength - 1 - selectedIndex;
 	const lengthTop = listLength - 1 - lengthBtm;

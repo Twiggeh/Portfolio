@@ -1,15 +1,16 @@
 /* eslint-disable indent */
 import styled from '@emotion/styled';
 import React, { useContext, useReducer } from 'react';
-import Option from './Option';
 import OptionList from './OptionList';
 import SelectContext from './SelectContext';
 import AnimatorData from './components/AnimatorContext';
 import SelectOpts from './SelectOpts';
 
+/**@type {Option} */
 const defaultOption = {
 	txt: 'Please Select A Subject',
 	value: 'please select',
+	action: { type: 'toggle' },
 };
 
 /** @type {import('./SelectContext').SelectState} */
@@ -17,6 +18,7 @@ const selectInit = {
 	open: false,
 	initial: true,
 	selected: defaultOption.value,
+	opened: false,
 };
 
 const StyledSelect = styled.div`
@@ -26,6 +28,7 @@ const StyledSelect = styled.div`
 const Select = () => {
 	const time = 150;
 	const { animate } = useContext(AnimatorData);
+
 	/** @param {import('./SelectContext').SelectState} state
 	 *  @param {OptionActions} action
 	 */
@@ -46,17 +49,19 @@ const Select = () => {
 			case 'toggle': {
 				animate({
 					type: 'setAnimation',
-					key: 'bSel',
-					css: `${transition};
-								transform: translateY(0)`,
+					key: 'Sel',
+					css: `${transition(SelectOpts.length)};
+								transform: translateY(calc(
+										(var(--margin-Option) + var(--max-height)) * -${action.selectedIndex}
+									))`,
 				});
 				animate({
 					type: 'setAnimation',
-					key: 'Sel',
-					css: `${transition};
+					key: 'bSel',
+					css: `${transition(SelectOpts.length)};
 								transform: translateY(0)`,
 				});
-				return { ...state, open: !state.open };
+				return { ...state, open: !state.open, opened: true };
 			}
 			case 'select': {
 				const data = {
@@ -85,7 +90,7 @@ const Select = () => {
 					type: 'setAnimation',
 					key: 'bSel',
 					css: data.open
-						? `${transition(lengthTop)};
+						? `${transition(longerLength)};
 							transform: translateY(0);`
 						: `${transition(longerLength)};
 							transform: translateY(calc((var(--margin-Option) + var(--max-height)) * -${
@@ -112,15 +117,11 @@ const Select = () => {
 				selectedIndex: state.selectedIndex,
 			}}>
 			<StyledSelect optLength={SelectOpts.length} customCss={getCss('Sel')}>
-				<OptionList options={SelectOpts} />
-				{!state.open && state.initial ? (
-					<Option
-						txt={defaultOption.txt}
-						value={defaultOption.value}
-						action={{ type: 'toggle' }}
-						listLength={SelectOpts.length}
-					/>
-				) : null}
+				<OptionList
+					options={SelectOpts}
+					defaultOption={defaultOption}
+					opened={state.opened}
+				/>
 			</StyledSelect>
 		</SelectContext.Provider>
 	);

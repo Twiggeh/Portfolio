@@ -9,15 +9,12 @@ const initAnimStore = {
 	bSel: {
 		default: `
 		transform: translateY(
-			calc((var(--max-height) + var(--margin-Option)) * -${SelectOpts.length})
+			calc((var(--max-height) + var(--margin-Option)) * -${SelectOpts.length - 1})
 		);
 	`,
 	},
 	Sel: {
-		default: `transform: translateY(
-			calc((var(--margin-Option) + var(--max-height)) * -${SelectOpts.length})
-		);
-	`,
+		default: '',
 	},
 };
 
