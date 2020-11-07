@@ -6,7 +6,7 @@ import HoverBorder from '../../components/HoverBorder';
 import FormInputCss from './FormInputCss';
 import SelectContext from './SelectContext';
 
-const time = 200;
+const time = 150;
 const StyledOption = styled.div`
 	${FormInputCss};
 	position: relative;
@@ -19,7 +19,7 @@ const StyledOption = styled.div`
 		return `
 			z-index: ${!open && !selected ? mul : mul + 1};
 			opacity: ${!open && !selected ? 0 : 1};
-			transition: transform ${dur}ms ease-in-out, opacity ${dur}ms ease-in-out;
+			transition: transform ${dur}ms linear, opacity ${dur}ms ease-in-out;
 			transform: ${
 				// prettier-ignore
 				!open && !selected
@@ -29,7 +29,7 @@ const StyledOption = styled.div`
 			};
 			${
 				!open
-					? `transition: transform ${dur}ms ease-in-out ${closeDel}ms, opacity ${time}ms ease-in-out ${closeDel}ms;`
+					? `transition: transform ${dur}ms linear ${closeDel}ms, opacity ${time}ms ease-in-out ${closeDel}ms;`
 					: ''
 			}
 		`;
