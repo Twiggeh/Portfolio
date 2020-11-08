@@ -1,4 +1,3 @@
-import { css } from '@emotion/core';
 import React from 'react';
 
 const cross = (
@@ -41,16 +40,14 @@ export const fonts = {
 	fallback: 'Roboto',
 };
 
-/** @type {import('@emotion/core').Interpolation} */
-const outline = css`
+const outline = `
 	border-color: ${colors.grayBorder};
 	border-width: 1px;
 	border-style: solid;
 `;
 
 const customOutline = (top = 0, right = 0, bottom = 0, left = 0) => {
-	/** @type {import('@emotion/core').Interpolation} */
-	return css`
+	return `
 		border-color: ${colors.grayBorder};
 		border-top-width: ${top}px;
 		border-bottom-width: ${bottom}px;
@@ -73,8 +70,8 @@ export const fontSizes = {
 	sideTitle: 'clamp(35px, 2.8vw, 60px)',
 	sideSubTitle: 'clamp(16px, 1.4vw, 50px)',
 	mainNoteTitle: 'clamp(30px, 2vw, 60px)',
-	navEl: 'clamp(20px, 2vw, 2vw)',
-	navTitle: 'clamp(25px, 2.2vw, 2.2vw)',
+	navEl: 'clamp(20px, 1.6vw, 1.6vw)',
+	navTitle: 'clamp(30px, 2.2vw, 2.2vw)',
 	text: 'clamp(18px, 1.2vw, 35px)',
 };
 
