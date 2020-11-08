@@ -1,44 +1,60 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useContext } from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
 import AnimatorData from './components/AnimatorContext';
+import useAnimator from './components/useAnimator';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
+import SelectOpts from './SelectOpts';
 import WrapInHover from './WrapInHover';
 
-const Form = () => {
-	const { getCss } = useContext(AnimatorData);
+/** @type {import('./components/components/useAnimator').AnimStore} */
+const initAnimStore = {
+	bSel: {
+		default: `
+		transform: translateY(
+			calc((var(--max-height) + var(--margin-Option)) * -${SelectOpts.length - 1})
+		);
+	`,
+	},
+	Sel: {
+		default: '',
+	},
+};
 
+const Form = () => {
+	const { animStore, animate, getCss } = useAnimator(initAnimStore);
 	return (
-		<FormEl>
-			<FormTitle key='FormTitle'>Contact me</FormTitle>
-			<Label htmlFor='email' key='Email'>
-				Email
-			</Label>
-			<WrapInHover key='HoverWrapEmail'>
-				<Input key='ContactEmailInput' type='email' required />
-			</WrapInHover>
-			<Label htmlFor='subject' key='HoverWrapSubject'>
-				Subject
-			</Label>
-			<Select key='Select' />
-			<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
-				Message
-			</Label>
-			<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
-				<TextArea key='ContactMessageTextArea' name='message' />
-			</WrapInHover>
-			<Button
-				key='SubmitButton'
-				content='Send'
-				customCss={`
+		<AnimatorData.Provider value={{ animStore, animate, getCss }}>
+			<FormWrap>
+				<FormTitle key='FormTitle'>Contact me</FormTitle>
+				<Label htmlFor='email' key='Email'>
+					Email
+				</Label>
+				<WrapInHover key='HoverWrapEmail'>
+					<Input key='ContactEmailInput' type='email' required />
+				</WrapInHover>
+				<Label htmlFor='subject' key='HoverWrapSubject'>
+					Subject
+				</Label>
+				<Select key='Select' />
+				<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
+					Message
+				</Label>
+				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
+					<TextArea key='ContactMessageTextArea' name='message' />
+				</WrapInHover>
+				<Button
+					key='SubmitButton'
+					content='Send'
+					customCss={`
 						display: block;
 						${getCss('bSel')}
 					`}
-			/>
-		</FormEl>
+				/>
+			</FormWrap>
+		</AnimatorData.Provider>
 	);
 };
 
