@@ -71,13 +71,13 @@ var FormTitle = styled.div`
 	margin-bottom: 2rem;
 `;
 
-var FormEl = styled.div`
+var FormWrap = styled.div`
 	margin: ${styles.contentPaddingSides};
-	--formWidth: 35vw;
+	--formWidth: clamp(400px, 35vw, 50vw);
 	width: var(--formWidth);
-	--padding-Option: 1rem;
-	--margin-Option: 2rem;
-	--font-size: calc(${fontSizes.text}*.8);
+	--padding-Option: max(1rem, calc(0.8 * var(--font-size)));
+	--margin-Option: calc(var(--font-size) * 2);
+	--font-size: calc(${fontSizes.text}*.9);
 	--max-height: calc(var(--padding-Option) * 2 + var(--font-size));
 `;
 
@@ -91,9 +91,9 @@ var TextArea = styled.textarea`
 
 var Label = styled.label`
 	display: block;
-	font-size: ${fontSizes.text};
+	font-size: calc(${fontSizes.text} * 1.2);
 	font-weight: 500;
-	padding-bottom: 1rem;
+	padding-bottom: calc(var(--margin-Option) * 0.5);
 	position: relative;
 	${({ customCss }) => customCss};
 `;
