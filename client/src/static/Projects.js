@@ -1,8 +1,9 @@
 /** @type {Content} */
 const ReplayBotData = {
+	id: 'replay_bot',
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
-	descPage: './replaybot',
+	descPage: './projects#replay_bot',
 	buttons: [
 		{
 			btnName: 'Github',
@@ -62,8 +63,10 @@ const ReplayBotData = {
 
 /** @type {Content} */
 const Jane = {
+	id: 'jane',
 	title: 'Jane',
 	subTitle: 'Digital Painting from imagination',
+	descPage: './art#jane',
 	cover: lowJane,
 	notes: [
 		{
@@ -80,8 +83,10 @@ const Jane = {
 
 /** @type {Content} */
 const Esmeralda = {
+	id: 'esmeralda',
 	title: 'Esmeralda',
 	subTitle: 'Digital Portrait Painting',
+	descPage: './art#esmeralda',
 	cover: lowEsmeralda,
 	buttons: [
 		{
@@ -112,10 +117,11 @@ const Esmeralda = {
 
 /** @type {Content} */
 const RoyalBird = {
+	id: 'royal_bird',
 	title: 'Royal Bird',
 	subTitle: 'Character Bust',
 	cover: lowRoyalBird,
-	descPage: './art#royalBird',
+	descPage: './art#royal_bird',
 	notes: [
 		{
 			type: 'feature',
@@ -130,7 +136,10 @@ const RoyalBird = {
 
 export const projects = [ReplayBotData];
 export const art = [Jane, Esmeralda, RoyalBird];
+
+/** @type {Object.<string, Content>}} */
 export default { art, projects };
+
 import React from 'react';
 import { svgs } from '../styles/globalStyle';
 import {
@@ -191,6 +200,7 @@ import {
  * @prop {import('../components/Modals/modal_index').Modal} [button.modal] - A modal that can pop up if defined
  *
  * @typedef {{
+	id        : String,
 	notes     : Note[]
 	buttons   : Button[],
 	title     : string,

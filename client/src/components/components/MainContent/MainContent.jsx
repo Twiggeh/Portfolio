@@ -3,10 +3,10 @@ import { css } from '@emotion/core';
 const mq = queries.mainQueries;
 
 /** @param {MainContentInput} param0 */
-const MainContent = ({ data: { title, subTitle, notes, buttons } }) => {
+const MainContent = ({ data: { title, subTitle, notes, buttons, id } }) => {
 	const { setModal } = useContext(ModalContext);
 	return (
-		<Main>
+		<Main id={id}>
 			<MainHeadWrap>
 				<MainTitleWrap buttons={!!buttons}>
 					<MainTitle>{title}</MainTitle>
@@ -251,12 +251,7 @@ import ButtonS from './components/components/ButtonStyle.js';
 import HoverBorder from '../HoverBorder.jsx';
 
 /** @typedef {{
-	data: {
-		title: string,
-		subTitle: string,
-		notes: note[],
-		buttons: button[]
-	}
+	data: import('../../../static/Projects.js').Content
 }} MainContentInput */
 
 /**
