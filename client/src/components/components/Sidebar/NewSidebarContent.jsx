@@ -1,5 +1,3 @@
-import { css } from '@emotion/core';
-
 /** @param {{
 						data:import('../../../static/Projects').Content
   					}} param0 */
@@ -25,12 +23,10 @@ const NewSidebarContent = ({
 									}
 								}}>
 								<HoverBorder
-									customCss={css`
-										width: calc(100% + 2px) !important;
+									customCss={`width: calc(100% + 2px) !important;
 										height: calc(100% + 2px) !important;
 										top: -1px;
-										left: -1px;
-									`}
+										left: -1px;`}
 								/>
 								{SVG ? <SVG /> : btnIcn}
 							</SideBtn>
