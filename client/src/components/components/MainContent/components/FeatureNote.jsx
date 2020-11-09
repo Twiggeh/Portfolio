@@ -1,5 +1,28 @@
 const mq = queries.mainQueries;
-// TODO : Allow to rename the button
+
+const FeatureMediaCss = props => `
+	align-self: flex-start;
+	width: max(300px, ${props.precedence === 'text' ? '20vw' : '40vw'});
+	${[mq[1]]} {
+		width: 100%;
+	}`;
+
+const StyledVideo = styled.video(FeatureMediaCss);
+
+const NoteVideo = ({ src, alt }) => {
+	return (
+		<StyledVideo controls loop>
+			<source src={src} type='video/mp4'></source>
+		</StyledVideo>
+	);
+};
+
+NoteVideo.propTypes = {
+	src: PropTypes.string,
+	customCss: PropTypes.string,
+	precedence: PropTypes.string,
+	alt: PropTypes.string,
+};
 
 /** @param {{
 			note: import('../../../../static/Projects').FeatureNote,
@@ -9,13 +32,21 @@ const mq = queries.mainQueries;
 const FeatureNote = ({ note, renderReverse }) => {
 	const {
 		title,
-		img = khala,
+		src = khala,
 		alt,
 		text,
 		btnUrl,
 		btnText = 'More',
 		precedence = 'text',
 	} = note;
+
+	/** @param {string} str - Path */
+	const getExt = str => str.split('.').pop();
+
+	const imgExt = ['png', 'gif', 'webp'];
+
+	const isImg = imgExt.includes(getExt(src));
+
 	return (
 		<FeatureWrapper>
 			{title ? (
@@ -24,7 +55,11 @@ const FeatureNote = ({ note, renderReverse }) => {
 				</a>
 			) : null}
 			<FeatureContentWrap reverse={renderReverse}>
-				<FeatureImg {...{ precedence }} src={img} alt={alt} loading='lazy' />
+				{isImg ? (
+					<FeatureImg {...{ precedence }} src={src} alt={alt} loading='lazy' />
+				) : (
+					<NoteVideo {...{ precedence }} src={src} alt={alt} loading='lazy' />
+				)}
 				<FeatureDescBtnWrap>
 					{text ? <Description>{text}</Description> : null}
 					{btnUrl ? <Button href={btnUrl} content={btnText} /> : null}
@@ -56,13 +91,7 @@ var FeatureDescBtnWrap = styled.div`
 	}
 `;
 
-var FeatureImg = styled.img`
-	align-self: flex-start;
-	width: max(300px, ${({ precedence }) => (precedence === 'text' ? '20vw' : '40vw')});
-	${[mq[1]]} {
-		width: 100%;
-	}
-`;
+var FeatureImg = styled.img(FeatureMediaCss);
 
 var FeatureContentWrap = styled.div`
 	display: flex;

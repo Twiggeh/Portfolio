@@ -54,6 +54,8 @@ const ReplayBotData = {
 		},
 		{
 			title: 'Clean, Straightforward UI',
+			src: ReplayBotUi,
+			precedence: 'img',
 			type: 'feature',
 			text:
 				'Familiarity and ease of use through implementation of common Discord Bot patterns.',
@@ -74,7 +76,7 @@ const Jane = {
 			btnUrl: medJane,
 			btnText: 'Download',
 			precedence: 'img',
-			img: medJane,
+			src: medJane,
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
@@ -101,7 +103,7 @@ const Esmeralda = {
 			btnUrl: medEsmeralda,
 			btnText: 'Download',
 			precedence: 'img',
-			img: medEsmeralda,
+			src: medEsmeralda,
 			text: 'A one day painting exercise, origin of the reference is unknown.',
 		},
 		{
@@ -128,7 +130,7 @@ const RoyalBird = {
 			btnUrl: medRoyalBird,
 			btnText: 'Download',
 			precedence: 'img',
-			img: medRoyalBird,
+			src: medRoyalBird,
 			text: '35min Speed Painting, pushing my rendering ability beyond its limits',
 		},
 	],
@@ -151,12 +153,13 @@ import {
 	medRoyalBird,
 	refEsmeralda,
 } from './Pictures';
+import { ReplayBotUi } from './Videos';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
  * @prop {string} [FeatureNote.title] - The title of the feature
  * @prop {"img" | "text"} [FeatureNote.precedence="text"] - The element to take precedence over the other elements
- * @prop {string} FeatureNote.img - The path relative to src to get to the image / url
+ * @prop {string} FeatureNote.src - The path to the image / video
  * @prop {string} FeatureNote.alt - The fallback path relative to src to get to the image / url
  * @prop {string} [FeatureNote.text] - The small description of the feature
  * @prop {string} [FeatureNote.btnUrl] - The url of the bigger description of the feature
