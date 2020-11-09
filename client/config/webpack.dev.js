@@ -66,6 +66,26 @@ module.exports = {
 				},
 			},
 			{
+				test: /\.gif?$/,
+				use: {
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'public/gif/',
+					},
+				},
+			},
+			{
+				test: /\.m4v?$/,
+				use: {
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'public/video/',
+					},
+				},
+			},
+			{
 				test: /\.svg$/,
 				use: [
 					'babel-loader',
