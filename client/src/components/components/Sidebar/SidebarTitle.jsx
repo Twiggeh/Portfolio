@@ -1,7 +1,6 @@
-const SidebarTitle = ({ title, subTitle = '', picture = './static/khala_close.jpg' }) => {
+const SidebarTitle = ({ title, subTitle = '' }) => {
 	return (
 		<header css={{ marginTop: '5rem', overflow: 'hidden' }}>
-			<AsideImage picture={picture} />
 			<AsideTitle>{title}</AsideTitle>
 			<AsideSubtitle>{subTitle}</AsideSubtitle>
 			<Separator />
@@ -17,18 +16,6 @@ SidebarTitle.propTypes = {
 };
 
 export default SidebarTitle;
-
-// TODO : make these all template strings
-
-var AsideImage = styled.div`
-	background-image: url(${({ picture }) => picture});
-	background-repeat: no-repeat;
-	background-position: bottom center;
-	background-size: cover;
-	width: clamp(150px, 10vw, 10vw);
-	height: clamp(150px, 10vw, 10vw);
-	margin-bottom: 2rem;
-`;
 
 var AsideTitle = styled.h1({
 	letterSpacing: '0.265rem',
