@@ -6,7 +6,6 @@ const mq = queries.mainQueries;
 
 const App = () => {
 	const [modal, setModal] = useState(undefined);
-	/** @type {import('@emotion/core').Interpolation}*/
 	return (
 		<>
 			<Global styles={globalStyle} />

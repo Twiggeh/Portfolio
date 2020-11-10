@@ -43,12 +43,14 @@ const ReplayBotData = {
 		{
 			title: 'Scalability and Performance',
 			type: 'feature',
+			src: repDebranch,
 			text:
-				'Vertical Scaling is very easy due to the stateless nature. Functions running on each request are de-branched for maximum performance.',
+				'Horizontal Scaling is very easy due to the stateless nature. Functions running on each request are de-branched for maximum performance.',
 		},
 		{
 			title: 'Data Aggregation',
 			type: 'feature',
+			src: repInsight,
 			text:
 				'Provides meaningful insight into the coaches performance and students behaviour, assisting management in making unbiased decisions.',
 		},
@@ -152,6 +154,8 @@ import {
 	medJane,
 	medRoyalBird,
 	refEsmeralda,
+	repDebranch,
+	repInsight,
 } from './Pictures';
 import { ReplayBotUi } from './Videos';
 

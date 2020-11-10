@@ -13,3 +13,7 @@ export { default as medRoyalBird } from '../assets/Art/Creatures/RoyalBird/mediu
 
 // Khala (placeholder)
 export { default as khala } from '../assets/khala.webp';
+
+// RepBot
+export { default as repInsight } from '../assets/images/RepBotInsight.webp';
+export { default as repDebranch } from '../assets/images/RepBotDebranch.webp';
