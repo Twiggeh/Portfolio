@@ -1,4 +1,7 @@
-/** @type {{modal : import('../Modals/modal_index').Modal, setModal: function}} */
+/** @type {{
+	modal   : import('../Modals/modal_index').Modal,
+	setModal: function(import('../Modals/modal_index').Modal):void
+}} */
 const MODAL_DEFAULT = {
 	modal: undefined,
 	setModal: () => {},

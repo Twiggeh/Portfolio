@@ -20,7 +20,7 @@ const ReplayBotData = {
 						</article>
 					</div>
 				),
-				css: {
+				modalCss: {
 					display: 'flex',
 					alignItems: 'flex-start',
 					flexDirection: 'row-reverse',
@@ -57,7 +57,6 @@ const ReplayBotData = {
 		{
 			title: 'Clean, Straightforward UI',
 			src: ReplayBotUi,
-			precedence: 'img',
 			type: 'feature',
 			text:
 				'Familiarity and ease of use through implementation of common Discord Bot patterns.',

@@ -9,9 +9,9 @@ const FeatureMediaCss = props => `
 
 const StyledVideo = styled.video(FeatureMediaCss);
 
-const NoteVideo = ({ src, alt }) => {
+const NoteVideo = ({ src, alt, precedence }) => {
 	return (
-		<StyledVideo controls loop>
+		<StyledVideo {...{ precedence }} controls loop>
 			<source src={src} type='video/mp4'></source>
 		</StyledVideo>
 	);
@@ -22,6 +22,22 @@ NoteVideo.propTypes = {
 	customCss: PropTypes.string,
 	precedence: PropTypes.string,
 	alt: PropTypes.string,
+};
+
+/** @type {import('@emotion/core').Interpolation} */
+const ImgModalCss = {
+	modalCss: {
+		display: 'flex',
+		flexDirection: 'row-reverse',
+		padding: 0,
+		img: {
+			maxHeight: 'calc(100vh * 0.8)',
+			maxWidth: 'calc(100vw *0.8)',
+		},
+	},
+	closeBtnCss: {
+		padding: '1rem',
+	},
 };
 
 /** @param {{
@@ -47,6 +63,8 @@ const FeatureNote = ({ note, renderReverse }) => {
 
 	const isImg = imgExt.includes(getExt(src));
 
+	const { setModal } = useContext(ModalContext);
+
 	return (
 		<FeatureWrapper>
 			{title ? (
@@ -56,7 +74,15 @@ const FeatureNote = ({ note, renderReverse }) => {
 			) : null}
 			<FeatureContentWrap reverse={renderReverse}>
 				{isImg ? (
-					<FeatureImg {...{ precedence }} src={src} alt={alt} loading='lazy' />
+					<FeatureImg
+						{...{ precedence }}
+						src={src}
+						alt={alt}
+						loading='lazy'
+						onClick={() =>
+							setModal({ content: <img src={src} alt={alt}></img>, ...ImgModalCss })
+						}
+					/>
 				) : (
 					<NoteVideo {...{ precedence }} src={src} alt={alt} loading='lazy' />
 				)}
@@ -91,7 +117,10 @@ var FeatureDescBtnWrap = styled.div`
 	}
 `;
 
-var FeatureImg = styled.img(FeatureMediaCss);
+var FeatureImg = styled.img(
+	props => `${FeatureMediaCss(props)};
+	cursor: pointer;`
+);
 
 var FeatureContentWrap = styled.div`
 	display: flex;
@@ -125,3 +154,5 @@ import Button from './components/Button';
 import Description from './components/Description';
 import Title from './components/Title';
 import { khala } from 'pictures';
+import { useContext } from 'react';
+import ModalContext from '../../../Providers/modalProvider';

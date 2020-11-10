@@ -1,8 +1,8 @@
 /**
  * @typedef {{
-							css ?: import('@emotion/core').Interpolation,
+							modalCss ?: import('@emotion/core').Interpolation,
 							content : JSX.Element,
-							btnContainerCss: import('@emotion/core').Interpolation, 
+							closeBtnCss: import('@emotion/core').Interpolation, 
 						}} Modal
  */
 
@@ -11,7 +11,7 @@ const Modals = () => {
 
 	if (!modal) return null;
 
-	const { css, content } = modal;
+	const { modalCss, content, closeBtnCss } = modal;
 
 	return (
 		<>
@@ -40,7 +40,7 @@ const Modals = () => {
 						borderColor: 'hotpink',
 						backdropFilter: 'unset',
 						filter: 'drop-shadow(0 0 1em rgba(200, 63, 134, 0.6))',
-						...css,
+						...modalCss,
 					}}>
 					<button
 						css={{
@@ -48,6 +48,7 @@ const Modals = () => {
 							borderWidth: 0,
 							background: 'transparent',
 							marginTop: '-0.5em',
+							...closeBtnCss,
 						}}
 						onClick={e => {
 							e.preventDefault();
