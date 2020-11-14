@@ -37,6 +37,7 @@ const ReplayBotData = {
 		{
 			title: 'Stateless',
 			type: 'feature',
+			src: ReplayBotStateless,
 			text:
 				'Stateless operation not only makes the bot more resilient, it allows for easy scaling, a seamless user experience and a faster development cycle.',
 		},
@@ -137,8 +138,29 @@ const RoyalBird = {
 	],
 };
 
+/** @type {Content} */
+const PHBird = {
+	id: 'ph_bird',
+	title: 'Splash Bird',
+	cover: lowPHBird,
+	subTitle: 'Splash Screen / Printable Design',
+	descPage: './art#ph_bird',
+	notes: [
+		{
+			type: 'feature',
+			btnUrl: medPHBird,
+			alt: 'Metal Bird holding a Diamond',
+			text:
+				'Was comissioned to create a mascot that could be used as a splash screen on digital media and merch.',
+			src: medPHBird,
+			btnText: 'Download',
+			precedence: 'img',
+		},
+	],
+};
+
 export const projects = [ReplayBotData];
-export const art = [Jane, Esmeralda, RoyalBird];
+export const art = [Jane, Esmeralda, RoyalBird, PHBird];
 
 /** @type {Object.<string, Content>}} */
 export default { art, projects };
@@ -155,8 +177,10 @@ import {
 	refEsmeralda,
 	repDebranch,
 	repInsight,
+	lowPHBird,
+	medPHBird,
 } from './Pictures';
-import { ReplayBotUi } from './Videos';
+import { ReplayBotStateless, ReplayBotUi } from './Videos';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
@@ -184,10 +208,10 @@ import { ReplayBotUi } from './Videos';
  *
  * @typedef {object} VideoNote - Notes are the messages attached
  * @prop {string} VideoNote.src - The url of the video
- * @prop {string} [VideoNote.base="30vw"] - The base width of the iframe should take up. 
- * @prop {number} [VideoNote.aspect=16/9] - The aspect ratio of the iframe. 
+ * @prop {string} [VideoNote.base="30vw"] - The base width of the iframe should take up.
+ * @prop {number} [VideoNote.aspect=16/9] - The aspect ratio of the iframe.
  * @prop {string} [VideoNote.title] - Title to be displayed
- * @prop {string} [VideoNote.text] - The description for the video  
+ * @prop {string} [VideoNote.text] - The description for the video
  * @prop {"video" } VideoNote.type - The type of the feature
  *
  * @typedef {
@@ -196,7 +220,7 @@ import { ReplayBotUi } from './Videos';
 			| HeroNote
 			| VideoNote
 		} Note
- * 
+ *
  * @typedef {object} Button
  * @prop {string} button.btnName - The name of the buttons feature
  * @prop {string} button.btnUrl - The url the button points to
