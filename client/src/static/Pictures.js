@@ -22,3 +22,8 @@ export { default as medPHBird } from '../assets/Art/Creatures/PHBird/mediumResPH
 export { default as repInsight } from '../assets/images/RepBotInsight.webp';
 export { default as repDebranch } from '../assets/images/RepBotDebranch.webp';
 export { default as repThumb } from '../assets/images/RepBotThumbnail.webp';
+
+// DataWrangler
+export { default as wranglerEase } from '../assets/images/DWEaseOfUse.webp';
+export { default as wranglerCmds } from '../assets/images/DWAdaptable.webp';
+export { default as wranglerPrinter } from '../assets/images/DWExtensible.webp';
