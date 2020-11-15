@@ -63,6 +63,49 @@ const ReplayBotData = {
 			text:
 				'Familiarity and ease of use through implementation of common Discord Bot patterns.',
 		},
+		{
+			type: 'description',
+			title: 'Built with my Discord Data Wrangler',
+			// prettier-ignore
+			text:
+				'Powered by my extensible discord data manipulation microservice.',
+			btnText: 'Read more about it',
+			btnUrl: './projects#discord_data_wrangler',
+		},
+	],
+};
+
+/** @type {Content} */
+const DiscordAbstractionData = {
+	title: 'Discord Data Wrangler',
+	subTitle: 'Extensible Discord API Data Provider',
+	id: 'discord_data_wrangler',
+	descPage: './projects#discord_data_wrangler',
+	// TODO : ADD CUSTOM DISCORD SERVER AS A PLAYGROUND
+	buttons: [{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: '' }],
+	notes: [
+		{
+			type: 'feature',
+			title: 'Convenient',
+			text: 'Provides an easy to use bot to retrieve up to date discord data.',
+			src: wranglerEase,
+		},
+		{
+			type: 'feature',
+			title: 'Pluggable',
+			text:
+				'Can be extended with custom formatters to consolidate all possible types of output, from human readable to a custom handlebars format that only liquipedia uses, as well as data filters and its own query api.',
+			src: wranglerPrinter,
+		},
+		{
+			type: 'feature',
+			title: 'High Reusability',
+			src: wranglerCmds,
+			text:
+				'Used to moderate discord servers with over 2k users, provide for the replay bot and give reliable usage statistics to entice advertisers.',
+			btnText: 'Goto Replay Bot',
+			btnUrl: './projects#replay_bot',
+		},
 	],
 };
 
@@ -160,7 +203,7 @@ const PHBird = {
 	],
 };
 
-export const projects = [ReplayBotData];
+export const projects = [ReplayBotData, DiscordAbstractionData];
 export const art = [Jane, Esmeralda, RoyalBird, PHBird];
 
 /** @type {Object.<string, Content>}} */
@@ -180,6 +223,10 @@ import {
 	repInsight,
 	lowPHBird,
 	medPHBird,
+	repThumb,
+	wranglerEase,
+	wranglerPrinter,
+	wranglerCmds,
 } from './Pictures';
 import { ReplayBotStateless, ReplayBotUi } from './Videos';
 
@@ -216,7 +263,7 @@ import { ReplayBotStateless, ReplayBotUi } from './Videos';
  * @prop {"video" } VideoNote.type - The type of the feature
  *
  * @typedef {
-			FeatureNote
+ 			FeatureNote
 			| DescriptionNote
 			| HeroNote
 			| VideoNote
