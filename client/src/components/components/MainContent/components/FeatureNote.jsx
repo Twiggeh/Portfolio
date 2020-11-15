@@ -45,7 +45,10 @@ const ImgModalCss = {
 			prevType : import('../../../../static/Projects').Note["type"],
 			index: number,
 		}} param0 */
-const FeatureNote = ({ note, renderReverse }) => {
+const FeatureNote = props => {
+	const note = props.note;
+	const renderReverse = props.renderReverse;
+	console.log(note);
 	const {
 		title,
 		src = khala,
@@ -67,11 +70,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 
 	return (
 		<FeatureWrapper>
-			{title ? (
-				<a href={btnUrl}>
-					<Title bigGap={!renderReverse}>{title}</Title>
-				</a>
-			) : null}
+			{title ? <Title bigGap={!renderReverse}>{title}</Title> : null}
 			<FeatureContentWrap reverse={renderReverse}>
 				{isImg ? (
 					<FeatureImg
@@ -96,7 +95,6 @@ const FeatureNote = ({ note, renderReverse }) => {
 };
 
 var FeatureWrapper = styled.div`
-	padding-top: 2.5em;
 	display: flex;
 	flex-direction: column;
 `;
@@ -133,7 +131,6 @@ var FeatureContentWrap = styled.div`
 			: `${Description} {
 				margin-top: -0.35em;
 			}`};
-	padding-bottom: 1.5rem;
 	${[mq[1]]} {
 		flex-wrap: wrap;
 	}

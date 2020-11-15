@@ -19,22 +19,38 @@ const NoteRenderer = ({ notes }) => {
 		switch (note.type) {
 			case 'feature': {
 				checkPrevReverse(i);
-				result.push(<FeatureNote note={note} key={i} renderReverse={reverse} />);
+				result.push(
+					<NoteSpacer key={i}>
+						<FeatureNote note={note} renderReverse={reverse} />
+					</NoteSpacer>
+				);
 				checkNextReverse(i);
 				break;
 			}
 			case 'video': {
 				checkPrevReverse(i);
-				result.push(<VideoNote note={note} key={i} reverse={reverse} />);
+				result.push(
+					<NoteSpacer key={i}>
+						<VideoNote note={note} reverse={reverse} />
+					</NoteSpacer>
+				);
 				checkNextReverse(i);
 				break;
 			}
 			case 'description': {
-				result.push(<DescriptionNote note={note} key={i} />);
+				result.push(
+					<NoteSpacer key={i}>
+						<DescriptionNote note={note} />
+					</NoteSpacer>
+				);
 				break;
 			}
 			case 'hero': {
-				result.push(<HeroNote note={note} key={i} />);
+				result.push(
+					<NoteSpacer key={i}>
+						<HeroNote note={note} />
+					</NoteSpacer>
+				);
 				break;
 			}
 		}
@@ -42,6 +58,12 @@ const NoteRenderer = ({ notes }) => {
 	});
 	return <NoteWrapper>{result}</NoteWrapper>;
 };
+
+var NoteSpacer = styled.div`
+	margin-top: 2.5rem;
+	margin-bottom: 2rem;
+`;
+
 var NoteWrapper = styled.div`
 	margin-left: ${styles.contentPaddingSides};
 	margin-right: ${styles.contentPaddingSides};

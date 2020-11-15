@@ -18,20 +18,8 @@ DescriptionNote.propTypes = {
 var BtnDescWrapper = styled.div`
 	margin-top: 2em;
 	margin-bottom: 2em;
-	display: flex;
-	align-items: flex-start;
-	flex-flow: row wrap;
 	${Description} {
-		margin-top: -0.2em;
-		margin-right: 2em;
-		margin-bottom: 0;
-		flex: 1 2 50%;
-	}
-	${[queries.mainQueries[1]]} {
-		${Description} {
-			margin-right: 0;
-			margin-bottom: 1.5em;
-		}
+		margin-bottom: 2em;
 	}
 `;
 
