@@ -8,6 +8,7 @@ import {
 } from '../../../../../styles/globalStyle';
 
 var ButtonS = css`
+	display: block;
 	position: relative;
 	font-family: ${fonts.mainFont};
 	color: ${colors.whiteText};
