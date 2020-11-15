@@ -45,10 +45,7 @@ const ImgModalCss = {
 			prevType : import('../../../../static/Projects').Note["type"],
 			index: number,
 		}} param0 */
-const FeatureNote = props => {
-	const note = props.note;
-	const renderReverse = props.renderReverse;
-	console.log(note);
+const FeatureNote = ({ note, renderReverse }) => {
 	const {
 		title,
 		src = khala,
