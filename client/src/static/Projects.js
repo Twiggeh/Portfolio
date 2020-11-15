@@ -4,6 +4,7 @@ const ReplayBotData = {
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
 	descPage: './projects#replay_bot',
+	cover: repThumb,
 	buttons: [
 		{
 			btnName: 'Github',

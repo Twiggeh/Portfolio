@@ -21,3 +21,4 @@ export { default as medPHBird } from '../assets/Art/Creatures/PHBird/mediumResPH
 // RepBot
 export { default as repInsight } from '../assets/images/RepBotInsight.webp';
 export { default as repDebranch } from '../assets/images/RepBotDebranch.webp';
+export { default as repThumb } from '../assets/images/RepBotThumbnail.webp';
