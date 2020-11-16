@@ -27,3 +27,4 @@ export { default as repThumb } from '../assets/images/RepBotThumbnail.webp';
 export { default as wranglerEase } from '../assets/images/DWEaseOfUse.webp';
 export { default as wranglerCmds } from '../assets/images/DWAdaptable.webp';
 export { default as wranglerPrinter } from '../assets/images/DWExtensible.webp';
+export { default as wranglerThumb } from '../assets/images/DWThumb.webp';

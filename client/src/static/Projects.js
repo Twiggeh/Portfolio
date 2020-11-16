@@ -81,6 +81,7 @@ const DiscordAbstractionData = {
 	subTitle: 'Extensible Discord API Data Provider',
 	id: 'discord_data_wrangler',
 	descPage: './projects#discord_data_wrangler',
+	cover: wranglerThumb,
 	// TODO : ADD CUSTOM DISCORD SERVER AS A PLAYGROUND
 	buttons: [{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: '' }],
 	notes: [
@@ -227,6 +228,7 @@ import {
 	wranglerEase,
 	wranglerPrinter,
 	wranglerCmds,
+	wranglerThumb,
 } from './Pictures';
 import { ReplayBotStateless, ReplayBotUi } from './Videos';
 
