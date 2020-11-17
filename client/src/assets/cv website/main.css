@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,500;0,600;0,700;0,800;1,400&display=swap');
+/* http://meyerweb.com/eric/tools/css/reset/ 
+  v2.0 | 20110126
+  License: none (public domain)
+*/
+/* prettier-ignore */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+/* prettier-ignore */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+/* prettier-ignore */
+ol, ul {
+	list-style: none;
+}
+/* prettier-ignore */
+blockquote, q {
+	quotes: none;
+}
+/* prettier-ignore */
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+	font-family: Mulish, sans-serif;
+	--title-size: clamp(55px, 6.2vw, 160px);
+	--margin-br: clamp(12px, 2.5vw, 35px);
+	--title-weight: 600;
+	--title-spacing: 0.05em;
+	padding: 6rem;
+	line-height: 1.3em;
+	position: relative;
+}
+
+/* Name (Title) */
+h1 {
+	line-height: normal;
+	font-size: var(--title-size);
+	font-weight: var(--title-weight);
+	letter-spacing: var(--title-spacing);
+	text-transform: uppercase;
+}
+
+/* Software Engineer, Illustrator */
+h4 {
+	line-height: normal;
+	font-weight: 200;
+	font-size: max(25px, calc(var(--title-size) * 0.2));
+}
+
+hr {
+	border-color: gray;
+	border-top: 0;
+	margin-top: calc(var(--margin-br) * 0.5);
+	margin-bottom: var(--margin-br);
+}
+
+#flexWrap {
+	display: flex;
+	position: relative;
+}
+
+#main {
+	width: 80ch;
+	margin-left: var(--margin-br);
+}
+
+#side {
+	font-weight: 500;
+	margin-right: var(--margin-br);
+}
+
+#side h3 {
+	line-height: normal;
+	font-weight: 800;
+}
+
+#side li {
+	list-style: none;
+}
+
+/* Contact, Skills, Programming Experience */
+h2 {
+	line-height: normal;
+	font-weight: 700;
+	font-size: calc(var(--title-size) * 0.3);
+	text-transform: uppercase;
+	letter-spacing: 0.18em;
+	position: relative;
+	margin-bottom: calc(var(--margin-br) * 1.5);
+}
+
+#side > h2:not(:first-child) {
+	margin-top: calc(var(--margin-br) * 1.5);
+}
+
+#main > h2:not(:first-child) {
+	margin-top: calc(var(--margin-br) * 1.5) !important;
+}
+
+h2::after {
+	content: '';
+	background-color: black;
+	width: 45px;
+	height: 3px;
+	position: absolute;
+	left: 0;
+	bottom: calc(var(--margin-br) * -0.5);
+}
+
+/* ADDRESS SC2ReplayBot */
+h3 {
+	margin-top: calc(var(--margin-br) * 0.9);
+	margin-bottom: calc(var(--margin-br) * 0.2);
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.vr {
+	background-color: gray;
+	min-width: 1px;
+	margin-top: calc(-1 * var(--margin-br));
+	padding-bottom: 100%;
+}
+
+/* Decoration */
+#triangleTop {
+	width: 25vw;
+	height: 25vw;
+	background: linear-gradient(
+		to top right,
+		transparent 0%,
+		transparent 50%,
+		white 51%,
+		white 54%,
+		black 54%,
+		black 100%
+	);
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#triangleBottom {
+	width: 25vw;
+	height: 25vw;
+	background: linear-gradient(
+		to bottom left,
+		transparent 0%,
+		transparent 50%,
+		white 51%,
+		white 54%,
+		black 50%,
+		black 100%
+	);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+li {
+	margin-top: 0.5em;
+	list-style: inside circle;
+}
+
+/* Links */
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+.italic {
+	font-style: italic;
+}

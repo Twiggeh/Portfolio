@@ -85,6 +85,26 @@ module.exports = {
 					},
 				},
 			},
+			//			{
+			//				test: /\.html?$/,
+			//				use: {
+			//					loader: 'file-loader',
+			//					options: {
+			//						name: '[name].[ext]',
+			//						outputPath: 'webpages',
+			//					},
+			//				},
+			//			},
+			{
+				test: /\.pdf$/,
+				use: {
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: 'public/pdf/',
+					},
+				},
+			},
 			{
 				test: /\.svg$/,
 				use: [
