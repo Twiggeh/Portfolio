@@ -3,6 +3,7 @@ import React from 'react';
 import { fontSizes, styles } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
 import AnimatorData from './components/AnimatorContext';
+import Title from './components/Title';
 import useAnimator from './components/useAnimator';
 import FormInputCss from './FormInputCss';
 import Select from './Select';
@@ -28,7 +29,7 @@ const Form = () => {
 	return (
 		<AnimatorData.Provider value={{ animStore, animate, getCss }}>
 			<FormWrap>
-				<FormTitle key='FormTitle'>Contact me</FormTitle>
+				<Title>Contact me</Title>
 				<Label htmlFor='email' key='Email'>
 					Email
 				</Label>
@@ -52,6 +53,10 @@ const Form = () => {
 						display: block;
 						${getCss('bSel')}
 					`}
+					onClick={e => {
+						e.preventDefault();
+						fetch({ type: 'POST' });
+					}}
 				/>
 			</FormWrap>
 		</AnimatorData.Provider>
@@ -66,13 +71,7 @@ var Input = styled.input`
 	${FormInputCss}
 `;
 
-var FormTitle = styled.div`
-	font-size: ${fontSizes.mainNoteTitle};
-	margin-bottom: 2rem;
-`;
-
-var FormWrap = styled.div`
-	margin: ${styles.contentPaddingSides};
+var FormWrap = styled.form`
 	--formWidth: clamp(400px, 35vw, 50vw);
 	width: var(--formWidth);
 	--padding-Option: max(1rem, calc(0.8 * var(--font-size)));
