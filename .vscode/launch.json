@@ -16,9 +16,10 @@
 			"internalConsoleOptions": "neverOpen",
 			"name": "server",
 			"program": "${workspaceFolder}/server/app.js",
+			"cwd": "${workspaceFolder}/server",
 			"request": "launch",
 			"restart": true,
-			"runtimeExecutable": "/home/twiggeh/.yarn/bin/nodemon",
+			"runtimeExecutable": "nodemon",
 			"skipFiles": ["<node_internals>/**"],
 			"type": "pwa-node"
 		},
