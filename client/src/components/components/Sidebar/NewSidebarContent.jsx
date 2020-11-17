@@ -13,7 +13,7 @@ const NewSidebarContent = ({
 				<SideBtnWrap>
 					{buttons.map(
 						({ btnIcn, btnIcnFallback, btnName, btnUrl, svg: SVG, modal }, i) => (
-							<SideBtn
+							<SmallButton
 								key={i}
 								href={btnUrl}
 								onClick={e => {
@@ -21,15 +21,10 @@ const NewSidebarContent = ({
 										e.preventDefault();
 										setModal(modal);
 									}
-								}}>
-								<HoverBorder
-									customCss={`width: calc(100% + 2px) !important;
-										height: calc(100% + 2px) !important;
-										top: -1px;
-										left: -1px;`}
-								/>
+								}}
+							>
 								{SVG ? <SVG /> : btnIcn}
-							</SideBtn>
+							</SmallButton>
 						)
 					)}
 				</SideBtnWrap>
@@ -65,33 +60,6 @@ var SideBtnWrap = styled.div`
 var SideImg = styled.img`
 	max-width: 100%;
 	min-width: calc(100% - 2vw);
-`;
-
-var SideBtn = styled.a`
-	pointer-events: all;
-	display: flex;
-	position: relative;
-	justify-content: center;
-	align-items: center;
-	${styles.outline};
-	svg {
-		width: 2vw;
-	}
-	width: 2.8vw;
-	height: 2.8vw;
-	margin-right: 4%;
-	background: ${colors.darkestInfill};
-	z-index: 2;
-	path,
-	svg {
-		transition: all 250ms ease-in-out;
-	}
-	:hover {
-		path,
-		svg {
-			fill: hotpink;
-		}
-	}
 `;
 
 var SideWrapper = styled.a`
@@ -141,3 +109,4 @@ import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider';
 import { khala } from 'pictures';
 import HoverBorder from '../HoverBorder';
+import SmallButton from '../../SmallButton';
