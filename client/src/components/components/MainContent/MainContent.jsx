@@ -1,5 +1,11 @@
 const mq = queries.mainQueries;
-const bottomLine = styles.customOutline(0, 0, 1);
+const bottomLine = `
+	${styles.customOutline(0, 0, 1)}
+	padding-top: clamp(30px, 4vw, 40px);
+	padding-right: clamp(40px, 6vw, 60px);
+	padding-bottom: clamp(30px, 4vw, 40px);
+	padding-left: clamp(40px, 6vw, 60px);
+`;
 
 /** @param {MainContentInput} param0 */
 const MainContent = ({ data: { title, subTitle, notes, buttons, id } }) => {
@@ -96,6 +102,7 @@ import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
 import NoteRenderer from './components/NoteRenderer.jsx';
 import MediumButtons from '../../MediumButtons.jsx';
+import { css } from '@emotion/core';
 /** @typedef {{
 	data: import('../../../static/Projects.js').Content
 }} MainContentInput */

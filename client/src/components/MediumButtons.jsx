@@ -66,10 +66,6 @@ var BtnList = styled.section`
 	flex-grow: 0;
 	flex-direction: column;
 	justify-content: center;
-	padding-top: clamp(30px, 4vw, 40px);
-	padding-bottom: clamp(30px, 4vw, 40px);
-	padding-left: clamp(40px, 6vw, 60px);
-	padding-right: clamp(40px, 6vw, 60px);
 	${[mq[1]]} {
 		flex-direction: row;
 		justify-content: space-between;
@@ -165,6 +161,7 @@ var VertSep = styled.div`
 MediumButtons.propTypes = {
 	buttons: PropTypes.array,
 	setModal: PropTypes.func,
+	customCss: PropTypes.string,
 };
 
 export default MediumButtons;
