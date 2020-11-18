@@ -1,20 +1,21 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import https from 'https';
 import keys from './keys/keys.js';
 import { join, resolve } from 'path';
 import FormSubmission from './Models/FormSubmission.js';
 import { cwd } from 'process';
+import { readFileSync } from 'fs';
 
 const app = express();
 
 app.disable('x-powered-by');
 
 const allowedOrigins = [
-	'http://localhost:8080',
-	'http://127.0.0.1:8080',
-	'http://www.twiggeh.xyz',
-	'http://localhost:5000',
+	'https://localhost:8080',
+	'https://127.0.0.1:8080',
+	'https://www.twiggeh.xyz',
 	undefined,
 ];
 
@@ -43,11 +44,15 @@ app.use(
 	})
 );
 
-app.post('/api/submit', async (req, res) => {
+app.post('/api/v1/submit', async (req, res) => {
 	console.log(req.body);
 	//const formSubmission = new FormSubmission({
 	//
 	//})
+});
+
+app.get('/api/v1/socket_playground', async () => {
+	// TODO : Add socket playground
 });
 
 app.get('/public/*', (req, res) => {
@@ -58,6 +63,14 @@ app.get('*', (req, res) => {
 	res.sendFile(resolve(cwd(), '../client', 'dist', 'index.html'));
 });
 
-app.listen(5000, () => {
-	console.log('Online on Port 5000');
-});
+https
+	.createServer(
+		{
+			key: readFileSync(resolve(cwd(), 'cert', 'privkey.pem')),
+			cert: readFileSync(resolve(cwd(), 'cert', 'fullchain.pem')),
+		},
+		app
+	)
+	.listen(8080, () => {
+		console.log('Secure Server is listening on port 8080');
+	});
