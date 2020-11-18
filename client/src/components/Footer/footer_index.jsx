@@ -3,9 +3,9 @@ const Footer = () => {
 		<FooterS>
 			<FooterContentWrap>
 				<LinkWrap>
-					<Link>Licenses</Link>
-					<Link>Contact</Link>
-					<Link>Privacy</Link>
+					{/*<Link>Licenses</Link>*/}
+					<Link href='./Contact'>About</Link>
+					<Link href='https://github.com/Twiggeh'>Github</Link>
 				</LinkWrap>
 				<Copyright>
 					Copyright &copy; Twiggeh -
@@ -31,6 +31,7 @@ var FooterContentWrap = styled.div`
 `;
 
 var Link = styled.a`
+	text-decoration: none;
 	font-size: ${fontSizes.text};
 	position: relative;
 	transition: color 200ms ease-in;
