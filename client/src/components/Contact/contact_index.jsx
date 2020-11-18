@@ -39,6 +39,7 @@ const Contact = () => {
 
 var TextBlock = styled.div`
 	font-size: ${fontSizes.text};
+	line-height: 1.3em;
 	margin-bottom: 2.5rem;
 `;
 
