@@ -102,7 +102,6 @@ import { useContext } from 'react';
 import ModalContext from '../../Providers/modalProvider.jsx';
 import NoteRenderer from './components/NoteRenderer.jsx';
 import MediumButtons from '../../MediumButtons.jsx';
-import { css } from '@emotion/core';
 /** @typedef {{
 	data: import('../../../static/Projects.js').Content
 }} MainContentInput */

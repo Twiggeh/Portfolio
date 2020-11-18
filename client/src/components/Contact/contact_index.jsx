@@ -48,12 +48,10 @@ var ContactWrap = styled.div`
 	& > * {
 		margin-right: 10vw;
 	}
-	${[mq[0]]} {
-	}
 	${mq[1]} {
-		width: 92%;
 		margin-top: 7rem;
 		flex-wrap: wrap-reverse;
+		margin-right: 0;
 	}
 `;
 
