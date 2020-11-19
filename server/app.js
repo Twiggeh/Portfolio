@@ -7,6 +7,7 @@ import { join, resolve } from 'path';
 import FormSubmission from './Models/FormSubmission.js';
 import { cwd } from 'process';
 import { readFileSync } from 'fs';
+import http from 'http';
 
 const app = express();
 
@@ -62,6 +63,19 @@ app.get('/public/*', (req, res) => {
 app.get('*', (req, res) => {
 	res.sendFile(resolve(cwd(), '../client', 'dist', 'index.html'));
 });
+
+http
+	.createServer((req, res) => {
+		console.log('Redirecting to: ', `https://${req.headers.host}${req.url});`);
+		res
+			.writeHead(301, {
+				Location: `https://${req.headers.host}${req.url});`,
+			})
+			.end();
+	})
+	.listen(8081, () => {
+		console.log('http upgrade server online on port 8081');
+	});
 
 https
 	.createServer(
