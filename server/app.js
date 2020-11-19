@@ -3,13 +3,27 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import https from 'https';
 import keys from './keys/keys.js';
-import { join, resolve } from 'path';
+import { join, resolve, dirname } from 'path';
 import FormSubmission from './Models/FormSubmission.js';
 import { cwd } from 'process';
-import { readFileSync } from 'fs';
+import { readFileSync, createWriteStream } from 'fs';
 import http from 'http';
+import morgan from 'morgan';
+const __dirname = dirname(new URL(import.meta.url).pathname);
 
 const app = express();
+
+const logStream = createWriteStream(join(__dirname, 'access.log'), { flags: 'a' });
+const myDate = new Date();
+
+morgan.token('time', () => {
+	console.log(myDate.toISOString());
+	return myDate.toISOString();
+});
+
+const logger = morgan(':time :url :method :remote-addr :user-agent :response-time ms', {
+	stream: logStream,
+});
 
 app.disable('x-powered-by');
 
@@ -45,11 +59,12 @@ app.use(
 	})
 );
 
+app.use(logger);
 
-app.use((req,res, next)=>{
-	if(req.hostname.startsWith("www."))	return next();
+app.use((req, res, next) => {
+	if (req.hostname.startsWith('www.')) return next();
 	res.redirect(301, `https://www.${req.hostname}${req.url}`);
-})
+});
 
 app.post('/api/v1/submit', async (req, res) => {
 	console.log(req.body);
@@ -70,14 +85,17 @@ app.get('*', (req, res) => {
 	res.sendFile(resolve(cwd(), '../client', 'dist', 'index.html'));
 });
 
-http
+const httpServer = http
 	.createServer((req, res) => {
 		console.log('Redirecting to: ', `https://www.twiggeh.xyz${req.url}`);
-		res
-			.writeHead(301, {
-				Location: `https://www.twiggeh.xyz${req.url}`,
-			})
-			.end();
+		logger(req, res, err => {
+			if (err) console.error(err);
+			res
+				.writeHead(301, {
+					Location: `https://www.twiggeh.xyz${req.url}`,
+				})
+				.end();
+		});
 	})
 	.listen(8081, () => {
 		console.log('http upgrade server online on port 8081');
