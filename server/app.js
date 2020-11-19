@@ -17,7 +17,6 @@ const logStream = createWriteStream(join(__dirname, 'access.log'), { flags: 'a' 
 const myDate = new Date();
 
 morgan.token('time', () => {
-	console.log(myDate.toISOString());
 	return myDate.toISOString();
 });
 
