@@ -45,6 +45,12 @@ app.use(
 	})
 );
 
+
+app.use((req,res, next)=>{
+	if(req.hostname.startsWith("www."))	return next();
+	res.redirect(301, `https://www.${req.hostname}${req.url}`);
+})
+
 app.post('/api/v1/submit', async (req, res) => {
 	console.log(req.body);
 	//const formSubmission = new FormSubmission({
@@ -66,10 +72,10 @@ app.get('*', (req, res) => {
 
 http
 	.createServer((req, res) => {
-		console.log('Redirecting to: ', `https://${req.headers.host}${req.url});`);
+		console.log('Redirecting to: ', `https://www.twiggeh.xyz${req.url}`);
 		res
 			.writeHead(301, {
-				Location: `https://${req.headers.host}${req.url});`,
+				Location: `https://www.twiggeh.xyz${req.url}`,
 			})
 			.end();
 	})
