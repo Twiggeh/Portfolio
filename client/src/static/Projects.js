@@ -31,7 +31,7 @@ const ReplayBotData = {
 		{
 			btnName: 'Hosted',
 			svg: svgs.DiscordLogo,
-			btnUrl: 'https:discord.gg/f5gQQPP',
+			btnUrl: 'https://discord.gg/wH7aY2q7qT',
 		},
 	],
 	notes: [
@@ -82,8 +82,9 @@ const DiscordAbstractionData = {
 	id: 'discord_data_wrangler',
 	descPage: './projects#discord_data_wrangler',
 	cover: wranglerThumb,
-	// TODO : ADD CUSTOM DISCORD SERVER AS A PLAYGROUND
-	buttons: [{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: '' }],
+	buttons: [
+		{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: 'https://discord.gg/wH7aY2q7qT' },
+	],
 	notes: [
 		{
 			type: 'feature',
