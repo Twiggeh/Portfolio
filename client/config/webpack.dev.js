@@ -3,6 +3,7 @@ const process = require('process');
 require('dotenv').config();
 const mode = process.env.NODE_ENV;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 console.log(mode);
 const curProcess = process.cwd();
 
@@ -137,6 +138,9 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.resolve(curProcess, 'src/index.html'),
 			filename: 'index.html',
+		}),
+		new webpack.DefinePlugin({
+			BACKEND_URL: JSON.stringify(process.env.BACKEND_URL),
 		}),
 	],
 };

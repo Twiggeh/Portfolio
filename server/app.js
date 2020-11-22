@@ -9,6 +9,17 @@ import { cwd } from 'process';
 import { readFileSync, createWriteStream } from 'fs';
 import http from 'http';
 import morgan from 'morgan';
+import { config } from 'dotenv';
+config();
+
+const SECURE_PORT = 8080;
+const UPGRADE_PORT = 8081;
+const DEV_PORT = 5050;
+
+const isProd = process.env.NODE_ENV === 'production';
+const secureServerPort = isProd ? SECURE_PORT : DEV_PORT;
+const upgradeServerPort = UPGRADE_PORT;
+
 const __dirname = dirname(new URL(import.meta.url).pathname);
 
 const app = express();
@@ -17,7 +28,6 @@ const logStream = createWriteStream(join(__dirname, 'access.log'), { flags: 'a' 
 const myDate = new Date();
 
 morgan.token('time', () => {
-	console.log(myDate.toISOString());
 	return myDate.toISOString();
 });
 
@@ -28,8 +38,8 @@ const logger = morgan(':time :url :method :remote-addr :user-agent :response-tim
 app.disable('x-powered-by');
 
 const allowedOrigins = [
-	'https://localhost:8080',
-	'https://127.0.0.1:8080',
+	'http://localhost:5000',
+	'http://127.0.0.1:5000',
 	'https://www.twiggeh.xyz',
 	undefined,
 ];
@@ -61,10 +71,12 @@ app.use(
 
 app.use(logger);
 
+if (isProd) {
 app.use((req, res, next) => {
 	if (req.hostname.startsWith('www.')) return next();
 	res.redirect(301, `https://www.${req.hostname}${req.url}`);
 });
+}
 
 app.post('/api/v1/submit', async (req, res) => {
 	console.log(req.body);
@@ -85,7 +97,8 @@ app.get('*', (req, res) => {
 	res.sendFile(resolve(cwd(), '../client', 'dist', 'index.html'));
 });
 
-const httpServer = http
+if (isProd) {
+	http
 	.createServer((req, res) => {
 		console.log('Redirecting to: ', `https://www.twiggeh.xyz${req.url}`);
 		logger(req, res, err => {
@@ -97,8 +110,8 @@ const httpServer = http
 				.end();
 		});
 	})
-	.listen(8081, () => {
-		console.log('http upgrade server online on port 8081');
+	.listen(upgradeServerPort, () => {
+		console.log(`Http upgrade server online on port ${upgradeServerPort}`);
 	});
 
 https
@@ -109,6 +122,11 @@ https
 		},
 		app
 	)
-	.listen(8080, () => {
-		console.log('Secure Server is listening on port 8080');
+	.listen(secureServerPort, () => {
+		console.log(`Secure Server is listening on port ${secureServerPort}`);
 	});
+} else {
+	app.listen(secureServerPort, () => {
+		console.log(`Dev server is listening on port ${secureServerPort}`);
+	});
+}

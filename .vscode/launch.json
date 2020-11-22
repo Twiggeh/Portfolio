@@ -29,12 +29,24 @@
 			"request": "attach",
 			"skipFiles": ["<node_internals>/**"],
 			"type": "pwa-node"
+		},
+		{
+			"name": "Development Backend",
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"cwd": "${workspaceFolder}/server",
+			"request": "launch",
+			"restart": true,
+			"runtimeExecutable": "yarn",
+			"skipFiles": ["<node_internals>/**"],
+			"type": "pwa-node",
+			"runtimeArgs": ["debug"]
 		}
 	],
 	"compounds": [
 		{
 			"name": "start debug session",
-			"configurations": ["Launch Chrome"],
+			"configurations": ["Launch Chrome", "Development Backend"],
 			"preLaunchTask": "start Webpack",
 			"stopAll": true
 		}
