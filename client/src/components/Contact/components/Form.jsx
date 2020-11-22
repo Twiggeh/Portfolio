@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import React from 'react';
-import { fontSizes, styles } from '../../../styles/globalStyle';
+import React, { useState } from 'react';
+import { fontSizes } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
 import AnimatorData from './components/AnimatorContext';
 import Title from './components/Title';
@@ -34,23 +34,40 @@ const Form = () => {
 					Email
 				</Label>
 				<WrapInHover key='HoverWrapEmail'>
-					<Input key='ContactEmailInput' type='email' required />
+					<Input
+						key='ContactEmailInput'
+						type='email'
+						value={formState.email}
+						onChange={({ target: { value } }) => setFormState('email', value)}
+						required
+					/>
 				</WrapInHover>
 				<Label htmlFor='subject' key='HoverWrapSubject'>
 					Subject
 				</Label>
-				<Select key='Select' />
+				<Select setFormState={setFormState} />
 				<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
 					Message
 				</Label>
 				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
-					<TextArea key='ContactMessageTextArea' name='message' />
+					<TextArea
+						key='ContactMessageTextArea'
+						name='message'
+						value={formState.message}
+						onChange={({ target: { value } }) => setFormState('message', value)}
+					/>
 				</WrapInHover>
 				<Button
-					key='SubmitButton'
 					content='Send'
+					disabled={Object.keys(formState).reduce((acc, curKey) => {
+						const condition =
+							curKey === 'email'
+								? !validateEMail(formState.email)
+								: formState[String(curKey)] === '';
+						return acc === true || condition;
+					}, false)}
 					customCss={`
-						display: block;
+						width: 100%;
 						${getCss('bSel')}
 					`}
 					onClick={e => {

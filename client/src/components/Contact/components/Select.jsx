@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import styled from '@emotion/styled';
 import React, { useContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import OptionList from './OptionList';
 import SelectContext from './SelectContext';
 import AnimatorData from './components/AnimatorContext';
@@ -25,7 +26,7 @@ const StyledSelect = styled.div`
 	${({ customCss }) => customCss}
 `;
 
-const Select = () => {
+const Select = ({ setFormState }) => {
 	const time = 150;
 	const { animate } = useContext(AnimatorData);
 
@@ -72,6 +73,8 @@ const Select = () => {
 					initial: false,
 				};
 
+				setFormState('subject', action.selected);
+
 				animate({
 					type: 'setAnimation',
 					key: 'Sel',
@@ -115,7 +118,8 @@ const Select = () => {
 				open: state.open,
 				selected: state.selected,
 				selectedIndex: state.selectedIndex,
-			}}>
+			}}
+		>
 			<StyledSelect optLength={SelectOpts.length} customCss={getCss('Sel')}>
 				<OptionList
 					options={SelectOpts}
@@ -125,6 +129,10 @@ const Select = () => {
 			</StyledSelect>
 		</SelectContext.Provider>
 	);
+};
+
+Select.propTypes = {
+	setFormState: PropTypes.func,
 };
 
 export default Select;
