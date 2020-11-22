@@ -6,6 +6,7 @@ import AnimatorData from './components/AnimatorContext';
 import Title from './components/Title';
 import useAnimator from './components/useAnimator';
 import FormInputCss from './FormInputCss';
+import useFetch from './hooks/useFetch';
 import Select from './Select';
 import SelectOpts from './SelectOpts';
 import WrapInHover from './WrapInHover';
@@ -24,8 +25,35 @@ const initAnimStore = {
 	},
 };
 
+const validateEMail = email => {
+	// eslint-disable-next-line security/detect-unsafe-regex
+	const res = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return res.test(String(email).toLowerCase());
+};
+
 const Form = () => {
 	const { animStore, animate, getCss } = useAnimator(initAnimStore);
+	const [formState, _setFormState] = useState({
+		subject: '',
+		email: '',
+		message: '',
+	});
+	const setFormState = (name, value) => _setFormState(c => ({ ...c, [name]: value }));
+	const [sendMsgDep, sendMsg] = useState(true);
+
+	// eslint-disable-next-line no-undef
+	const result = useFetch(`${BACKEND_URL}/api/v1/submit`, {
+		fetchOptions: {
+			method: 'POST',
+			body: JSON.stringify(formState),
+			headers: { 'Content-Type': 'application/json' },
+			mode: 'cors',
+		},
+		hookOptions: { dep: sendMsgDep, condition: sendMsgDep },
+	});
+
+	//TODO : display todo's result
+
 	return (
 		<AnimatorData.Provider value={{ animStore, animate, getCss }}>
 			<FormWrap>
@@ -72,7 +100,7 @@ const Form = () => {
 					`}
 					onClick={e => {
 						e.preventDefault();
-						fetch({ type: 'POST' });
+						sendMsg(c => (c += 1));
 					}}
 				/>
 			</FormWrap>

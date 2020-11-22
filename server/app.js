@@ -9,6 +9,7 @@ import { cwd } from 'process';
 import { readFileSync, createWriteStream } from 'fs';
 import http from 'http';
 import morgan from 'morgan';
+import { body, validationResult } from 'express-validator';
 import { config } from 'dotenv';
 config();
 
@@ -76,18 +77,51 @@ app.use(
 app.use(logger);
 
 if (isProd) {
-app.use((req, res, next) => {
-	if (req.hostname.startsWith('www.')) return next();
-	res.redirect(301, `https://www.${req.hostname}${req.url}`);
-});
+	app.use((req, res, next) => {
+		if (req.hostname.startsWith('www.')) return next();
+		res.redirect(301, `https://www.${req.hostname}${req.url}`);
+	});
 }
 
-app.post('/api/v1/submit', async (req, res) => {
-	console.log(req.body);
-	//const formSubmission = new FormSubmission({
-	//
-	//})
-});
+app.post(
+	'/api/v1/submit',
+	[
+		body('email', 'Empty or Invalid Email').isEmail(),
+		body(
+			'subject',
+			'Needs to be a value of "software", "art", "art training", "software training" or "other".'
+		)
+			.escape()
+			.isIn(['software', 'art', 'art training', 'software training', 'other']),
+		body('message', 'No message provided.').escape().trim().isLength({ min: 1 }),
+	],
+	async (req, res) => {
+		const errors = validationResult(req).array();
+		if (errors?.length !== 0) {
+			return res.send({
+				state: 'Failure',
+				message: errors.map(err => err.msg),
+				formData: req.body,
+			});
+		}
+
+		const myFS = new FormSubmission();
+		myFS.email = req.body.email;
+		myFS.date = myDate.toISOString();
+		myFS.subject = req.body.subject;
+		myFS.message = req.body.message;
+
+		try {
+			await myFS.save();
+			res.send({ state: 'Success', message: 'Message has been received.' });
+		} catch {
+			res.send({
+				state: 'Failure',
+				message: 'Please try again later, message could not be saved.',
+			});
+		}
+	}
+);
 
 app.get('/api/v1/socket_playground', async () => {
 	// TODO : Add socket playground
@@ -103,32 +137,32 @@ app.get('*', (req, res) => {
 
 if (isProd) {
 	http
-	.createServer((req, res) => {
-		console.log('Redirecting to: ', `https://www.twiggeh.xyz${req.url}`);
-		logger(req, res, err => {
-			if (err) console.error(err);
-			res
-				.writeHead(301, {
-					Location: `https://www.twiggeh.xyz${req.url}`,
-				})
-				.end();
+		.createServer((req, res) => {
+			console.log('Redirecting to: ', `https://www.twiggeh.xyz${req.url}`);
+			logger(req, res, err => {
+				if (err) console.error(err);
+				res
+					.writeHead(301, {
+						Location: `https://www.twiggeh.xyz${req.url}`,
+					})
+					.end();
+			});
+		})
+		.listen(upgradeServerPort, () => {
+			console.log(`Http upgrade server online on port ${upgradeServerPort}`);
 		});
-	})
-	.listen(upgradeServerPort, () => {
-		console.log(`Http upgrade server online on port ${upgradeServerPort}`);
-	});
 
-https
-	.createServer(
-		{
-			key: readFileSync(resolve(cwd(), 'cert', 'privkey.pem')),
-			cert: readFileSync(resolve(cwd(), 'cert', 'fullchain.pem')),
-		},
-		app
-	)
-	.listen(secureServerPort, () => {
-		console.log(`Secure Server is listening on port ${secureServerPort}`);
-	});
+	https
+		.createServer(
+			{
+				key: readFileSync(resolve(cwd(), 'cert', 'privkey.pem')),
+				cert: readFileSync(resolve(cwd(), 'cert', 'fullchain.pem')),
+			},
+			app
+		)
+		.listen(secureServerPort, () => {
+			console.log(`Secure Server is listening on port ${secureServerPort}`);
+		});
 } else {
 	app.listen(secureServerPort, () => {
 		console.log(`Dev server is listening on port ${secureServerPort}`);
