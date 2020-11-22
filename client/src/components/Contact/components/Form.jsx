@@ -50,6 +50,15 @@ const Form = () => {
 			mode: 'cors',
 		},
 		hookOptions: { dep: sendMsgDep, condition: sendMsgDep },
+		callbacks: {
+		successCb: ()=>{
+			sendMsg(0);
+			setFormState({subject: "", email: "", message: "Message received!"})
+		},
+		failCb: ()=>{
+			sendMsg(0);
+			setFormState({subject: "", email: "", message: "Message was not received ;_;"})
+		}}
 	});
 
 	//TODO : display todo's result
