@@ -54,6 +54,10 @@ app.use((req, res, next) => {
 	res.header('X-Frame-Options', 'deny');
 	res.header('X-Content-Type-Options', 'nosniff');
 	res.header('Access-Control-Allow-Credentials', 'true');
+	res.header(
+		'Access-Control-Allow-Origin',
+		isProd ? 'https://www.twiggeh.xyz' : 'localhost:5000'
+	);
 	next();
 });
 

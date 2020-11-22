@@ -16,5 +16,7 @@
 	"author": "Twiggeh",
 	"type": "module",
 	"license": "MIT",
-	"proxy": "http://localhost:8080"
+	"devDependencies": {
+		"eslint-plugin-security": "^1.4.0"
+	}
 }
