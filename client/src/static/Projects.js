@@ -31,7 +31,7 @@ const ReplayBotData = {
 		{
 			btnName: 'Hosted',
 			svg: svgs.DiscordLogo,
-			btnUrl: 'https://discord.gg/wH7aY2q7qT',
+			btnUrl: 'https://www.discord.gg/wH7aY2q7qT',
 		},
 	],
 	notes: [
@@ -83,7 +83,7 @@ const DiscordAbstractionData = {
 	descPage: './projects#discord_data_wrangler',
 	cover: wranglerThumb,
 	buttons: [
-		{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: 'https://discord.gg/wH7aY2q7qT' },
+		{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: 'https://www.discord.gg/wH7aY2q7qT' },
 	],
 	notes: [
 		{
