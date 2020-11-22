@@ -136,7 +136,7 @@ module.exports = {
 	node: { __dirname: true, __filename: true }, // to get correct __dirname and __filename
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.resolve(curProcess, 'src/index.html'),
+			template: path.resolve(curProcess, 'src/index_dev.html'),
 			filename: 'index.html',
 		}),
 		new webpack.DefinePlugin({
