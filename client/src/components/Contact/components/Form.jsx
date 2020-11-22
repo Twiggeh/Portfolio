@@ -51,14 +51,19 @@ const Form = () => {
 		},
 		hookOptions: { dep: sendMsgDep, condition: sendMsgDep },
 		callbacks: {
-		successCb: ()=>{
-			sendMsg(0);
-			setFormState({subject: "", email: "", message: "Message received!"})
+			successCb: () => {
+				sendMsg(0);
+				_setFormState({ subject: '', email: '', message: 'Message received!' });
+			},
+			failCb: () => {
+				sendMsg(0);
+				_setFormState({
+					subject: '',
+					email: '',
+					message: 'Message was not received ;_;',
+				});
+			},
 		},
-		failCb: ()=>{
-			sendMsg(0);
-			setFormState({subject: "", email: "", message: "Message was not received ;_;"})
-		}}
 	});
 
 	//TODO : display todo's result
