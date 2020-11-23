@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 /** @type {Fetch}  */
 const useFetch = (
 	url,
@@ -18,6 +20,7 @@ const useFetch = (
 		res: undefined,
 		loading: false,
 		error: false,
+		uuid: undefined,
 	};
 
 	const FStateReducer = (state, action) => {
@@ -25,9 +28,9 @@ const useFetch = (
 			case 'loading':
 				return { ...state, loading: true };
 			case 'error':
-				return { res: undefined, loading: false, error: action.payload };
+				return { ...state, res: undefined, loading: false, error: action.payload };
 			case 'setData':
-				return { res: action.payload, loading: false, error: false };
+				return { ...state, res: action.payload, loading: false, error: false };
 		}
 	};
 	const [fState, fDispatch] = useReducer(FStateReducer, initFState);
@@ -36,7 +39,7 @@ const useFetch = (
 	useEffect(() => {
 		if (!condition) return;
 		const fetchData = async () => {
-			fDispatch({ type: 'loading' });
+			fDispatch({ type: 'loading', uuid: uuid() });
 
 			const result = [];
 
@@ -131,7 +134,8 @@ export default useFetch;
   }) =>  {
     res: any;
     error: string | object;
-    loading: boolean;
+		loading: boolean;
+		uuid: string;
   }} Fetch
   */
 
