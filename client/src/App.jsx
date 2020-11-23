@@ -21,7 +21,10 @@ const App = () => {
 			<Global styles={globalStyle} />
 			<ModalContext.Provider value={{ modal, setModal }}>
 				<FlashMessagesContext.Provider value={{ setFlashMessages, addFlashMessages }}>
-					<FlashMessages flashMessages={flashMessages} />
+					<FlashMessages
+						flashMessages={flashMessages}
+						setFlashMessages={setFlashMessages}
+					/>
 					<Modals />
 					<Body />
 				</FlashMessagesContext.Provider>
