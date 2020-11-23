@@ -71,22 +71,37 @@ const Form = () => {
 	});
 
 	useEffect(() => {
-		const messages = [];
-		if (result.loading) messages.push({ message: 'Sending Message', type: 'Warning' });
+		let message;
+
+		if (result.loading)
+			message = { message: 'Sending Message', type: 'Warning', uuid: result.uuid };
+
 		if (result.res)
-			messages.push({
+			message = {
 				delay: 2700,
 				message: result.res?.message,
 				type: 'Success',
 				fillMode: 'both',
-			});
+				uuid: result.uuid,
+			};
+
 		if (result.error)
-			messages.push({ delay: 1200, message: result.res?.message, type: 'Failure' });
-		if (messages.length === 0) return;
+			message = {
+				delay: 1200,
+				message: result.res?.message,
+				type: 'Failure',
+				uuid: result.uuid,
+			};
+
+		if (message === undefined) return;
+
 		setFlashMessages(cur => {
 			const index = cur.findIndex(({ uuid }) => uuid === result.uuid);
-			if (index === -1) return [...cur, ...messages];
-			return (cur[Number(index)] = messages);
+
+			if (index === -1) return [...cur, message];
+
+			cur[Number(index)] = { ...message, index };
+			return [...cur];
 		});
 	}, [result.res, result.error, result.loading, result.uuid]);
 

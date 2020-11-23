@@ -26,7 +26,7 @@ const useFetch = (
 	const FStateReducer = (state, action) => {
 		switch (action.type) {
 			case 'loading':
-				return { ...state, loading: true };
+				return { ...state, loading: true, uuid: action.uuid };
 			case 'error':
 				return { ...state, res: undefined, loading: false, error: action.payload };
 			case 'setData':
