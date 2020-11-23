@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { fontSizes } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
+import FlashMessagesContext from '../../FlashMessage/FlashMessagesContext';
 import AnimatorData from './components/AnimatorContext';
 import Title from './components/Title';
 import useAnimator from './components/useAnimator';
@@ -33,13 +34,16 @@ const validateEMail = email => {
 
 const Form = () => {
 	const { animStore, animate, getCss } = useAnimator(initAnimStore);
+
+	const { setFlashMessages } = useContext(FlashMessagesContext);
+
 	const [formState, _setFormState] = useState({
 		subject: '',
 		email: '',
 		message: '',
 	});
 	const setFormState = (name, value) => _setFormState(c => ({ ...c, [name]: value }));
-	const [sendMsgDep, sendMsg] = useState(true);
+	const [sendMsgDep, sendMsg] = useState(0);
 
 	// eslint-disable-next-line no-undef
 	const result = useFetch(`${BACKEND_URL}/api/v1/submit`, {
@@ -66,7 +70,25 @@ const Form = () => {
 		},
 	});
 
-	//TODO : display todo's result
+	useEffect(() => {
+		const messages = [];
+		if (result.loading) messages.push({ message: 'Sending Message', type: 'Warning' });
+		if (result.res)
+			messages.push({
+				delay: 2700,
+				message: result.res?.message,
+				type: 'Success',
+				fillMode: 'both',
+			});
+		if (result.error)
+			messages.push({ delay: 1200, message: result.res?.message, type: 'Failure' });
+		if (messages.length === 0) return;
+		setFlashMessages(cur => {
+			const index = cur.findIndex(({ uuid }) => uuid === result.uuid);
+			if (index === -1) return [...cur, ...messages];
+			return (cur[Number(index)] = messages);
+		});
+	}, [result.res, result.error, result.loading, result.uuid]);
 
 	return (
 		<AnimatorData.Provider value={{ animStore, animate, getCss }}>
