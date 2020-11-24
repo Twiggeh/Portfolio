@@ -39,7 +39,10 @@ const Form = () => {
 		message: '',
 	});
 	const setFormState = (name, value) => _setFormState(c => ({ ...c, [name]: value }));
-	const [sendMsgDep, sendMsg] = useState(true);
+	const [sendMsgDep, sendMsg] = useState(0);
+
+	// TODO webpack prod doesnt inject variables
+	const BACKEND_URL = "https://www.twiggeh.xyz";
 
 	// eslint-disable-next-line no-undef
 	const result = useFetch(`${BACKEND_URL}/api/v1/submit`, {
