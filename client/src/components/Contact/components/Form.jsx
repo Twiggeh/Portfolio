@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { fontSizes } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
+import FlashMessagesContext from '../../FlashMessage/FlashMessagesContext';
 import AnimatorData from './components/AnimatorContext';
 import Title from './components/Title';
 import useAnimator from './components/useAnimator';
@@ -33,6 +34,9 @@ const validateEMail = email => {
 
 const Form = () => {
 	const { animStore, animate, getCss } = useAnimator(initAnimStore);
+
+	const { setFlashMessages } = useContext(FlashMessagesContext);
+
 	const [formState, _setFormState] = useState({
 		subject: '',
 		email: '',
@@ -40,9 +44,12 @@ const Form = () => {
 	});
 	const setFormState = (name, value) => _setFormState(c => ({ ...c, [name]: value }));
 	const [sendMsgDep, sendMsg] = useState(0);
+<<<<<<< HEAD
 
 	// TODO webpack prod doesnt inject variables
 	const BACKEND_URL = "https://www.twiggeh.xyz";
+=======
+>>>>>>> 4720c5a71e3a4705bbec05a28e8d44bd04e68761
 
 	// eslint-disable-next-line no-undef
 	const result = useFetch(`${BACKEND_URL}/api/v1/submit`, {
@@ -69,7 +76,37 @@ const Form = () => {
 		},
 	});
 
-	//TODO : display todo's result
+	useEffect(() => {
+		let message;
+
+		if (result.loading)
+			message = { message: 'Sending Message', type: 'Warning', uuid: result.uuid };
+
+		if (result.res)
+			message = {
+				message: result.res?.message,
+				type: 'Success',
+				uuid: result.uuid,
+			};
+
+		if (result.error)
+			message = {
+				message: result.res?.message,
+				type: 'Failure',
+				uuid: result.uuid,
+			};
+
+		if (message === undefined) return;
+
+		setFlashMessages(cur => {
+			const index = cur.findIndex(({ uuid }) => uuid === result.uuid);
+
+			if (index === -1) return [...cur, message];
+
+			cur[Number(index)] = { ...message, index };
+			return [...cur];
+		});
+	}, [result.res, result.error, result.loading, result.uuid]);
 
 	return (
 		<AnimatorData.Provider value={{ animStore, animate, getCss }}>

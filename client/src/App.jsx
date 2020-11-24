@@ -6,12 +6,28 @@ const mq = queries.mainQueries;
 
 const App = () => {
 	const [modal, setModal] = useState(undefined);
+
+	/** @type { FlashMessageState } */
+	const [flashMessages, setFlashMessages] = useState([]);
+
+	/** @param {AddFlashMessageInput} msg */
+	const addFlashMessages = msg => {
+		if (Array.isArray(msg)) return setFlashMessages(c => [...c, ...msg]);
+		setFlashMessages(c => [...c, msg]);
+	};
+
 	return (
 		<>
 			<Global styles={globalStyle} />
 			<ModalContext.Provider value={{ modal, setModal }}>
-				<Modals />
-				<Body />
+				<FlashMessagesContext.Provider value={{ setFlashMessages, addFlashMessages }}>
+					<FlashMessages
+						flashMessages={flashMessages}
+						setFlashMessages={setFlashMessages}
+					/>
+					<Modals />
+					<Body />
+				</FlashMessagesContext.Provider>
 			</ModalContext.Provider>
 		</>
 	);
@@ -24,6 +40,8 @@ import Body from './components/Body/body_index';
 import Modals from './components/Modals/modal_index';
 import ModalContext from './components/Providers/modalProvider';
 import { queries, colors, styles } from './styles/globalStyle';
+import FlashMessagesContext from './components/FlashMessage/FlashMessagesContext';
+import FlashMessages from './components/FlashMessage/FlashMessages';
 
 var globalStyle = css`
 	* {
@@ -31,7 +49,8 @@ var globalStyle = css`
 			color: white;
 			background: hotpink;
 		}
-		font-family: 'Montserrat';
+		font-family: Montserrat;
+		color: white;
 		::-webkit-scrollbar-track {
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3) inset;
 			${[mq[0]]} {
@@ -54,3 +73,16 @@ var globalStyle = css`
 		--trueWidth: 100%;
 	}
 `;
+
+/**
+ * @typedef {[
+ * 		import('./components/FlashMessage/FlashMessages').FlashMessage[],
+ * 		function(import('./components/FlashMessage/FlashMessages')[]):void
+ * ]} FlashMessageState
+ */
+
+/**
+ * @typedef {import('./components/FlashMessage/FlashMessages').FlashMessage
+ * | import('./components/FlashMessage/FlashMessages').FlashMessage[]
+ * } AddFlashMessageInput
+ */
