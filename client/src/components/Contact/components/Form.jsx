@@ -78,16 +78,13 @@ const Form = () => {
 
 		if (result.res)
 			message = {
-				delay: 2700,
 				message: result.res?.message,
 				type: 'Success',
-				fillMode: 'both',
 				uuid: result.uuid,
 			};
 
 		if (result.error)
 			message = {
-				delay: 1200,
 				message: result.res?.message,
 				type: 'Failure',
 				uuid: result.uuid,

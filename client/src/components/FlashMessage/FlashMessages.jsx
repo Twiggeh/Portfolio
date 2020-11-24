@@ -34,10 +34,18 @@ const slideAnim = keyframes`
 const lookup = {
 	Success: {
 		color: 'cornflowerblue',
-		animation: slideAnim,
+		livAnim: slideAnim,
 		timing: '1s ease 1',
+		delay: 2700,
+		fillMode: 'both',
+		maxDur: 3700,
 	},
-	Warning: { color: 'chocolate', livAnim: bounceAnim, timing: '1s ease infinite' },
+	Warning: {
+		color: 'chocolate',
+		livAnim: bounceAnim,
+		timing: '1s ease infinite',
+		minDur: 1000,
+	},
 	Failure: { color: 'crimson', livAnim: bounceAnim, timing: '1s ease infinite' },
 };
 
@@ -160,6 +168,9 @@ export default FlashMessages;
  * @typedef {{current: Object.<string, {
  * 	exitId : Number,
  * 	startTime: Number,
+ * 	curAnim: String,
+ * 	curData: String,
+ *  nextAnims: String[],
  * }>}} RegisteredAnimations
  */
 
@@ -167,6 +178,11 @@ export default FlashMessages;
  * @typedef LookupElement
  * @prop {String} color - The color of the notification
  * @prop {String} timing - The timing function ex. "1s ease infinite"
+ * @prop {Number} [delay] - The delay before the animation will play [ms]
+ * @prop {Number} [minDur] - The minimum amount of time that an animation should play [ms]
+ * @prop {Number | "infinite"} [maxDur="infinte"] - The maximum amount of time that an animation should play [ms]
+ * 																								- Make sure that it is as long or longer than delay & the duration in timing
+ * @prop {"both" | "none" | "forwards" | "backwards" | "initial" | "inherit"} [fillMode="none"] - The Animation fill Mode
  * @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [livAnim] - What should play while the banner is alive. (what @emotion/core keyframes`...` returns)
  * @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [exitAnim] - What should play before the banner is removed. (what @emotion/core keyframes`...` returns)
  */
