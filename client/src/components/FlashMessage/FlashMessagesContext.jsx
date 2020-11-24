@@ -9,9 +9,6 @@ import { createContext } from 'react';
  * 	addFlashMessages: function(import('../../App').AddFlashMessageInput):void
  * }}
  */
-/**
- * @type {}
- */
 const DEFAULT_FLASH_MESSAGES_CONTEXT = {
 	setFlashMessages: () => {},
 	addFlashMessages: () => {},

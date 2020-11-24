@@ -1,8 +1,11 @@
 /* eslint-disable indent */
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
+
+// how many milliseconds leeway to allow updating the current animation even if the minimum time has not yet passed. Removes "unnecessary" setTimeouts
+const animationSwitchThreshold = 50;
 
 const bounceAnim = keyframes`
   from, 20%, 53%, 80%, to {
@@ -50,11 +53,22 @@ const lookup = {
 };
 
 /**
- * @param {{flashMessages: FlashMessage[]}} param0
+ * @param {String} type
+ * @param {Number} index
+ * @returns {LookupElement}
  */
+const getLookup = (type, index) => {
+	const data = lookup[String(type)];
+	const livAnim = typeof data.livAnim === 'function' ? data.livAnim(index) : livAnim;
+	return { ...data, ...livAnim };
+};
+
+/** @param {{flashMessages: FlashMessage[]}} param0 */
 const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 	/** @type {RegisteredAnimations} */
 	const regAnims = useRef({});
+	const refresh = useState(false)[1];
+	const update = () => refresh(c => !c);
 
 	if (flashMessages.length === 0) return null;
 	// TODO: Add max & min duration for the animations
@@ -62,61 +76,122 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 	console.log(flashMessages);
 	return (
 		<FlashMsgWrap>
-			{flashMessages.map(
-				({
-					delay = 0,
-					uuid,
-					message,
-					type,
-					fillMode = 'none',
-					index = 0,
-					minDur = 500,
+			{flashMessages.map(({ uuid, message, type, index = 0 }) => {
+				let {
+					color,
+					timing,
+					livAnim,
+					delay,
+					minDur = 1000,
 					maxDur = 'infinite',
-				}) => {
-					const { color, livAnim: _livAnim, timing } = lookup[String(type)];
-					const livAnim = typeof _livAnim === 'function' ? _livAnim(index) : _livAnim;
+					fillMode,
+				} = getLookup(type, index);
 
-					// If there was an animation registered, clear the timeout
-					if (regAnims.current[String(uuid)]) {
-						clearTimeout(regAnims.current[String(uuid)].exitId);
-						regAnims.current[String(uuid)].startTime = Date.now();
+				const animRegistrar = regAnims.current[String(uuid)];
+
+				if (animRegistrar) {
+					const isNewAnim = animRegistrar.curAnim !== type;
+					const timePassed = Date.now() - animRegistrar.startTime;
+					const minTimePassed = timePassed > minDur - animationSwitchThreshold;
+
+					if (isNewAnim) {
+						// New Animation has been detected, remove the un-mount of the element
+						clearTimeout(animRegistrar.exitId);
 					}
 
-					// Register deletion callback && into the regAnims holder
-					if (maxDur !== 'infinite') {
-						// Delete the animated object from the pool
-						const exitId = setTimeout(() => {
-							setFlashMessages(cur => {
-								const index = cur.findIndex(({ uuid: flashUUID }) => uuid === flashUUID);
-								if (index === -1) return cur;
+					// Play the next animation that is in the queue
+					if (animRegistrar.nextAnims.length && minTimePassed) {
+						// Stack animations that are the same type TODO: needs to be moved
+						//if (animRegistrar.nextAnims[animRegistrar.nextAnims.length - 1] !== type) {
+						//	console.log('Todo');
+						//}
 
-								// Object found, deleting
+						// remove the next animation, need to remove next data as well
+						const queuedType = animRegistrar.nextAnims.shift();
 
-								// TODO, add exit animations
-								delete regAnims.current[String(uuid)];
-								cur.splice(index, 1);
-								return [...cur];
-							});
-						}, Math.max(maxDur, minDur));
+						const data = getLookup(queuedType, index);
 
-						// Add the animation to the pool of animated objects
-						regAnims.current[String(uuid)] = { exitId, startTime: Date.now() };
+						color = data.color;
+						timing = data.timing;
+						livAnim = data.livAnim;
+						delay = data.delay;
+						fillMode = data.fillMode;
 					}
 
-					return (
-						<FlashMessage
-							key={uuid}
-							backgroundColor={color}
-							animation={livAnim}
-							delay={delay}
-							fillMode={fillMode}
-							timing={timing}
-						>
-							{message}
-						</FlashMessage>
-					);
+					// animation needs to change and has not yet played the minimum required time to play
+					if (isNewAnim && !minTimePassed) {
+						animRegistrar.nextAnims = [type, ...animRegistrar.nextAnims];
+
+						// register next Data as well
+
+						// set a timeout that will refresh this element as soon as the minimum time runs out.
+						setTimeout(update, minDur - timePassed);
+
+						// dont update the component, return early
+						const { color, timing, livAnim, delay, fillMode } = getLookup(
+							animRegistrar.curAnim,
+							index
+						);
+
+						return (
+							<FlashMessage
+								key={uuid}
+								backgroundColor={color}
+								animation={livAnim}
+								delay={delay}
+								fillMode={fillMode}
+								timing={timing}
+							>
+								{animRegistrar.curData}
+							</FlashMessage>
+						);
+					}
+
+					// New Animation could be played immediately
+					// animRegistrar.startTime = Date.now();
 				}
-			)}
+
+				let exitId;
+				// Register deletion callback && into the regAnims holder
+				if (maxDur !== 'infinite') {
+					// Delete the animated object from the pool
+					exitId = setTimeout(() => {
+						setFlashMessages(cur => {
+							const index = cur.findIndex(({ uuid: flashUUID }) => uuid === flashUUID);
+							if (index === -1) return cur;
+
+							// TODO, add exit and enter animations
+
+							// Object found, deleting current AnimRegistrar
+							delete regAnims.current[String(uuid)];
+							cur.splice(index, 1);
+							return [...cur];
+						});
+					}, Math.max(maxDur, minDur));
+				}
+
+				// Add the animation to the pool of animated objects
+				regAnims.current[String(uuid)] = {
+					exitId,
+					startTime: Date.now(),
+					curAnim: type,
+					nextAnims: [],
+					curData: message,
+				};
+
+				return (
+					<FlashMessage
+						key={uuid}
+						backgroundColor={color}
+						animation={livAnim}
+						delay={delay}
+						fillMode={fillMode}
+						timing={timing}
+					>
+						{message}
+					</FlashMessage>
+				);
+			})}
 		</FlashMsgWrap>
 	);
 };
