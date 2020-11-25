@@ -83,7 +83,11 @@ const DiscordAbstractionData = {
 	descPage: './projects#discord_data_wrangler',
 	cover: wranglerThumb,
 	buttons: [
-		{ svg: svgs.DiscordLogo, btnName: 'Hosted', btnUrl: 'https://www.discord.gg/wH7aY2q7qT' },
+		{
+			svg: svgs.DiscordLogo,
+			btnName: 'Hosted',
+			btnUrl: 'https://www.discord.gg/wH7aY2q7qT',
+		},
 	],
 	notes: [
 		{
@@ -205,8 +209,35 @@ const PHBird = {
 	],
 };
 
+/** @type {Content} */
+const Student_0 = {
+	id: 'student_0',
+	// prettier-ignore
+	title: 'Redacted\'s art Progress',
+	subTitle: 'Traditional Media improvement over 30 actual days',
+	cover: lowStudent_0,
+
+	buttons: [
+		{
+			svg: svgs.Download,
+			btnName: 'Download',
+			btnUrl: medStudent_0,
+		},
+	],
+	descPage: './art#student_0',
+	notes: [
+		{
+			type: 'feature',
+			src: medStudent_0,
+			alt: 'Multiple Portraits and eyes',
+			text:
+				'Showcasing the beginning of the artistic journey of my first student. This image collection highlights the massive improvement that happened over the span of 30 actual days. Work amount: Monday - Friday for a month, ~2 hours daily.',
+		},
+	],
+};
+
 export const projects = [ReplayBotData, DiscordAbstractionData];
-export const art = [Jane, Esmeralda, RoyalBird, PHBird];
+export const art = [Jane, Student_0, Esmeralda, RoyalBird, PHBird];
 
 /** @type {Object.<string, Content>}} */
 export default { art, projects };
@@ -230,6 +261,8 @@ import {
 	wranglerPrinter,
 	wranglerCmds,
 	wranglerThumb,
+	lowStudent_0,
+	medStudent_0,
 } from './Pictures';
 import { ReplayBotStateless, ReplayBotUi } from './Videos';
 

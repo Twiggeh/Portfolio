@@ -28,3 +28,7 @@ export { default as wranglerEase } from '../assets/images/DWEaseOfUse.webp';
 export { default as wranglerCmds } from '../assets/images/DWAdaptable.webp';
 export { default as wranglerPrinter } from '../assets/images/DWExtensible.webp';
 export { default as wranglerThumb } from '../assets/images/DWThumb.webp';
+
+// Student_0
+export { default as lowStudent_0 } from '../assets/Art/Students/low_student_0.webp';
+export { default as medStudent_0 } from '../assets/Art/Students/med_student_0.webp';
