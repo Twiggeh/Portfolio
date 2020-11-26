@@ -236,7 +236,22 @@ const Student_0 = {
 	],
 };
 
-export const projects = [ReplayBotData, DiscordAbstractionData];
+/** @type {Content} */
+const myWebsite = {
+	title: 'Portfolio Site',
+	subTitle: 'Smaller than the font that is bundled with it !',
+	notes: [
+		{
+			type: 'feature',
+			src: CustomAnimations,
+			title: 'Vanilla CSS animations',
+			text:
+				'Extremely performant and easy to implement CSS animations through custom library - Form is made with CSS-Transitions, while the Flash Notification is made with Keyframes ',
+		},
+	],
+};
+
+export const projects = [ReplayBotData, DiscordAbstractionData, myWebsite];
 export const art = [Jane, Student_0, Esmeralda, RoyalBird, PHBird];
 
 /** @type {Object.<string, Content>}} */
@@ -264,7 +279,7 @@ import {
 	lowStudent_0,
 	medStudent_0,
 } from './Pictures';
-import { ReplayBotStateless, ReplayBotUi } from './Videos';
+import { CustomAnimations, ReplayBotStateless, ReplayBotUi } from './Videos';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
