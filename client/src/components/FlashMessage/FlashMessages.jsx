@@ -140,8 +140,7 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 								animation={livAnim}
 								delay={delay}
 								fillMode={fillMode}
-								timing={timing}
-							>
+								timing={timing}>
 								{animRegistrar.curData}
 							</FlashMessage>
 						);
@@ -186,8 +185,7 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 						animation={livAnim}
 						delay={delay}
 						fillMode={fillMode}
-						timing={timing}
-					>
+						timing={timing}>
 						{message}
 					</FlashMessage>
 				);
@@ -204,6 +202,7 @@ var FlashMsgWrap = styled.div`
 
 var FlashMessage = styled.div`
 	padding: 1em 0 1em 0;
+	color: white;
 	text-align: center;
 	font-family: Montserrat;
 	font-weight: 700;
