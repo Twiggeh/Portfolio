@@ -62,7 +62,7 @@ var Shade = styled.div`
 	position: absolute;
 	z-index: -1;
 	top: 0;
-	width: 100vw;
+	width: var(--trueWidth);
 	height: 100vh;
 	background-color: ${colors.darkestInfill};
 	opacity: 40%;
