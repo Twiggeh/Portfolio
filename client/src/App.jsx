@@ -50,7 +50,6 @@ var globalStyle = css`
 			background: hotpink;
 		}
 		font-family: Montserrat;
-		color: white;
 		::-webkit-scrollbar-track {
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3) inset;
 			${[mq[0]]} {
