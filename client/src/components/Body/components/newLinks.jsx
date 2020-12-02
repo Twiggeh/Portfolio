@@ -1,6 +1,7 @@
 const NewLinks = () => {
 	const [width] = useScreenSize();
 	const [open, setOpen] = useState(false);
+	const flipOpen = () => setOpen(c => !c);
 	return (
 		<>
 			<Nav>
@@ -21,33 +22,32 @@ const NewLinks = () => {
 				{width > nq[1] ? (
 					<TopRight href={'https://github.com/Twiggeh'}>{<svgs.GithubLogo />}</TopRight>
 				) : (
-					<TopRight
-						onClick={() => {
-							setOpen(c => !c);
-						}}>
-						{<svgs.HamburgerMenu />}
-					</TopRight>
+					<TopRight onClick={flipOpen}>{<svgs.HamburgerMenu />}</TopRight>
 				)}
 				<SideSlideNav open={open}>
 					<li>
-						<Link to='/art'>Art</Link>
-						<a
-							onClick={() => {
-								setOpen(c => !c);
-							}}>
-							{svgs.cross()}
+						<Link onClick={flipOpen} to='/art'>
+							Art
+						</Link>
+						<a onClick={flipOpen}>{svgs.cross()}</a>
+					</li>
+					<li>
+						<Link to='/projects' onClick={flipOpen}>
+							Projects
+						</Link>
+					</li>
+					<li>
+						<Link to='/contact' onClick={flipOpen}>
+							Contact
+						</Link>
+					</li>
+					<li>
+						<a href='https://github.com/Twiggeh' onClick={flipOpen}>
+							GitHub
 						</a>
 					</li>
-					<li>
-						<Link to='/projects'>Projects</Link>
-					</li>
-					<li>
-						<Link to='/contact'>Contact</Link>
-					</li>
-					<li>
-						<a href='https://github.com/Twiggeh'>GitHub</a>
-					</li>
 				</SideSlideNav>
+				<Shade onClick={flipOpen} open={open}></Shade>
 			</Nav>
 		</>
 	);
@@ -57,6 +57,23 @@ export default NewLinks;
 
 var mq = queries.mainQueries;
 var nq = queries.numQueries;
+
+var Shade = styled.div`
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: ${colors.darkestInfill};
+	opacity: 40%;
+	transition: opacity 200ms ease-in-out;
+	${({ open }) => {
+		return `
+			pointer-events: ${open ? 'all' : 'none'};
+			opacity: ${open ? '40%' : '0%'}
+		`;
+	}};
+`;
 
 var Nav = styled.nav`
 	z-index: 10;
@@ -94,6 +111,7 @@ var Nav = styled.nav`
 `;
 
 var NavTitle = styled.div`
+	z-index: -1;
 	padding-left: ${styles.contentPaddingSides};
 	a {
 		font-weight: 700;
