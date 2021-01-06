@@ -21,11 +21,11 @@ const ReplayBotData = {
 						</article>
 					</div>
 				),
-				modalCss: {
-					display: 'flex',
-					alignItems: 'flex-start',
-					flexDirection: 'row-reverse',
-				},
+				modalCss: `
+					display: flex;
+					alignItems: flex-start;
+					flexDirection: row-reverse;
+				`,
 			},
 		},
 		{
