@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const process = require('process');
 require('dotenv').config();
 const mode = process.env.NODE_ENV;
+const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 console.log(mode);
@@ -9,36 +11,80 @@ const curProcess = process.cwd();
 
 module.exports = {
 	entry: ['react-hot-loader/patch', path.resolve(curProcess, 'src')],
+	output: {
+		path: path.resolve(curProcess, './dist'),
+		publicPath: '/',
+		filename: 'public/js/bundle.js',
+	},
 	devtool: 'source-map',
 	devServer: {
-		contentBase: path.resolve(curProcess, 'src/'),
+		contentBase: path.resolve(curProcess, 'src/assets'),
+		contentBasePublicPath: '/',
 		historyApiFallback: true,
 		hot: true,
 		compress: true,
+		writeToDisk: true,
 	},
 	mode: 'development',
 	module: {
 		rules: [
 			{
-				enforce: 'pre',
+				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				test: /\.(js|jsx)$/,
-				loader: [{ loader: 'eslint-loader' }],
+				use: [
+					{
+						loader: 'babel-loader',
+						options: {
+							presets: [
+								[
+									'@babel/preset-env',
+									{
+										targets: {
+											esmodules: true,
+										},
+									},
+								],
+								'@babel/preset-react',
+								'@emotion/babel-preset-css-prop',
+							],
+							// don't inject babel code into each file, create a global import for them
+							plugins: ['@babel/plugin-transform-runtime', 'react-hot-loader/babel'],
+							compact: false,
+							cacheDirectory: true,
+							cacheCompression: false,
+							sourceMaps: true,
+							inputSourceMap: true,
+						},
+					},
+					{
+						loader: 'ts-loader',
+						options: { compilerOptions: { target: 'esnext', module: 'esnext' } },
+					},
+				],
 			},
 			{
-				test: /\.(js|jsx)$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
-				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-react'],
-					// don't inject babel code into each file, create a global import for them
-					plugins: ['@babel/plugin-transform-runtime'],
-					compact: false,
-					cacheDirectory: true,
-					cacheCompression: false,
-					sourceMaps: true,
-					inputSourceMap: true,
-				},
+				include: /src/,
+				use: [
+					{
+						loader: 'babel-loader',
+						options: {
+							presets: [
+								'@babel/preset-env',
+								'@babel/react',
+								'@emotion/babel-preset-css-prop',
+							],
+							// don't inject babel code into each file, create a global import for them
+							plugins: ['react-hot-loader/babel', '@babel/plugin-transform-runtime'],
+							compact: false,
+							cacheDirectory: true,
+							cacheCompression: false,
+							sourceMaps: true,
+							inputSourceMap: true,
+						},
+					},
+				],
 			},
 			{
 				test: /\.css?$/,
@@ -86,16 +132,6 @@ module.exports = {
 					},
 				},
 			},
-			//			{
-			//				test: /\.html?$/,
-			//				use: {
-			//					loader: 'file-loader',
-			//					options: {
-			//						name: '[name].[ext]',
-			//						outputPath: 'webpages',
-			//					},
-			//				},
-			//			},
 			{
 				test: /\.pdf$/,
 				use: {
@@ -131,10 +167,10 @@ module.exports = {
 			pictures: path.resolve(curProcess, './src/static/Pictures.js'),
 		},
 		modules: ['src', 'node_modules'],
-		extensions: ['*', '.js', '.jsx'],
+		extensions: ['.ts', '.tsx', '.js', '.jsx'],
 	},
-	node: { __dirname: true, __filename: true }, // to get correct __dirname and __filename
 	plugins: [
+		new ESLintPlugin(),
 		new HtmlWebpackPlugin({
 			template: path.resolve(curProcess, 'src/index_dev.html'),
 			filename: 'index.html',

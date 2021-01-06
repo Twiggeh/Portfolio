@@ -1,5 +1,5 @@
 {
-	"parser": "babel-eslint",
+	"parser": "@typescript-eslint/parser",
 	"env": {
 		"browser": true,
 		"es6": true,
@@ -8,7 +8,8 @@
 	"extends": [
 		"eslint:recommended",
 		"plugin:react/recommended",
-		"plugin:security/recommended"
+		"plugin:security/recommended",
+		"plugin:@typescript-eslint/recommended"
 	],
 	"globals": {
 		"Atomics": "readonly",
@@ -21,23 +22,25 @@
 		"ecmaVersion": 2018,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "react-hooks", "emotion", "security"],
+	"plugins": ["react", "react-hooks", "@emotion", "security"],
 	"rules": {
-		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"indent": [
+			"off",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
 		"flatTernaryExpressions": 0,
-		"no-unused-vars": [
-			1,
-			{
-				"vars": "all",
-				"args": "after-used",
-				"ignoreRestSiblings": false
-			}
-		],
 		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn"
+		"react-hooks/exhaustive-deps": "warn",
+		"react/prop-types": 0,
+		"no-unused-vars": "off",
+		"no-var": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off"
 	},
 	"settings": {
 		"react": {
