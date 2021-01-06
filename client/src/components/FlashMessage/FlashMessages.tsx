@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
 
@@ -33,8 +32,7 @@ const slideAnim = keyframes`
   }
 `;
 
-/** @type {Object.<string, LookupElement>} */
-const lookup = {
+const lookup: Record<'Success' | 'Warning' | 'Failure', LookupElement> = {
 	Success: {
 		color: 'cornflowerblue',
 		livAnim: slideAnim,
@@ -42,31 +40,39 @@ const lookup = {
 		delay: 2700,
 		fillMode: 'both',
 		maxDur: 3700,
+		minDur: 1000,
+		exitAnim: slideAnim,
 	},
 	Warning: {
 		color: 'chocolate',
 		livAnim: bounceAnim,
 		timing: '1s ease infinite',
 		minDur: 1000,
+		maxDur: 3700,
+		fillMode: 'both',
+		exitAnim: slideAnim,
+		delay: 0,
 	},
-	Failure: { color: 'crimson', livAnim: bounceAnim, timing: '1s ease infinite' },
+	Failure: {
+		color: 'crimson',
+		livAnim: bounceAnim,
+		timing: '1s ease infinite',
+		maxDur: 3700,
+		fillMode: 'both',
+		exitAnim: slideAnim,
+		delay: 0,
+		minDur: 1000,
+	},
 };
 
-/**
- * @param {String} type
- * @param {Number} index
- * @returns {LookupElement}
- */
-const getLookup = (type, index) => {
+const getLookup = (type: keyof typeof lookup, index: number): LookupElement => {
 	const data = lookup[String(type)];
-	const livAnim = typeof data.livAnim === 'function' ? data.livAnim(index) : livAnim;
-	return { ...data, ...livAnim };
+	const livAnim = typeof data.livAnim === 'function' ? data.livAnim(index) : data.livAnim;
+	return { ...data, livAnim };
 };
 
-/** @param {{flashMessages: FlashMessage[]}} param0 */
-const FlashMessages = ({ flashMessages, setFlashMessages }) => {
-	/** @type {RegisteredAnimations} */
-	const regAnims = useRef({});
+const FlashMessages: React.FC<IFlashMessages> = ({ flashMessages, setFlashMessages }) => {
+	const regAnims: RegisteredAnimations = useRef({});
 	const refresh = useState(false)[1];
 	const update = () => refresh(c => !c);
 
@@ -77,15 +83,8 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 	return (
 		<FlashMsgWrap>
 			{flashMessages.map(({ uuid, message, type, index = 0 }) => {
-				let {
-					color,
-					timing,
-					livAnim,
-					delay,
-					minDur = 1000,
-					maxDur = 'infinite',
-					fillMode,
-				} = getLookup(type, index);
+				let { color, timing, livAnim, delay, fillMode } = getLookup(type, index);
+				const { minDur = 1000, maxDur = 'infinite' } = getLookup(type, index);
 
 				const animRegistrar = regAnims.current[String(uuid)];
 
@@ -108,14 +107,15 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 
 						// remove the next animation, need to remove next data as well
 						const queuedType = animRegistrar.nextAnims.shift();
+						if (queuedType) {
+							const data = getLookup(queuedType, index);
 
-						const data = getLookup(queuedType, index);
-
-						color = data.color;
-						timing = data.timing;
-						livAnim = data.livAnim;
-						delay = data.delay;
-						fillMode = data.fillMode;
+							color = data.color;
+							timing = data.timing;
+							livAnim = data.livAnim;
+							delay = data.delay;
+							fillMode = data.fillMode;
+						}
 					}
 
 					// animation needs to change and has not yet played the minimum required time to play
@@ -136,8 +136,8 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 						return (
 							<FlashMessage
 								key={uuid}
-								backgroundColor={color}
-								animation={livAnim}
+								color={color}
+								livAnim={livAnim}
 								delay={delay}
 								fillMode={fillMode}
 								timing={timing}>
@@ -181,8 +181,8 @@ const FlashMessages = ({ flashMessages, setFlashMessages }) => {
 				return (
 					<FlashMessage
 						key={uuid}
-						backgroundColor={color}
-						animation={livAnim}
+						color={color}
+						livAnim={livAnim}
 						delay={delay}
 						fillMode={fillMode}
 						timing={timing}>
@@ -200,7 +200,9 @@ var FlashMsgWrap = styled.div`
 	width: 100%;
 `;
 
-var FlashMessage = styled.div`
+var FlashMessage = styled.div<
+	Pick<LookupElement, 'color' | 'livAnim' | 'timing' | 'delay' | 'fillMode' | 'color'>
+>`
 	padding: 1em 0 1em 0;
 	color: white;
 	text-align: center;
@@ -208,55 +210,71 @@ var FlashMessage = styled.div`
 	font-weight: 700;
 	transition: transform 250ms ease-in-out, opacity 100ms ease-in-out,
 		background-color 500ms ease-in-out;
-	${({ backgroundColor, animation, timing, delay, fillMode }) => {
+	${({ color, livAnim, timing, delay, fillMode }) => {
 		return css`
-			background-color: ${backgroundColor};
-			animation: ${animation} ${timing};
+			background-color: ${color};
+			animation: ${livAnim as string} ${timing};
 			animation-delay: ${delay}ms;
 			animation-fill-mode: ${fillMode};
 		`;
 	}}
 `;
 
-FlashMessages.propTypes = {
-	flashMessages: PropTypes.array,
-	setFlashMessages: PropTypes.func,
-};
-
 export default FlashMessages;
 
-/**
- * @typedef {{
- *		delay: Number,
- *		message: String,
- *		type: 'Success' | 'Failure' | 'Warning',
- *    fillMode?: 'none' | 'forwards' | 'backwards' | 'both',
- *    uuid?: String,
- * 		index?: Number,
- * 		maxDur?: Number | "infinite",
- * 		minDur?: Number,
- *	}} FlashMessage
- */
+export type FlashMessage = {
+	delay: number;
+	message: string;
+	type: 'Success' | 'Failure' | 'Warning';
+	fillMode?: 'none' | 'forwards' | 'backwards' | 'both';
+	uuid?: string;
+	index?: number;
+	maxDur?: number | 'infinite';
+	minDur?: number;
+};
+
+export type RegisteredAnimations = {
+	current: Record<
+		string,
+		{
+			exitId?: number;
+			startTime: number;
+			curAnim: FlashMessage['type'];
+			curData: string;
+			nextAnims: Array<FlashMessage['type']>;
+		}
+	>;
+};
+
+export type LookupElement = {
+	color: string;
+	timing: string;
+	delay: number;
+	minDur: number;
+	maxDur: number | 'infinite';
+	fillMode: 'both' | 'none' | 'forwards' | 'backwards' | 'initial' | 'inherit';
+	livAnim:
+		| import('@emotion/serialize').Keyframes
+		| ((index: number) => import('@emotion/serialize').Keyframes);
+	exitAnim:
+		| import('@emotion/serialize').Keyframes
+		| ((index: number) => import('@emotion/serialize').Keyframes);
+};
+
+interface IFlashMessages {
+	flashMessages: FlashMessage[];
+	setFlashMessages: React.Dispatch<React.SetStateAction<FlashMessage[]>>;
+}
 
 /**
- * @typedef {{current: Object.<string, {
- * 	exitId : Number,
- * 	startTime: Number,
- * 	curAnim: String,
- * 	curData: String,
- *  nextAnims: String[],
- * }>}} RegisteredAnimations
- */
-
-/**
- * @typedef LookupElement
- * @prop {String} color - The color of the notification
- * @prop {String} timing - The timing function ex. "1s ease infinite"
- * @prop {Number} [delay] - The delay before the animation will play [ms]
- * @prop {Number} [minDur] - The minimum amount of time that an animation should play [ms]
- * @prop {Number | "infinite"} [maxDur="infinte"] - The maximum amount of time that an animation should play [ms]
- * 																								- Make sure that it is as long or longer than delay & the duration in timing
- * @prop {"both" | "none" | "forwards" | "backwards" | "initial" | "inherit"} [fillMode="none"] - The Animation fill Mode
- * @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [livAnim] - What should play while the banner is alive. (what @emotion/core keyframes`...` returns)
- * @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [exitAnim] - What should play before the banner is removed. (what @emotion/core keyframes`...` returns)
+  @typedef LookupElement
+  @prop {String} color - The color of the notification
+  @prop {String} timing - The timing function ex. "1s ease infinite"
+  @prop {Number} [delay] - The delay before the animation will play [ms]
+  @prop {Number} [minDur] - The minimum amount of time that an animation should play [ms]
+  @prop {Number | "infinite"} [maxDur="infinte"] - The maximum amount of time that an animation should play [ms]
+  																								- Make sure that it is as long or longer than delay & the duration in timing
+  @prop {"both" | "none" | "forwards" | "backwards" | "initial" | "inherit"} [fillMode="none"] - The Animation fill Mode
+  @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [livAnim] - What should play while the banner is alive. (what @emotion/core keyframes`...` returns)
+  @prop {import("@emotion/serialize").Keyframes | (index: number)=> import("@emotion/serialize").Keyframes} [exitAnim] - What should play before the banner is removed. (what @emotion/core keyframes`...` returns)
  */
