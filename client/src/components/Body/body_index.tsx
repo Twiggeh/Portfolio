@@ -1,17 +1,5 @@
 const Body = () => (
-	<div
-		css={{
-			fontFamily: 'Montserrat',
-			backgroundColor: colors.bgInfill,
-			color: colors.whiteText,
-			a: { color: colors.whiteText },
-			minHeight: '100vh',
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'space-between',
-			// TODO : re-enable
-			//overflow: hidden,
-		}}>
+	<BodyWrapper>
 		<BrowserRouter>
 			<NewLinks />
 			<Switch>
@@ -30,8 +18,23 @@ const Body = () => (
 			</Switch>
 		</BrowserRouter>
 		<Footer />
-	</div>
+	</BodyWrapper>
 );
+
+var BodyWrapper = styled.div`
+	font-family: Montserrat;
+	background-color: ${colors.bgInfill};
+	color: ${colors.whiteText};
+	a: {
+		color: ${colors.whiteText};
+	}
+
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+`;
 
 export default Body;
 import React from 'react';
@@ -42,3 +45,4 @@ import Contact from '../Contact/contact_index';
 import ProjectsPage from '../Projects';
 import NewLinks from './components/newLinks';
 import Footer from '../Footer/footer_index';
+import styled from '@emotion/styled';
