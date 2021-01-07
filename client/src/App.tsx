@@ -54,6 +54,7 @@ import FlashMessages, { FlashMessage } from './components/FlashMessage/FlashMess
 
 var globalStyle = css`
 	* {
+		color: white;
 		::selection {
 			color: white;
 			background: hotpink;
