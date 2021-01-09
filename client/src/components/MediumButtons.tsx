@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { colors, queries, styles } from '../styles/globalStyle.js';
-import HoverBorder from './components/HoverBorder.jsx';
-import ButtonS from './components/MainContent/components/components/ButtonStyle.js';
-import PropTypes from 'prop-types';
+import { colors, queries, styles } from '../styles/globalStyle';
+import HoverBorder from './components/HoverBorder';
+import ButtonS from './components/MainContent/components/components/ButtonStyle';
+import { Button } from '../static/Projects';
+import { Modal } from './Modals/modal_index';
 
 const mq = queries.mainQueries;
 
@@ -14,12 +15,17 @@ const VertSepColor = () => (
 	</>
 );
 
-/**
- * @param {import('../static/Projects.js').Button[]} buttons
- * @param {function} setModal
- */
-const MediumButtons = ({ buttons, setModal = () => {}, customCss }) => {
-	const formatButton = (btnName, SVG, btnImg = false, btnImgAlt = false) => {
+const MediumButtons: React.FC<{
+	buttons: Button[];
+	setModal: React.Dispatch<Modal>;
+	css: string;
+}> = ({ buttons, setModal, css }) => {
+	const formatButton = (
+		btnName: string,
+		SVG?: React.FC,
+		btnImg?: string,
+		btnImgAlt?: string
+	) => {
 		if (SVG || btnImg || btnImgAlt) {
 			return (
 				<>
@@ -40,7 +46,7 @@ const MediumButtons = ({ buttons, setModal = () => {}, customCss }) => {
 		return <BtnListBtn>{btnName}</BtnListBtn>;
 	};
 	const btnList = buttons.map(
-		({ btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg = false }, i) => {
+		({ btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg }, i) => {
 			return (
 				<BtnListWrap
 					key={i}
@@ -50,18 +56,17 @@ const MediumButtons = ({ buttons, setModal = () => {}, customCss }) => {
 							e.preventDefault();
 							setModal(modal);
 						}
-					}}
-				>
+					}}>
 					{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
 				</BtnListWrap>
 			);
 		}
 	);
 
-	return <BtnList customCss={customCss}>{btnList}</BtnList>;
+	return <BtnList css={css}>{btnList}</BtnList>;
 };
 
-var BtnList = styled.section`
+var BtnList = styled.section<CustomCSS>`
 	display: flex;
 	flex-grow: 0;
 	flex-direction: column;
@@ -72,7 +77,7 @@ var BtnList = styled.section`
 		padding-top: 0;
 		padding-bottom: 0;
 	}
-	${({ customCss }) => customCss}
+	${({ css }) => css}
 `;
 
 var BtnListWrap = styled.a`
@@ -157,11 +162,5 @@ var VertSep = styled.div`
 	height: 100%;
 	${styles.customOutline(0, 1)};
 `;
-
-MediumButtons.propTypes = {
-	buttons: PropTypes.array,
-	setModal: PropTypes.func,
-	customCss: PropTypes.string,
-};
 
 export default MediumButtons;

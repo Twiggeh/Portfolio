@@ -325,7 +325,7 @@ import { CustomAnimations, ReplayBotStateless, ReplayBotUi } from './Videos';
  * @prop {string} button.btnUrl - The url the button points to
  * @prop {string} button.btnIcn - The path relative to src to get to the image / url
  * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
- * @prop {JSX.Element} button.svg - The svg icon for the button
+ * @prop {React.FC} button.svg - The svg icon for the button
  * @prop {import('../components/Modals/modal_index').Modal} [button.modal] - A modal that can pop up if defined
  *
  * @typedef {{
