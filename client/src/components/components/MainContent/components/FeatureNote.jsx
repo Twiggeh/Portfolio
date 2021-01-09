@@ -63,7 +63,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 
 	const isImg = imgExt.includes(getExt(src));
 
-	const { setModal } = useContext(ModalContext);
+	const { setModal } = ModalContext();
 
 	return (
 		<FeatureWrapper>
@@ -148,5 +148,4 @@ import Button from './components/Button';
 import Description from './components/Description';
 import Title from './components/Title';
 import { khala } from 'pictures';
-import { useContext } from 'react';
-import ModalContext from '../../../Providers/modalProvider';
+import { ModalContext } from '../../../../App';

@@ -16,7 +16,8 @@ const HoverBorder = ({ hoverGradient = false, customCss = '', hover }) => {
 					: hover === true
 					? [svgStyle, svgHover, pointerNone, customCss]
 					: [svgStyle, pointerNone, customCss]
-			}>
+			}
+		>
 			<line id='topLine' x1='0' y1='0' x2='100%' y2='0' />
 			<line id='rightLine' x1='100%' y1='0%' x2='100%' y2='100%' />
 			<line id='botLine' x1='100%' y1='100%' x2='0' y2='100%' />

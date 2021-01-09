@@ -4,7 +4,7 @@
 const NewSidebarContent = ({
 	data: { title, cover = khala, subTitle, buttons, notes, descPage },
 }) => {
-	const { setModal } = useContext(ModalContext);
+	const { setModal } = ModalContext();
 	// TODO: finish btnIcon support & btnName as hover
 	if (!title) return null;
 	return (
@@ -21,8 +21,7 @@ const NewSidebarContent = ({
 										e.preventDefault();
 										setModal(modal);
 									}
-								}}
-							>
+								}}>
 								{SVG ? <SVG /> : btnIcn}
 							</SmallButton>
 						)
@@ -105,8 +104,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { colors, fontSizes, styles } from '../../../styles/globalStyle';
-import { useContext } from 'react';
-import ModalContext from '../../Providers/modalProvider';
 import { khala } from 'pictures';
 import HoverBorder from '../HoverBorder';
 import SmallButton from '../../SmallButton';
+import { ModalContext } from '../../../App';

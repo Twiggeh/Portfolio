@@ -66,6 +66,8 @@ const lookup: Record<'Success' | 'Warning' | 'Failure', LookupElement> = {
 };
 
 const getLookup = (type: keyof typeof lookup, index: number): LookupElement => {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	const data = lookup[String(type)];
 	const livAnim = typeof data.livAnim === 'function' ? data.livAnim(index) : data.livAnim;
 	return { ...data, livAnim };

@@ -9,7 +9,7 @@ const bottomLine = `
 
 /** @param {MainContentInput} param0 */
 const MainContent = ({ data: { title, subTitle, notes, buttons, id } }) => {
-	const { setModal } = useContext(ModalContext);
+	const { setModal } = ModalContext();
 	return (
 		<Main id={id}>
 			<MainHeadWrap>
@@ -97,11 +97,10 @@ export default MainContent;
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { colors, queries, styles } from '../../../styles/globalStyle.js';
-import { useContext } from 'react';
-import ModalContext from '../../Providers/modalProvider.jsx';
-import NoteRenderer from './components/NoteRenderer.jsx';
-import MediumButtons from '../../MediumButtons.jsx';
+import { colors, queries, styles } from '../../../styles/globalStyle';
+import NoteRenderer from './components/NoteRenderer';
+import MediumButtons from '../../MediumButtons';
+import { ModalContext } from '../../../App';
 /** @typedef {{
 	data: import('../../../static/Projects.js').Content
 }} MainContentInput */
