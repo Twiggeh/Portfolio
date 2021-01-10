@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { colors, styles } from '../styles/globalStyle';
 import HoverBorder from './components/HoverBorder';
 
@@ -31,7 +30,12 @@ const SideBtn = styled.a`
 	}
 `;
 
-const SmallButton = ({ children, href, onClick }) => (
+interface ISmallButton {
+	href: string;
+	onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+}
+
+const SmallButton: React.FC<ISmallButton> = ({ children, href, onClick }) => (
 	<SideBtn href={href} onClick={onClick}>
 		<HoverBorder
 			customCss={`
@@ -44,11 +48,5 @@ const SmallButton = ({ children, href, onClick }) => (
 		{children}
 	</SideBtn>
 );
-
-SmallButton.propTypes = {
-	children: PropTypes.any,
-	href: PropTypes.string,
-	onClick: PropTypes.func,
-};
 
 export default SmallButton;
