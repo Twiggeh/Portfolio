@@ -9,12 +9,16 @@ const Footer = () => {
 				</LinkWrap>
 				<Copyright>
 					Copyright &copy; Twiggeh -
-					<nobr> Redistribution without permission forbidden</nobr>
+					<Nobr> Redistribution without permission forbidden</Nobr>
 				</Copyright>
 			</FooterContentWrap>
 		</FooterS>
 	);
 };
+
+var Nobr = styled.span`
+	white-space: nowrap;
+`;
 
 var Copyright = styled.div`
 	margin-top: 2.2em;
