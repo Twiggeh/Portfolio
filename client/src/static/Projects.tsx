@@ -1,5 +1,4 @@
-/** @type {Content} */
-const ReplayBotData = {
+const ReplayBotData: Content = {
 	id: 'replay_bot',
 	title: 'Replay Bot',
 	subTitle: 'Functionally written, stateless, Discord Bot.',
@@ -39,6 +38,7 @@ const ReplayBotData = {
 			title: 'Stateless',
 			type: 'feature',
 			src: ReplayBotStateless,
+			alt: 'Video showcasing a faked bot crash',
 			text:
 				'Stateless operation not only makes the bot more resilient, it allows for easy scaling, a seamless user experience and a faster development cycle.',
 		},
@@ -46,6 +46,7 @@ const ReplayBotData = {
 			title: 'Scalability and Performance',
 			type: 'feature',
 			src: repDebranch,
+			alt: 'Image showing de-branched code.',
 			text:
 				'Horizontal Scaling is very easy due to the stateless nature. Functions running on each request are de-branched for maximum performance.',
 		},
@@ -53,12 +54,14 @@ const ReplayBotData = {
 			title: 'Data Aggregation',
 			type: 'feature',
 			src: repInsight,
+			alt: 'Image showing data graphs',
 			text:
 				'Provides meaningful insight into the coaches performance and students behaviour, assisting management in making unbiased decisions.',
 		},
 		{
 			title: 'Clean, Straightforward UI',
 			src: ReplayBotUi,
+			alt: 'Video showcasing dashboard',
 			type: 'feature',
 			text:
 				'Familiarity and ease of use through implementation of common Discord Bot patterns.',
@@ -75,8 +78,7 @@ const ReplayBotData = {
 	],
 };
 
-/** @type {Content} */
-const DiscordAbstractionData = {
+const DiscordAbstractionData: Content = {
 	title: 'Discord Data Wrangler',
 	subTitle: 'Extensible Discord API Data Provider',
 	id: 'discord_data_wrangler',
@@ -95,6 +97,7 @@ const DiscordAbstractionData = {
 			title: 'Convenient',
 			text: 'Provides an easy to use bot to retrieve up to date discord data.',
 			src: wranglerEase,
+			alt: 'Image of code showcasing the use case of this bot',
 		},
 		{
 			type: 'feature',
@@ -102,11 +105,13 @@ const DiscordAbstractionData = {
 			text:
 				'Can be extended with custom formatters to consolidate all possible types of output, from human readable to a custom handlebars format that only liquipedia uses, as well as data filters and its own query api.',
 			src: wranglerPrinter,
+			alt: 'Image of code showing a formatter',
 		},
 		{
 			type: 'feature',
 			title: 'High Reusability',
 			src: wranglerCmds,
+			alt: 'Image of all commands',
 			text:
 				'Used to moderate discord servers with over 2k users, provide for the replay bot and give reliable usage statistics to entice advertisers.',
 			btnText: 'Goto Replay Bot',
@@ -115,8 +120,7 @@ const DiscordAbstractionData = {
 	],
 };
 
-/** @type {Content} */
-const Jane = {
+const Jane: Content = {
 	id: 'jane',
 	title: 'Jane',
 	subTitle: 'Digital Painting from imagination',
@@ -129,14 +133,14 @@ const Jane = {
 			btnText: 'Download',
 			precedence: 'img',
 			src: medJane,
+			alt: 'Portrait of an imaginary woman',
 			text:
 				'This painting took me a week to complete. Without reference means that the entire face is made up - painted from imagination. Drawn in Krita, on a Wacom 13HD.',
 		},
 	],
 };
 
-/** @type {Content} */
-const Esmeralda = {
+const Esmeralda: Content = {
 	id: 'esmeralda',
 	title: 'Esmeralda',
 	subTitle: 'Digital Portrait Painting',
@@ -156,6 +160,7 @@ const Esmeralda = {
 			btnText: 'Download',
 			precedence: 'img',
 			src: medEsmeralda,
+			alt: 'Portrait of a young woman',
 			text: 'A one day painting exercise, origin of the reference is unknown.',
 		},
 		{
@@ -169,8 +174,7 @@ const Esmeralda = {
 	],
 };
 
-/** @type {Content} */
-const RoyalBird = {
+const RoyalBird: Content = {
 	id: 'royal_bird',
 	title: 'Royal Bird',
 	subTitle: 'Character Bust',
@@ -183,13 +187,13 @@ const RoyalBird = {
 			btnText: 'Download',
 			precedence: 'img',
 			src: medRoyalBird,
+			alt: 'Bird in Royal Cloak',
 			text: '35min Speed Painting, pushing my rendering ability beyond its limits',
 		},
 	],
 };
 
-/** @type {Content} */
-const PHBird = {
+const PHBird: Content = {
 	id: 'ph_bird',
 	title: 'Splash Bird',
 	cover: lowPHBird,
@@ -209,14 +213,12 @@ const PHBird = {
 	],
 };
 
-/** @type {Content} */
-const Student_0 = {
+const Student_0: Content = {
 	id: 'student_0',
 	// prettier-ignore
 	title: 'Redacted\'s art Progress',
 	subTitle: 'Traditional Media improvement over 30 actual days',
 	cover: lowStudent_0,
-
 	buttons: [
 		{
 			svg: svgs.Download,
@@ -236,25 +238,25 @@ const Student_0 = {
 	],
 };
 
-/** @type {Content} */
-const myWebsite = {
-	title: 'Portfolio Site',
-	subTitle: 'Smaller than the font that is bundled with it !',
-	notes: [
-		{
-			type: 'feature',
-			src: CustomAnimations,
-			title: 'Vanilla CSS animations',
-			text:
-				'Extremely performant and easy to implement CSS animations through custom library - Form is made with CSS-Transitions, while the Flash Notification is made with Keyframes ',
-		},
-	],
-};
+// const myWebsite: Content = {
+// 	title: 'Portfolio Site',
+// 	id: 'portfolio_anims',
+// 	subTitle: 'Smaller than the font that is bundled with it !',
+// 	notes: [
+// 		{
+// 			type: 'feature',
+// 			src: CustomAnimations,
+// 			alt: 'Animation Displayed',
+// 			title: 'Vanilla CSS animations',
+// 			text:
+// 				'Extremely performant and easy to implement CSS animations through custom library - Form is made with CSS-Transitions, while the Flash Notification is made with Keyframes ',
+// 		},
+// 	],
+// };
 
-export const projects = [ReplayBotData, DiscordAbstractionData, myWebsite];
+export const projects = [ReplayBotData, DiscordAbstractionData /*myWebsite*/];
 export const art = [Jane, Student_0, Esmeralda, RoyalBird, PHBird];
 
-/** @type {Object.<string, Content>}} */
 export default { art, projects };
 
 import React from 'react';
@@ -280,6 +282,7 @@ import {
 	medStudent_0,
 } from './Pictures';
 import { CustomAnimations, ReplayBotStateless, ReplayBotUi } from './Videos';
+import type { Modal } from '../components/Modals/modal_index';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
@@ -313,13 +316,6 @@ import { CustomAnimations, ReplayBotStateless, ReplayBotUi } from './Videos';
  * @prop {string} [VideoNote.text] - The description for the video
  * @prop {"video" } VideoNote.type - The type of the feature
  *
- * @typedef {
- 			FeatureNote
-			| DescriptionNote
-			| HeroNote
-			| VideoNote
-		} Note
- *
  * @typedef {object} Button
  * @prop {string} button.btnName - The name of the buttons feature
  * @prop {string} button.btnUrl - The url the button points to
@@ -327,14 +323,58 @@ import { CustomAnimations, ReplayBotStateless, ReplayBotUi } from './Videos';
  * @prop {string} button.btnIcnFallback - The fallback path relative to src to get to the image / url
  * @prop {React.FC} button.svg - The svg icon for the button
  * @prop {import('../components/Modals/modal_index').Modal} [button.modal] - A modal that can pop up if defined
- *
- * @typedef {{
-	id        : String,
-	notes     : Note[]
-	buttons   : Button[],
-	title     : string,
-	subTitle  : string,
-	cover: string,
-	descPage: string,
-	}} Content
  */
+
+type FeatureNote = {
+	type: 'feature';
+	src: string;
+	alt: string;
+	precedence?: 'img' | 'text';
+	title?: string;
+	text?: string;
+	btnUrl?: string;
+	btnText?: string;
+};
+
+type DescriptionNote = {
+	type: 'description';
+	text: string;
+	title?: string;
+	btnUrl?: string;
+	btnText?: string;
+};
+
+type HeroNote = {
+	type: 'hero';
+	img: string;
+	url: string;
+	title?: string;
+};
+
+type VideoNote = {
+	type: 'video';
+	src: string;
+	base?: string;
+	aspect?: number;
+	title?: string;
+	text?: string;
+};
+
+export type Button = {
+	btnName: string;
+	btnUrl: string;
+	svg: React.FC;
+	modal?: Modal;
+};
+
+export type Note = FeatureNote | DescriptionNote | HeroNote | VideoNote;
+
+export type Content = {
+	id: string;
+	notes: Note[];
+	buttons?: Button[];
+	title: string;
+	subTitle: string;
+	cover: string;
+	descPage: string;
+};
