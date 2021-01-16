@@ -225,7 +225,7 @@ var FlashMessage = styled.div<
 export default FlashMessages;
 
 export type FlashMessage = {
-	delay: number;
+	delay?: number;
 	message: string;
 	type: 'Success' | 'Failure' | 'Warning';
 	fillMode?: 'none' | 'forwards' | 'backwards' | 'both';
