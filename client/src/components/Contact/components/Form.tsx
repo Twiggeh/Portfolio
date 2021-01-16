@@ -1,8 +1,10 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import styled from '@emotion/styled';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FlashMessageContext } from '../../../App';
 import { fontSizes } from '../../../styles/globalStyle';
 import Button from '../../components/MainContent/components/components/Button';
-import FlashMessagesContext from '../../FlashMessage/FlashMessagesContext';
+import { FlashMessage } from '../../FlashMessage/FlashMessages';
 import AnimatorData from './components/AnimatorContext';
 import Title from './components/Title';
 import useAnimator from './components/useAnimator';
@@ -11,9 +13,9 @@ import useFetch from './hooks/useFetch';
 import Select from './Select';
 import SelectOpts from './SelectOpts';
 import WrapInHover from './WrapInHover';
+import type { AnimStore } from '../components/components/useAnimator';
 
-/** @type {import('./components/components/useAnimator').AnimStore} */
-const initAnimStore = {
+const initAnimStore: AnimStore = {
 	bSel: {
 		default: `
 		transform: translateY(
@@ -26,7 +28,7 @@ const initAnimStore = {
 	},
 };
 
-const validateEMail = email => {
+const validateEMail = (email: string) => {
 	// eslint-disable-next-line security/detect-unsafe-regex
 	const res = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return res.test(String(email).toLowerCase());
@@ -35,21 +37,22 @@ const validateEMail = email => {
 const Form = () => {
 	const { animStore, animate, getCss } = useAnimator(initAnimStore);
 
-	const { setFlashMessages } = useContext(FlashMessagesContext);
+	const { setFlashMessages } = FlashMessageContext();
 
 	const [formState, _setFormState] = useState({
 		subject: '',
 		email: '',
 		message: '',
 	});
-	const setFormState = (name, value) => _setFormState(c => ({ ...c, [name]: value }));
+
+	const setFormState = (name: keyof typeof formState, value: string) =>
+		_setFormState(c => ({ ...c, [name]: value }));
 	const [sendMsgDep, sendMsg] = useState(0);
 
-	// TODO webpack prod doesnt inject variables
+	// TODO webpack prod doesn't inject variables
 	const BACKEND_URL = 'https://www.twiggeh.xyz';
 
-	// eslint-disable-next-line no-undef
-	const result = useFetch(`${BACKEND_URL}/api/v1/submit`, {
+	const result = useFetch<ContactFetch>(`${BACKEND_URL}/api/v1/submit`, {
 		fetchOptions: {
 			method: 'POST',
 			body: JSON.stringify(formState),
@@ -74,7 +77,7 @@ const Form = () => {
 	});
 
 	useEffect(() => {
-		let message;
+		let message: FlashMessage | undefined;
 
 		if (result.loading)
 			message = { message: 'Sending Message', type: 'Warning', uuid: result.uuid };
@@ -88,14 +91,13 @@ const Form = () => {
 
 		if (result.error)
 			message = {
-				message: result.res?.message,
+				message: result.error,
 				type: 'Failure',
 				uuid: result.uuid,
 			};
 
-		if (message === undefined) return;
-
 		setFlashMessages(cur => {
+			if (message === undefined) return cur;
 			const index = cur.findIndex(({ uuid }) => uuid === result.uuid);
 
 			if (index === -1) return [...cur, message];
@@ -125,7 +127,7 @@ const Form = () => {
 					Subject
 				</Label>
 				<Select setFormState={setFormState} />
-				<Label htmlFor='message' key='LabelMessage' customCss={getCss('bSel')}>
+				<Label htmlFor='message' key='LabelMessage' css={getCss('bSel')}>
 					Message
 				</Label>
 				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
@@ -139,11 +141,13 @@ const Form = () => {
 				<Button
 					as='button'
 					content='Send'
-					disabled={Object.keys(formState).reduce((acc, curKey) => {
+					disabled={Object.keys(formState).reduce<boolean>((acc, curKey) => {
 						const condition =
 							curKey === 'email'
 								? !validateEMail(formState.email)
-								: formState[String(curKey)] === '';
+								: // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+								  // @ts-ignore
+								  formState[String(curKey)] === '';
 						return acc === true || condition;
 					}, false)}
 					customCss={`
@@ -185,11 +189,21 @@ var TextArea = styled.textarea`
 	min-height: 25vh;
 `;
 
-var Label = styled.label`
+var Label = styled.label<CustomCSS>`
 	display: block;
 	font-size: calc(${fontSizes.text} * 1.2);
 	font-weight: 500;
 	padding-bottom: calc(var(--margin-Option) * 0.5);
 	position: relative;
-	${({ customCss }) => customCss};
+	${({ css }) => css};
 `;
+
+type ContactFetch = { state: 'Success' | 'Failure'; message: string };
+
+type Message =
+	| {
+			message: string;
+			type: 'Success' | 'Failure' | 'Warning';
+			uuid: string;
+	  }
+	| undefined;
