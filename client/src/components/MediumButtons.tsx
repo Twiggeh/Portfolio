@@ -4,7 +4,7 @@ import { colors, queries, styles } from '../styles/globalStyle';
 import HoverBorder from './components/HoverBorder';
 import ButtonS from './components/MainContent/components/components/ButtonStyle';
 import { Button } from '../static/Projects';
-import { Modal } from './Modals/modal_index';
+import { ModalContext } from '../App';
 
 const mq = queries.mainQueries;
 
@@ -17,51 +17,47 @@ const VertSepColor = () => (
 
 const MediumButtons: React.FC<{
 	buttons: Button[];
-	setModal: React.Dispatch<Modal>;
 	css: string;
-}> = ({ buttons, setModal, css }) => {
+}> = ({ buttons, css }) => {
 	const formatButton = (
 		btnName: string,
-		SVG?: React.FC,
-		btnImg?: string,
-		btnImgAlt?: string
+		SVG?: React.FC<React.SVGProps<SVGSVGElement>>
 	) => {
-		if (SVG || btnImg || btnImgAlt) {
-			return (
-				<>
-					<HoverBorder
-						customCss={`
-							width: calc(100% + 2px) !important;
-							height: calc(100% + 2px) !important;
-							top: -1px;
-							left: -1px;
-						`}
-					/>
-					<BtnIcoWrap>{SVG ? <SVG /> : <img src={btnImg} alt={btnImgAlt} />}</BtnIcoWrap>
-					<VertSepColor />
-					<BtnListBtn>{btnName}</BtnListBtn>
-				</>
-			);
-		}
-		return <BtnListBtn>{btnName}</BtnListBtn>;
+		if (!SVG) return <BtnListBtn>{btnName}</BtnListBtn>;
+		return (
+			<>
+				<HoverBorder
+					customCss={`
+						width: calc(100% + 2px) !important;
+						height: calc(100% + 2px) !important;
+						top: -1px;
+						left: -1px;
+					`}
+				/>
+				<BtnIcoWrap>{<SVG />}</BtnIcoWrap>
+				<VertSepColor />
+				<BtnListBtn>{btnName}</BtnListBtn>
+			</>
+		);
 	};
-	const btnList = buttons.map(
-		({ btnName, btnUrl, btnIcn, btnIcnFallback, modal, svg }, i) => {
-			return (
-				<BtnListWrap
-					key={i}
-					href={btnUrl}
-					onClick={e => {
-						if (modal) {
-							e.preventDefault();
-							setModal(modal);
-						}
-					}}>
-					{formatButton(btnName, svg, btnIcn, btnIcnFallback)}
-				</BtnListWrap>
-			);
-		}
-	);
+
+	const { setModal } = ModalContext();
+
+	const btnList = buttons.map(({ btnName, btnUrl, modal, svg }, i) => {
+		return (
+			<BtnListWrap
+				key={i}
+				href={btnUrl}
+				onClick={e => {
+					if (modal) {
+						e.preventDefault();
+						setModal(modal);
+					}
+				}}>
+				{formatButton(btnName, svg)}
+			</BtnListWrap>
+		);
+	});
 
 	return <BtnList css={css}>{btnList}</BtnList>;
 };
