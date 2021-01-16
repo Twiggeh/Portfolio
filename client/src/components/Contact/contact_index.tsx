@@ -28,10 +28,12 @@ const Contact = () => {
 				<Title>Curriculum Vitae</Title>
 				<MediumButtons
 					buttons={buttons}
-					customCss={`margin-bottom: 2.5rem;
+					css={`
+						margin-bottom: 2.5rem;
 						${[mq[1]]} {
 							${styles.outline}
-						}`}
+						}
+					`}
 				/>
 			</div>
 		</ContactWrap>
