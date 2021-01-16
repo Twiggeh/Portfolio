@@ -1,7 +1,7 @@
 export type Modal = {
-	modalCss?: string;
 	content: JSX.Element;
-	closeBtnCss: string;
+	modalCss?: string;
+	closeBtnCss?: string;
 };
 
 const Modals = () => {
