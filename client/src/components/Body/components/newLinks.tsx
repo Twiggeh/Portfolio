@@ -58,7 +58,7 @@ export default NewLinks;
 var mq = queries.mainQueries;
 var nq = queries.numQueries;
 
-var Shade = styled.div`
+var Shade = styled.div<{ open: boolean }>`
 	position: absolute;
 	z-index: -1;
 	top: 0;
@@ -162,7 +162,7 @@ var TopRight = styled.a`
 	}
 `;
 
-var SideSlideNav = styled.nav`
+var SideSlideNav = styled.nav<{ open: boolean }>`
 	background-color: ${colors.darkestInfill};
 	height: 100vh;
 	display: flex;
