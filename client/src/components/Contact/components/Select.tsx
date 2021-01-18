@@ -1,39 +1,19 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable indent */
-import styled from '@emotion/styled';
-import React, { useContext, useReducer } from 'react';
-import PropTypes from 'prop-types';
-import OptionList from './OptionList';
-import SelectContext from './SelectContext';
-import AnimatorData from './components/AnimatorContext';
-import SelectOpts from './SelectOpts';
 
-/**@type {Option} */
-const defaultOption = {
-	txt: 'Please Select A Subject',
-	value: 'please select',
-	action: { type: 'toggle' },
-};
+const [selectContext, SelectProvider] = createCtx<ISelectProviderCtx>();
+export const SelectContext = selectContext;
 
-/** @type {import('./SelectContext').SelectState} */
-const selectInit = {
-	open: false,
-	initial: true,
-	selected: defaultOption.value,
-	opened: false,
-};
-
-const StyledSelect = styled.div`
-	${({ customCss }) => customCss}
-`;
-
-const Select = ({ setFormState }) => {
+const Select: React.FC<ISelect> = ({ setFormState }) => {
 	const time = 150;
 	const { animate } = useContext(AnimatorData);
 
-	/** @param {import('./SelectContext').SelectState} state
-	 *  @param {OptionActions} action
-	 */
-	const selectReducer = (state, action) => {
+	type TSelectReducer = (
+		state: Omit<ISelectProviderCtx, 'dispatch'>,
+		action: OptionActions
+	) => Omit<ISelectProviderCtx, 'dispatch'>;
+
+	const selectReducer: TSelectReducer = (state, action) => {
 		const transition = (transMul = 0, delayMul = 0) => `
 				transition: transform ${transMul * time}ms ${delayMul * time}ms linear;
 			`;
@@ -65,7 +45,7 @@ const Select = ({ setFormState }) => {
 				return { ...state, open: !state.open, opened: true };
 			}
 			case 'select': {
-				const data = {
+				const data: ReturnType<typeof selectReducer> = {
 					...state,
 					selected: action.selected,
 					selectedIndex: action.selectedIndex,
@@ -103,46 +83,80 @@ const Select = ({ setFormState }) => {
 				});
 				return data;
 			}
-			default:
-				throw new Error(`${action.type} is not supported by selectReducer`);
 		}
 	};
 
-	const [state, dispatch] = useReducer(selectReducer, selectInit);
+	const [{ initial, open, opened, selected, selectedIndex }, dispatch] = useReducer(
+		selectReducer,
+		selectInit
+	);
 	const { getCss } = useContext(AnimatorData);
+
 	return (
-		<SelectContext.Provider
-			value={{
-				dispatch,
-				initial: state.initial,
-				open: state.open,
-				selected: state.selected,
-				selectedIndex: state.selectedIndex,
-			}}
-		>
-			<StyledSelect optLength={SelectOpts.length} customCss={getCss('Sel')}>
-				<OptionList
-					options={SelectOpts}
-					defaultOption={defaultOption}
-					opened={state.opened}
-				/>
+		<SelectProvider value={{ dispatch, initial, open, opened, selected, selectedIndex }}>
+			<StyledSelect css={getCss('Sel')}>
+				<OptionList options={SelectOpts} defaultOption={defaultOption} opened={opened} />
 			</StyledSelect>
-		</SelectContext.Provider>
+		</SelectProvider>
 	);
 };
 
-Select.propTypes = {
-	setFormState: PropTypes.func,
+import styled from '@emotion/styled';
+import React, { useContext, useReducer } from 'react';
+import OptionList from './OptionList';
+import AnimatorData from './components/AnimatorContext';
+import SelectOpts from './SelectOpts';
+import createCtx from '../../Providers/createCtx';
+
+var defaultOption: Option = {
+	txt: 'Please Select A Subject',
+	index: 0,
+	listLength: 1,
+	value: 'please select',
+	action: { type: 'toggle' },
+};
+
+var selectInit: Omit<ISelectProviderCtx, 'dispatch'> = {
+	open: false,
+	opened: false,
+	initial: true,
+	selected: defaultOption.value,
+	selectedIndex: 0,
+};
+
+var StyledSelect = styled.div<CustomCSS>`
+	${({ css }) => css}
+`;
+
+interface ISelect {
+	setFormState: (name: 'subject' | 'email' | 'message', value: string) => void;
+}
+
+type ISelectProviderCtx = {
+	selected: string;
+	open: boolean;
+	opened: boolean;
+	initial: boolean;
+	selectedIndex: number;
+	dispatch: React.Dispatch<OptionActions>;
 };
 
 export default Select;
 
+export type OptionActions =
+	| { type: 'select'; selected: string; selectedIndex: number }
+	| { type: 'toggle'; selected?: string; selectedIndex?: number };
+
+export type Option = {
+	value: string;
+	txt: string;
+	index: number;
+	listLength: number;
+	action?: OptionActions;
+	css?: string;
+};
+
 /**
- *
- * @typedef {{type: "select", selected: String, selectedIndex: Number}} SelectAction
- * @typedef {{type: "toggle"}} ToggleAction
- * @typedef {ToggleAction | SelectAction} OptionActions
- *
  * @typedef Option
  * @prop {string} value - The value of the actual Option element
  * @prop {string} txt - The displayed text of the actual Option element
