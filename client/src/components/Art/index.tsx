@@ -1,5 +1,5 @@
 const ArtPage = () => {
-	return <SideAndMainPage main={'art'} side={'projects'} />;
+	return <SideAndMainPage main='art' side='projects' />;
 };
 
 export default ArtPage;
