@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-const WrapInHover = ({ children, customCss }) => {
+
+const WrapInHover: React.FC<CustomCSS> = ({ children, css }) => {
 	const [hover, setHover] = useState(false);
 	return (
 		<StyledWrapInHover
@@ -9,25 +10,20 @@ const WrapInHover = ({ children, customCss }) => {
 			onMouseLeave={() => {
 				setHover(false);
 			}}
-			customCss={customCss}>
+			css={css}>
 			{children}
 			<HoverBorder hover={hover} />
 		</StyledWrapInHover>
 	);
 };
-WrapInHover.propTypes = {
-	children: PropTypes.any,
-	customCss: PropTypes.string,
-};
 
-var StyledWrapInHover = styled.div`
+var StyledWrapInHover = styled.div<CustomCSS>`
 	position: relative;
 	z-index: 1;
-	${({ customCss }) => customCss}
+	${({ css }) => css}
 `;
 
 export default WrapInHover;
 
 import HoverBorder from '../../components/HoverBorder';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
