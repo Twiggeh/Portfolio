@@ -1,9 +1,9 @@
 import Option from './Option';
 import React from 'react';
-import type { Option as IOption } from './Select';
+import type { Option as IOption, OptionActions } from './Select';
 
 interface IOptionList {
-	options: IOption[];
+	options: { txt: string; value: string; action?: OptionActions }[];
 	defaultOption: IOption;
 	opened: boolean;
 }
