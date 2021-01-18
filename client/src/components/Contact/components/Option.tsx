@@ -1,13 +1,24 @@
 /* eslint-disable indent */
 /* eslint-disable react/prop-types */
 import styled from '@emotion/styled';
-import React, { useContext } from 'react';
+import React from 'react';
 import HoverBorder from '../../components/HoverBorder';
 import FormInputCss from './FormInputCss';
-import SelectContext from './SelectContext';
+import { Option, SelectContext } from './Select';
+
+type TStyledOption = {
+	index: number;
+	open: boolean;
+	selected: boolean;
+	selectedIndex: number;
+	mul: number;
+	dur: number;
+	closeDel: number;
+};
 
 const time = 150;
-const StyledOption = styled.div`
+
+const StyledOption = styled.div<TStyledOption & CustomCSS>`
 	${FormInputCss};
 	position: relative;
 	padding: var(--padding-Option);
@@ -33,14 +44,18 @@ const StyledOption = styled.div`
 			}
 		`;
 	}};
-	${({ customCss }) => customCss}
+	${({ css }) => css}
 `;
 
-/** @param {import('./Select').Option} param0 */
-const Option = ({ txt, value, customCss, index = 0, listLength = 1, action }) => {
-	const { dispatch, open, selected, selectedIndex: _selectedIndex } = useContext(
-		SelectContext
-	);
+const Option: React.FC<Option> = ({
+	txt,
+	value,
+	css,
+	index = 0,
+	listLength = 1,
+	action,
+}) => {
+	const { dispatch, open, selected, selectedIndex: _selectedIndex } = SelectContext();
 
 	const selectedIndex = _selectedIndex === undefined ? 0 : _selectedIndex;
 
@@ -53,16 +68,16 @@ const Option = ({ txt, value, customCss, index = 0, listLength = 1, action }) =>
 
 	return (
 		<StyledOption
-			onClick={() => {
+			onClick={() =>
 				dispatch(
 					action ? action : { type: 'select', selected: value, selectedIndex: index }
-				);
-			}}
+				)
+			}
 			open={open}
 			selected={selected === value}
 			selectedIndex={selectedIndex}
 			index={index}
-			customCss={customCss}
+			css={css}
 			mul={mul}
 			dur={dur}
 			closeDel={closeDel}>
