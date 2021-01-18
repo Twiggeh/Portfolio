@@ -8,14 +8,9 @@ const SideAndMainPage = (
 		</div>
 	);
 };
-SideAndMainPage.propTypes = {
-	main: PropTypes.string,
-	side: PropTypes.string,
-};
 
 export default SideAndMainPage;
 
 import React from 'react';
 import MainContents from '../components/MainContent/index';
 import SidebarContents from '../components/Sidebar';
-import PropTypes from 'prop-types';
