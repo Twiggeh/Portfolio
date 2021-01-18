@@ -5,14 +5,9 @@ import createCtx from './components/Providers/createCtx';
 
 const mq = queries.mainQueries;
 
-const [modalContext, ModalProvider] = createCtx<{
-	modal: Modal | undefined;
-	setModal: React.Dispatch<React.SetStateAction<Modal | undefined>>;
-}>();
-const [flashMessageContext, FlashMessageProvider] = createCtx<{
-	setFlashMessages: React.Dispatch<React.SetStateAction<FlashMessage[]>>;
-	addFlashMessages: (flash: FlashMessage[]) => void;
-}>();
+const [modalContext, ModalProvider] = createCtx<IModalProviderCtx>();
+const [flashMessageContext, FlashMessageProvider] = createCtx<IFlashMsgProviderCtx>();
+
 export const ModalContext = modalContext;
 export const FlashMessageContext = flashMessageContext;
 
@@ -82,3 +77,12 @@ var globalStyle = css`
 		--trueWidth: 100%;
 	}
 `;
+
+type IModalProviderCtx = {
+	modal: Modal | undefined;
+	setModal: React.Dispatch<React.SetStateAction<Modal | undefined>>;
+};
+type IFlashMsgProviderCtx = {
+	setFlashMessages: React.Dispatch<React.SetStateAction<FlashMessage[]>>;
+	addFlashMessages: (flash: FlashMessage[]) => void;
+};
