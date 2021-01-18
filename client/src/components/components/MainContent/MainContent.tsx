@@ -7,9 +7,13 @@ const bottomLine = `
 	padding-left: clamp(40px, 6vw, 60px);
 `;
 
-/** @param {MainContentInput} param0 */
-const MainContent = ({ data: { title, subTitle, notes, buttons, id } }) => {
-	const { setModal } = ModalContext();
+interface IMainContent {
+	data: Content;
+}
+
+const MainContent: React.FC<IMainContent> = ({
+	data: { title, subTitle, notes, buttons, id },
+}) => {
 	return (
 		<Main id={id}>
 			<MainHeadWrap>
@@ -17,9 +21,7 @@ const MainContent = ({ data: { title, subTitle, notes, buttons, id } }) => {
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrap>
-				{buttons ? (
-					<MediumButtons buttons={buttons} setModal={setModal} customCss={bottomLine} />
-				) : null}
+				{buttons ? <MediumButtons buttons={buttons} css={bottomLine} /> : null}
 			</MainHeadWrap>
 			<NoteRenderer notes={notes} />
 		</Main>
@@ -41,7 +43,7 @@ var MainSubtitle = styled.h2`
 	font-size: clamp(20px, 2vw, 35px);
 `;
 
-var MainTitleWrap = styled.div`
+var MainTitleWrap = styled.div<{ buttons: boolean }>`
 	padding-top: clamp(30px, 4vw, 40px);
 	padding-bottom: clamp(30px, 4vw, 40px);
 	padding-right: ${styles.contentPaddingSides};
@@ -74,36 +76,18 @@ var Main = styled.article`
 	}
 `;
 
-MainContent.propTypes = {
-	data: PropTypes.exact({
-		descPage: PropTypes.string,
-		id: PropTypes.string,
-		cover: PropTypes.string,
-		notes: PropTypes.array,
-		title: PropTypes.string,
-		subTitle: PropTypes.string,
-		buttons: PropTypes.arrayOf(
-			PropTypes.exact({
-				btnName: PropTypes.string.isRequired,
-				btnUrl: PropTypes.string.isRequired,
-				btnIcn: PropTypes.string,
-				svg: PropTypes.func,
-				modal: PropTypes.object,
-			})
-		),
-	}),
-};
 export default MainContent;
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { colors, queries, styles } from '../../../styles/globalStyle';
 import NoteRenderer from './components/NoteRenderer';
 import MediumButtons from '../../MediumButtons';
 import { ModalContext } from '../../../App';
+import { Content } from '../../../static/Projects';
 /** @typedef {{
 	data: import('../../../static/Projects.js').Content
-}} MainContentInput */
+}} MainContentInput
+*/
 
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
