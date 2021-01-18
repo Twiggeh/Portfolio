@@ -6,7 +6,7 @@ export const SelectContext = selectContext;
 
 const Select: React.FC<ISelect> = ({ setFormState }) => {
 	const time = 150;
-	const { animate } = useContext(AnimatorData);
+	const { animate, getCss } = AnimatorDataContext();
 
 	type TSelectReducer = (
 		state: Omit<ISelectProviderCtx, 'dispatch'>,
@@ -90,7 +90,6 @@ const Select: React.FC<ISelect> = ({ setFormState }) => {
 		selectReducer,
 		selectInit
 	);
-	const { getCss } = useContext(AnimatorData);
 
 	return (
 		<SelectProvider value={{ dispatch, initial, open, opened, selected, selectedIndex }}>
@@ -102,11 +101,11 @@ const Select: React.FC<ISelect> = ({ setFormState }) => {
 };
 
 import styled from '@emotion/styled';
-import React, { useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import OptionList from './OptionList';
-import AnimatorData from './components/AnimatorContext';
 import SelectOpts from './SelectOpts';
 import createCtx from '../../Providers/createCtx';
+import { AnimatorDataContext } from './Form';
 
 var defaultOption: Option = {
 	txt: 'Please Select A Subject',

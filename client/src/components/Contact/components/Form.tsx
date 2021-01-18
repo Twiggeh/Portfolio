@@ -3,9 +3,8 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { FlashMessageContext } from '../../../App';
 import { fontSizes } from '../../../styles/globalStyle';
-import Button from '../../components/MainContent/components/components/Button';
 import { FlashMessage } from '../../FlashMessage/FlashMessages';
-import AnimatorData from './components/AnimatorContext';
+import Button from '../../components/MainContent/components/components/Button';
 import Title from './components/Title';
 import useAnimator from './components/useAnimator';
 import FormInputCss from './FormInputCss';
@@ -14,6 +13,7 @@ import Select from './Select';
 import SelectOpts from './SelectOpts';
 import WrapInHover from './WrapInHover';
 import type { AnimStore } from '../components/components/useAnimator';
+import createCtx from '../../Providers/createCtx';
 
 const initAnimStore: AnimStore = {
 	bSel: {
@@ -27,6 +27,9 @@ const initAnimStore: AnimStore = {
 		default: '',
 	},
 };
+
+const [animatorDataContext, AnimatorDataProvider] = createCtx<IAnimatorDataCtx>();
+export const AnimatorDataContext = animatorDataContext;
 
 const validateEMail = (email: string) => {
 	// eslint-disable-next-line security/detect-unsafe-regex
@@ -47,6 +50,7 @@ const Form = () => {
 
 	const setFormState = (name: keyof typeof formState, value: string) =>
 		_setFormState(c => ({ ...c, [name]: value }));
+
 	const [sendMsgDep, sendMsg] = useState(0);
 
 	// TODO webpack prod doesn't inject variables
@@ -108,7 +112,7 @@ const Form = () => {
 	}, [result.res, result.error, result.loading, result.uuid]);
 
 	return (
-		<AnimatorData.Provider value={{ animStore, animate, getCss }}>
+		<AnimatorDataProvider value={{ animStore, animate, getCss }}>
 			<FormWrap>
 				<Title>Contact me</Title>
 				<Label htmlFor='email' key='Email'>
@@ -130,7 +134,7 @@ const Form = () => {
 				<Label htmlFor='message' key='LabelMessage' css={getCss('bSel')}>
 					Message
 				</Label>
-				<WrapInHover key='HoverWrapMessage' customCss={getCss('bSel')}>
+				<WrapInHover key='HoverWrapMessage' css={getCss('bSel')}>
 					<TextArea
 						key='ContactMessageTextArea'
 						name='message'
@@ -160,7 +164,7 @@ const Form = () => {
 					}}
 				/>
 			</FormWrap>
-		</AnimatorData.Provider>
+		</AnimatorDataProvider>
 	);
 };
 
@@ -200,10 +204,4 @@ var Label = styled.label<CustomCSS>`
 
 type ContactFetch = { state: 'Success' | 'Failure'; message: string };
 
-type Message =
-	| {
-			message: string;
-			type: 'Success' | 'Failure' | 'Warning';
-			uuid: string;
-	  }
-	| undefined;
+type IAnimatorDataCtx = ReturnType<typeof useAnimator>;
