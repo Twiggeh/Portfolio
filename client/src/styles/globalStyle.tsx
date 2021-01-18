@@ -1,11 +1,16 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React from 'react';
 
-const cross: React.FC<{
-	size?: number;
-	color?: string;
-	width?: number;
-	lineCap?: React.SVGProps<SVGLineElement>['strokeLinecap'];
-}> = (
+type ICross = (
+	arg0?: React.SVGProps<SVGSVGElement> & {
+		size?: number;
+		color?: string;
+		width?: number;
+		lineCap?: React.SVGProps<SVGLineElement>['strokeLinecap'];
+	}
+) => JSX.Element;
+
+const cross: ICross = (
 	{ size = 40, color = 'white', width = 3, lineCap = 'round' } = {
 		size: 40,
 		color: 'white',
