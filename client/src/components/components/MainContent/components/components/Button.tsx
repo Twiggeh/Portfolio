@@ -1,41 +1,38 @@
 /* eslint-disable indent */
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import ButtonS from './ButtonStyle';
 import HoverBorder from '../../../HoverBorder';
 
-const StyledButton = styled.a`
+const StyledButton = styled.a<CustomCSS & { as: string; disabled: string | boolean }>`
 	${ButtonS};
-	${({ customCss }) => customCss};
+	${({ css }) => css};
 `;
 
-const Button = ({
+const Button: React.FC<IButton> = ({
 	content = '',
-	customCss = '',
+	css = '',
 	onClick,
 	type,
 	disabled = false,
 	href,
 	as = 'a',
 }) => {
-	if (onClick) console.log(onClick);
 	return (
 		<StyledButton
-			customCss={`${customCss}
-			${
-				disabled
+			css={`
+				${css}
+				${disabled
 					? `color: gray;
 				:hover {
 					color: gray;
 					cursor: not-allowed;
 				}`
-					: ''
-			}
+					: ''}
 			`}
 			as={as}
 			href={href}
-			onClick={onClick ? onClick : null}
+			onClick={onClick ? onClick : undefined}
 			type={type}
 			disabled={disabled && 'disabled'}>
 			<HoverBorder hover={disabled ? false : undefined}></HoverBorder>
@@ -44,14 +41,14 @@ const Button = ({
 	);
 };
 
-Button.propTypes = {
-	content: PropTypes.string,
-	href: PropTypes.string,
-	customCss: PropTypes.any,
-	onClick: PropTypes.func,
-	type: PropTypes.string,
-	disabled: PropTypes.bool,
-	as: PropTypes.string,
-};
-
 export default Button;
+
+interface IButton {
+	content: string;
+	css: string;
+	onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+	type?: string;
+	disabled?: boolean;
+	href?: string;
+	as: 'a' | 'button';
+}
