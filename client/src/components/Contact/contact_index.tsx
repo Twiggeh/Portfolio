@@ -6,8 +6,6 @@ import Title from './components/components/Title';
 import Form from './components/Form';
 import CV from 'assets/cv website/CV_Twiggeh.pdf';
 
-const mq = queries.mainQueries;
-
 const buttons = [{ svg: svgs.Download, btnName: 'Download', btnUrl: CV }];
 
 const Contact = () => {
@@ -26,21 +24,14 @@ const Contact = () => {
 					<br />I use Node, React, MongoDB and Express.
 				</TextBlock>
 				<Title>Curriculum Vitae</Title>
-				<MediumButtons
-					buttons={buttons}
-					css={`
-						margin-bottom: 2.5rem;
-						${[mq[1]]} {
-							${styles.outline}
-						}
-					`}
-				/>
+				<MediumButtons buttons={buttons} scss={medBtnCss} />
 			</div>
 		</ContactWrap>
 	);
 };
 
 // TODO : Add picture of cv to href
+var mq = queries.mainQueries;
 
 var TextBlock = styled.div`
 	font-size: ${fontSizes.text};
@@ -58,6 +49,13 @@ var ContactWrap = styled.div`
 		margin-top: 7rem;
 		flex-wrap: wrap-reverse;
 		margin-right: 0;
+	}
+`;
+
+var medBtnCss = `
+	margin-bottom: 2.5rem;
+	${[mq[1]]} {
+		${styles.outline}
 	}
 `;
 
