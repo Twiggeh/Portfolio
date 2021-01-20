@@ -131,10 +131,10 @@ const Form = () => {
 					Subject
 				</Label>
 				<Select setFormState={setFormState} />
-				<Label htmlFor='message' key='LabelMessage' css={getCss('bSel')}>
+				<Label htmlFor='message' key='LabelMessage' scss={getCss('bSel')}>
 					Message
 				</Label>
-				<WrapInHover key='HoverWrapMessage' css={getCss('bSel')}>
+				<WrapInHover key='HoverWrapMessage' scss={getCss('bSel')}>
 					<TextArea
 						key='ContactMessageTextArea'
 						name='message'
@@ -154,7 +154,7 @@ const Form = () => {
 								  formState[String(curKey)] === '';
 						return acc === true || condition;
 					}, false)}
-					customCss={`
+					scss={`
 						width: 100%;
 						${getCss('bSel')}
 					`}
@@ -199,7 +199,7 @@ var Label = styled.label<CustomCSS>`
 	font-weight: 500;
 	padding-bottom: calc(var(--margin-Option) * 0.5);
 	position: relative;
-	${({ css }) => css};
+	${({ scss }) => scss};
 `;
 
 type ContactFetch = { state: 'Success' | 'Failure'; message: string };
