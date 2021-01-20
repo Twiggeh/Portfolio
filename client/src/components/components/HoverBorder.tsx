@@ -1,30 +1,28 @@
 /* eslint-disable indent */
 import React from 'react';
-import { css } from '@emotion/core';
+import { SerializedStyles } from '@emotion/core';
+import { css as emotionCss } from '@emotion/react';
 
 interface IHoverBorder {
 	hoverGradient?: boolean;
-	customCss?: string;
+	css?: SerializedStyles;
 	hover?: boolean;
 }
 
-const HoverBorder: React.FC<IHoverBorder> = ({
-	hoverGradient = false,
-	customCss = '',
-	hover,
-}) => {
-	const pointerNone = css`
-		pointer-events: none;
-	`;
+const pointerNone = emotionCss`
+	pointer-events: none;
+`;
+
+const HoverBorder: React.FC<IHoverBorder> = ({ hoverGradient = false, css, hover }) => {
 	return (
 		<svg
 			fill='url(#pinkGradient)'
 			css={
 				hover === undefined
-					? [svgHoverStyle, customCss]
+					? [svgHoverStyle, css].filter(c => !!c)
 					: hover === true
-					? [svgStyle, svgHover, pointerNone, customCss]
-					: [svgStyle, pointerNone, customCss]
+					? [svgStyle, svgHover, pointerNone, css].filter(c => !!c)
+					: [svgStyle, pointerNone, css].filter(c => !!c)
 			}>
 			<line id='topLine' x1='0' y1='0' x2='100%' y2='0' />
 			<line id='rightLine' x1='100%' y1='0%' x2='100%' y2='100%' />
@@ -47,7 +45,7 @@ const HoverBorder: React.FC<IHoverBorder> = ({
 
 var getTransTime = (mag = 1, ms = 150) => `${mag * ms}ms`;
 
-var svgHover = css`
+var svgHover = emotionCss`
 	#myRect {
 		opacity: 1;
 	}
@@ -75,7 +73,7 @@ var svgHover = css`
 	}
 `;
 
-var svgStyle = css`
+var svgStyle = emotionCss`
 	#myRect {
 		opacity: 0;
 		transition: opacity ${getTransTime()} ease-in;
@@ -112,7 +110,7 @@ var svgStyle = css`
 	}
 `;
 
-var svgHoverStyle = css`
+var svgHoverStyle = emotionCss`
 	#myRect {
 		opacity: 0;
 		transition: opacity ${getTransTime()} ease-in;
