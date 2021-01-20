@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es2018",
-		// "lib": ["dom", "dom.iterable", "esnext"],
+		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
@@ -11,7 +11,6 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"jsx": "react",
 		"strictNullChecks": true,
 		"noEmit": false,
 		"typeRoots": ["src/@types"],
@@ -19,8 +18,10 @@
 		"paths": {
 			"*": ["src/@types/*.d.ts"]
 		},
-		"removeComments": true
+		"removeComments": true,
+		//"jsxImportSource": "@emotion/react",
+		"jsx": "preserve"
 	},
 	"include": ["./src"],
-	"exclude": ["node_modules", "dist", "src/index.js"]
+	"exclude": ["node_modules", "dist", "src/index.js", "config"]
 }
