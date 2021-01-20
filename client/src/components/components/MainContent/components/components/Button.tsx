@@ -6,30 +6,33 @@ import HoverBorder from '../../../HoverBorder';
 
 const StyledButton = styled.a<CustomCSS & { as: string; disabled: string | boolean }>`
 	${ButtonS};
-	${({ css }) => css};
+	${({ scss }) => scss};
 `;
 
 const Button: React.FC<IButton> = ({
 	content = '',
-	css = '',
+	scss = '',
 	onClick,
 	type,
 	disabled = false,
 	href,
 	as = 'a',
 }) => {
+	const StyledSCCS = `
+		${scss}
+		${
+			disabled
+				? `color: gray;
+		      :hover {
+			      color: gray;
+			      cursor: not-allowed;
+		      }`
+				: ''
+		}
+	`;
 	return (
 		<StyledButton
-			css={`
-				${css}
-				${disabled
-					? `color: gray;
-				:hover {
-					color: gray;
-					cursor: not-allowed;
-				}`
-					: ''}
-			`}
+			scss={StyledSCCS}
 			as={as}
 			href={href}
 			onClick={onClick ? onClick : undefined}
@@ -45,7 +48,7 @@ export default Button;
 
 interface IButton {
 	content: string;
-	css: string;
+	scss: string;
 	onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 	type?: string;
 	disabled?: boolean;
