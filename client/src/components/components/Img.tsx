@@ -3,18 +3,18 @@ import React from 'react';
 
 interface IImg {
 	src: string;
-	css: string;
+	scss: string;
 }
 
-const Img: React.FC<IImg> = ({ src, css }) => {
-	return <Image src={src} css={css} />;
+const Img: React.FC<IImg> = ({ src, scss }) => {
+	return <Image src={src} scss={scss} />;
 };
 
 var Image = styled.div<CustomCSS & { src: string }>`
-	background-image: 'url(${props => props.src})';
+	background-image: 'url(${({ src }) => src})';
 	background-repeat: no-repeat;
 	background-size: cover;
-	${props => props.css}
+	${({ scss }) => scss}
 `;
 
 export default Img;
