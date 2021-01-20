@@ -44,13 +44,13 @@ const StyledOption = styled.div<TStyledOption & CustomCSS>`
 			}
 		`;
 	}};
-	${({ css }) => css}
+	${({ scss }) => scss}
 `;
 
 const Option: React.FC<Option> = ({
 	txt,
 	value,
-	css,
+	scss,
 	index = 0,
 	listLength = 1,
 	action,
@@ -77,7 +77,7 @@ const Option: React.FC<Option> = ({
 			selected={selected === value}
 			selectedIndex={selectedIndex}
 			index={index}
-			css={css}
+			scss={scss}
 			mul={mul}
 			dur={dur}
 			closeDel={closeDel}>
