@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
 import { colors, styles } from '../styles/globalStyle';
@@ -35,16 +36,16 @@ interface ISmallButton {
 	onClick: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
+const HoverBorderStyle = css`
+	width: calc(100% + 2px) !important;
+	height: calc(100% + 2px) !important;
+	top: -1px;
+	left: -1px;
+`;
+
 const SmallButton: React.FC<ISmallButton> = ({ children, href, onClick }) => (
 	<SideBtn href={href} onClick={onClick}>
-		<HoverBorder
-			customCss={`
-				width: calc(100% + 2px) !important;
-				height: calc(100% + 2px) !important;
-				top: -1px;
-				left: -1px;
-			`}
-		/>
+		<HoverBorder css={HoverBorderStyle} />
 		{children}
 	</SideBtn>
 );
