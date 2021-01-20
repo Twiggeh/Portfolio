@@ -93,7 +93,7 @@ const Select: React.FC<ISelect> = ({ setFormState }) => {
 
 	return (
 		<SelectProvider value={{ dispatch, initial, open, opened, selected, selectedIndex }}>
-			<StyledSelect css={getCss('Sel')}>
+			<StyledSelect scss={getCss('Sel')}>
 				<OptionList options={SelectOpts} defaultOption={defaultOption} opened={opened} />
 			</StyledSelect>
 		</SelectProvider>
@@ -124,7 +124,7 @@ var selectInit: Omit<ISelectProviderCtx, 'dispatch'> = {
 };
 
 var StyledSelect = styled.div<CustomCSS>`
-	${({ css }) => css}
+	${({ scss }) => scss}
 `;
 
 interface ISelect {
@@ -152,7 +152,7 @@ export type Option = {
 	index: number;
 	listLength: number;
 	action?: OptionActions;
-	css?: string;
+	scss?: string;
 };
 
 /**
