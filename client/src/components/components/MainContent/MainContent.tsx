@@ -1,4 +1,5 @@
 const mq = queries.mainQueries;
+
 const bottomLine = `
 	${styles.customOutline(0, 0, 1)}
 	padding-top: clamp(30px, 4vw, 40px);
@@ -21,7 +22,7 @@ const MainContent: React.FC<IMainContent> = ({
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrap>
-				{buttons ? <MediumButtons buttons={buttons} css={bottomLine} /> : null}
+				{buttons ? <MediumButtons buttons={buttons} scss={bottomLine} /> : null}
 			</MainHeadWrap>
 			<NoteRenderer notes={notes} />
 		</Main>
@@ -84,6 +85,7 @@ import NoteRenderer from './components/NoteRenderer';
 import MediumButtons from '../../MediumButtons';
 import { ModalContext } from '../../../App';
 import { Content } from '../../../static/Projects';
+import { css } from '@emotion/react';
 /** @typedef {{
 	data: import('../../../static/Projects.js').Content
 }} MainContentInput
