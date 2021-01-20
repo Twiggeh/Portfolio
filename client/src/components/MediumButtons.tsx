@@ -5,8 +5,16 @@ import HoverBorder from './components/HoverBorder';
 import ButtonS from './components/MainContent/components/components/ButtonStyle';
 import { Button } from '../static/Projects';
 import { ModalContext } from '../App';
+import { css } from '@emotion/react';
 
 const mq = queries.mainQueries;
+
+const HoverBorderStyle = css`
+	width: calc(100% + 2px) !important;
+	height: calc(100% + 2px) !important;
+	top: -1px;
+	left: -1px;
+`;
 
 const VertSepColor = () => (
 	<>
@@ -17,8 +25,8 @@ const VertSepColor = () => (
 
 const MediumButtons: React.FC<{
 	buttons: Button[];
-	css: string;
-}> = ({ buttons, css }) => {
+	scss: string;
+}> = ({ buttons, scss }) => {
 	const formatButton = (
 		btnName: string,
 		SVG?: React.FC<React.SVGProps<SVGSVGElement>>
@@ -26,15 +34,10 @@ const MediumButtons: React.FC<{
 		if (!SVG) return <BtnListBtn>{btnName}</BtnListBtn>;
 		return (
 			<>
-				<HoverBorder
-					customCss={`
-						width: calc(100% + 2px) !important;
-						height: calc(100% + 2px) !important;
-						top: -1px;
-						left: -1px;
-					`}
-				/>
-				<BtnIcoWrap>{<SVG />}</BtnIcoWrap>
+				<HoverBorder css={HoverBorderStyle} />
+				<BtnIcoWrap>
+					<SVG />
+				</BtnIcoWrap>
 				<VertSepColor />
 				<BtnListBtn>{btnName}</BtnListBtn>
 			</>
@@ -59,7 +62,7 @@ const MediumButtons: React.FC<{
 		);
 	});
 
-	return <BtnList css={css}>{btnList}</BtnList>;
+	return <BtnList scss={scss}>{btnList}</BtnList>;
 };
 
 var BtnList = styled.section<CustomCSS>`
@@ -73,7 +76,7 @@ var BtnList = styled.section<CustomCSS>`
 		padding-top: 0;
 		padding-bottom: 0;
 	}
-	${({ css }) => css}
+	${({ scss }) => scss}
 `;
 
 var BtnListWrap = styled.a`
