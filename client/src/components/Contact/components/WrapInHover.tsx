@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WrapInHover: React.FC<CustomCSS> = ({ children, css }) => {
+const WrapInHover: React.FC<CustomCSS> = ({ children, scss }) => {
 	const [hover, setHover] = useState(false);
 	return (
 		<StyledWrapInHover
@@ -10,7 +10,7 @@ const WrapInHover: React.FC<CustomCSS> = ({ children, css }) => {
 			onMouseLeave={() => {
 				setHover(false);
 			}}
-			css={css}>
+			scss={scss}>
 			{children}
 			<HoverBorder hover={hover} />
 		</StyledWrapInHover>
@@ -20,7 +20,7 @@ const WrapInHover: React.FC<CustomCSS> = ({ children, css }) => {
 var StyledWrapInHover = styled.div<CustomCSS>`
 	position: relative;
 	z-index: 1;
-	${({ css }) => css}
+	${({ scss }) => scss}
 `;
 
 export default WrapInHover;
