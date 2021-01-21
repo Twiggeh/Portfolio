@@ -1,67 +1,62 @@
 const mq = queries.mainQueries;
 
-const FeatureMediaCss = props => `
+type Precedence = Extract<Note, { type: 'feature' }>['precedence'];
+
+const FeatureMediaCss = (precedence: Precedence) => `
 	align-self: flex-start;
-	width: max(300px, ${props.precedence === 'text' ? '20vw' : '40vw'});
+	width: max(300px, ${precedence === 'text' ? '20vw' : '40vw'});
 	${[mq[1]]} {
 		width: 100%;
 	}`;
 
-const StyledVideo = styled.video(FeatureMediaCss);
+const StyledVideo = styled.video<{ precedence: Precedence }>(({ precedence }) =>
+	FeatureMediaCss(precedence)
+);
 
-const NoteVideo = ({ src, alt, precedence }) => {
+interface INoteVideo {
+	src: string;
+	alt: string;
+	precedence: Precedence;
+}
+
+const NoteVideo: React.FC<INoteVideo> = ({ src, alt, precedence }) => {
 	return (
-		<StyledVideo {...{ precedence }} controls loop>
+		<StyledVideo precedence={precedence} controls loop>
 			<source src={src} type='video/mp4'></source>
 		</StyledVideo>
 	);
 };
 
-NoteVideo.propTypes = {
-	src: PropTypes.string,
-	customCss: PropTypes.string,
-	precedence: PropTypes.string,
-	alt: PropTypes.string,
-};
-
-/** @type {import('@emotion/core').Interpolation} */
 const ImgModalCss = {
-	modalCss: {
-		display: 'flex',
-		flexDirection: 'row-reverse',
-		padding: 0,
+	modalCss: `
+		display: flex;
+		flexDirection: row-reverse;
+		padding: 0;
 		img: {
-			maxHeight: 'calc(100vh * 0.8)',
-			maxWidth: 'calc(100vw *0.8)',
-		},
-	},
-	closeBtnCss: {
-		padding: '1rem',
-	},
+			maxHeight: 'calc(100vh * 0.8)';
+			maxWidth: 'calc(100vw *0.8)';
+		}
+	`,
+	closeBtnCss: `
+		padding: 1rem;
+	`,
 };
 
-/** @param {{
-			note: import('../../../../static/Projects').FeatureNote,
-			prevType : import('../../../../static/Projects').Note["type"],
-			index: number,
-		}} param0 */
-const FeatureNote = ({ note, renderReverse }) => {
-	const {
-		title,
-		src = khala,
-		alt,
-		text,
-		btnUrl,
-		btnText = 'More',
-		precedence = 'text',
-	} = note;
+interface IFeatureNote {
+	note: Extract<Note, { type: 'feature' }>;
+	prevType?: Note['type'];
+	renderReverse: boolean;
+}
 
-	/** @param {string} str - Path */
-	const getExt = str => str.split('.').pop();
+const FeatureNote: React.FC<IFeatureNote> = ({
+	note: { title, src = khala, alt, text, btnUrl, btnText = 'More', precedence = 'text' },
+	renderReverse,
+}) => {
+	const getExt = (str?: string) => str && str.split('.').pop();
 
 	const imgExt = ['png', 'gif', 'webp'];
-
-	const isImg = imgExt.includes(getExt(src));
+	const extension = getExt(src);
+	const isImg: boolean | undefined = extension ? imgExt.includes(extension) : undefined;
 
 	const { setModal } = ModalContext();
 
@@ -80,7 +75,7 @@ const FeatureNote = ({ note, renderReverse }) => {
 						}
 					/>
 				) : (
-					<NoteVideo {...{ precedence }} src={src} alt={alt} loading='lazy' />
+					<NoteVideo {...{ precedence }} src={src} alt={alt} />
 				)}
 				<FeatureDescBtnWrap>
 					{text ? <Description>{text}</Description> : null}
@@ -112,12 +107,12 @@ var FeatureDescBtnWrap = styled.div`
 	}
 `;
 
-var FeatureImg = styled.img(
-	props => `${FeatureMediaCss(props)};
+var FeatureImg = styled.img<{ precedence: Precedence }>(
+	({ precedence }) => `${FeatureMediaCss(precedence)};
 	cursor: pointer;`
 );
 
-var FeatureContentWrap = styled.div`
+var FeatureContentWrap = styled.div<{ reverse: boolean }>`
 	display: flex;
 	${({ reverse }) =>
 		reverse
@@ -133,19 +128,14 @@ var FeatureContentWrap = styled.div`
 	}
 `;
 
-FeatureNote.propTypes = {
-	note: PropTypes.object,
-	renderReverse: PropTypes.bool,
-};
-
 export default FeatureNote;
 
 import styled from '@emotion/styled';
 import React from 'react';
 import { queries } from '../../../../styles/globalStyle';
-import PropTypes from 'prop-types';
 import Button from './components/Button';
 import Description from './components/Description';
 import Title from './components/Title';
-import { khala } from 'pictures';
 import { ModalContext } from '../../../../App';
+import { Note } from '../../../../static/Projects';
+import { khala } from '../../../../static/Pictures';
