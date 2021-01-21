@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Title from './components/Title';
 import Description from './components/Description';
 import styled from '@emotion/styled';
 import { queries, styles } from '../../../../styles/globalStyle';
+import type { Note } from '../../../../static/Projects';
 
-/** @param {{
-  note: import('../../../../static/Projects').VideoNote,
-  aspect: number,
-  }} param0*/
-const VideoNote = ({
+interface IVideoNote {
+	note: Extract<Note, { type: 'video' }>;
+	reverse?: boolean;
+}
+
+const VideoNote: React.FC<IVideoNote> = ({
 	note: { text, title, src, aspect = 16 / 9, base = '30vw' },
 	reverse = false,
 }) => {
@@ -49,7 +50,7 @@ var TitleTextWrap = styled.div`
 	}
 `;
 
-var VidNoteWrap = styled.div`
+var VidNoteWrap = styled.div<{ reverse: boolean }>`
 	display: flex;
 	justify-content: space-between;
 	margin-top: 2.5em;
@@ -75,7 +76,7 @@ var VidNoteWrap = styled.div`
 	}
 `;
 
-var YoutubeVideo = styled.iframe`
+var YoutubeVideo = styled.iframe<{ base: string; aspect: number }>`
 	${({ base, aspect }) => {
 		const width = `max(${base}, 500px)`;
 		return `
@@ -87,10 +88,5 @@ var YoutubeVideo = styled.iframe`
 			}`;
 	}}
 `;
-
-VideoNote.propTypes = {
-	note: PropTypes.object,
-	reverse: PropTypes.bool,
-};
 
 export default VideoNote;
