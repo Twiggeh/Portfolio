@@ -1,20 +1,22 @@
-/**
- * @param {{notes: import('../../../../static/Projects').Note[]}} param0
- */
-const NoteRenderer = ({ notes }) => {
+interface INoteRenderer {
+	notes: Note[];
+}
+
+const NoteRenderer: React.FC<INoteRenderer> = ({ notes }) => {
 	let reverse = false;
 
-	const checkPrevReverse = i => {
+	const checkPrevReverse = (i: number) => {
 		const prevType = notes[i - 1]?.type;
 		if (prevType === 'feature' || prevType === 'video') reverse = !reverse;
 	};
 
-	const checkNextReverse = i => {
+	const checkNextReverse = (i: number) => {
 		const nextType = notes[i + 1]?.type;
 		if (nextType !== 'feature' && nextType !== 'video') reverse = false;
 	};
 
-	const result = [];
+	const result: JSX.Element[] = [];
+
 	notes.forEach((note, i) => {
 		switch (note.type) {
 			case 'feature': {
@@ -56,6 +58,7 @@ const NoteRenderer = ({ notes }) => {
 		}
 		if (i + 1 !== notes.length) result.push(<Separator key={i + '1'} />);
 	});
+
 	return <NoteWrapper>{result}</NoteWrapper>;
 };
 
@@ -69,20 +72,16 @@ var NoteWrapper = styled.div`
 	margin-right: ${styles.contentPaddingSides};
 `;
 
-NoteRenderer.propTypes = {
-	notes: PropTypes.array,
-};
-
 export default NoteRenderer;
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import FeatureNote from './FeatureNote';
 import styled from '@emotion/styled';
 import { styles } from '../../../../styles/globalStyle';
 import DescriptionNote from './DescriptionNote';
 import HeroNote from './HeroNote';
 import VideoNote from './VideoNote';
+import { Note } from '../../../../static/Projects';
 
 export var Separator = styled.div`
 	${styles.customOutline(1)};
