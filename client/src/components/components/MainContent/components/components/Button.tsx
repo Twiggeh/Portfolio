@@ -48,10 +48,10 @@ export default Button;
 
 interface IButton {
 	content: string;
-	scss: string;
+	scss?: string;
 	onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 	type?: string;
 	disabled?: boolean;
 	href?: string;
-	as: 'a' | 'button';
+	as?: 'a' | 'button';
 }
