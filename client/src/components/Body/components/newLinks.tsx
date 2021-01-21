@@ -2,6 +2,7 @@ const NewLinks = () => {
 	const [width] = useScreenSize();
 	const [open, setOpen] = useState(false);
 	const flipOpen = () => setOpen(c => !c);
+
 	return (
 		<>
 			<Nav>
@@ -121,8 +122,7 @@ var NavTitle = styled.div`
 
 var NavUl = styled.ul`
 	display: flex;
-	padding-top: 2em;
-	padding-bottom: 2em;
+	padding: 2em;
 	a {
 		font-size: ${fontSizes.navEl};
 	}
