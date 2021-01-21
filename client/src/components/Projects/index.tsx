@@ -1,4 +1,9 @@
-const SideAndMainPage = (
+interface ISideAndMainPage {
+	side: 'art' | 'projects';
+	main: 'projects' | 'art';
+}
+
+const SideAndMainPage: React.FC<Partial<ISideAndMainPage>> = (
 	{ main = 'projects', side = 'art' } = { main: 'projects', side: 'art' }
 ) => {
 	return (
