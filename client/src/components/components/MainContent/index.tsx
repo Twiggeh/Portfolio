@@ -13,7 +13,7 @@ const MainContents: React.FC<IMainContents> = ({ content = 'projects' }) => {
 var StyledSection = styled.section`
 	display: flex;
 	flex-direction: column;
-	max-width: 'var(--trueWidth)';
+	max-width: var(--trueWidth);
 `;
 
 export default MainContents;
