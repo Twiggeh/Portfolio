@@ -30,7 +30,8 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				exclude: /node_modules/,
+				include: /src/,
+				exclude: [/node_modules/, /cypress/],
 				use: [
 					{
 						loader: 'babel-loader',
@@ -64,7 +65,7 @@ module.exports = {
 			},
 			{
 				test: /\.jsx?$/,
-				exclude: /node_modules/,
+				exclude: [/node_modules/, /cypress/],
 				include: /src/,
 				use: [
 					{
@@ -164,7 +165,7 @@ module.exports = {
 			'react-dom': '@hot-loader/react-dom',
 			icons: path.resolve(curProcess, './src/assets/icons'),
 			assets: path.resolve(curProcess, './src/assets'),
-			pictures: path.resolve(curProcess, './src/static/Pictures.js'),
+			pictures: path.resolve(curProcess, './src/static/Pictures'),
 		},
 		modules: ['src', 'node_modules'],
 		extensions: ['.ts', '.tsx', '.js', '.jsx'],

@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es2018",
+		"types": ["cypress", "cypress-react-selector", "node"],
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -22,6 +23,6 @@
 		//"jsxImportSource": "@emotion/react",
 		"jsx": "preserve"
 	},
-	"include": ["./src"],
+	"include": ["./src", "**/*.ts"],
 	"exclude": ["node_modules", "dist", "src/index.js", "config"]
 }

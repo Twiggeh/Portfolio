@@ -10,7 +10,8 @@
 		"debug": "echo NODE_ENV=development > .env && echo BACKEND_URL=http://localhost:5050 >> .env && webpack-dev-server --config ./config/webpack.dev.js --mode development --host 0.0.0.0 --port 5000",
 		"build": "echo NODE_ENV=production > .env && echo BACKEND_URL=https://www.twiggeh.xyz >> .env && webpack --config ./config/webpack.prod.js --mode production",
 		"buildalyze": "echo NODE_ENV=production > .env && echo ANALYZE=true >> .env && > .env && echo BACKEND_URL=http://localhost:5050 && webpack --config ./config/webpack.prod.js --mode production",
-		"start": "echo NODE_ENV=development > .env &&  webpack-dev-server --config ./config/webpack.dev.js --mode development --open"
+		"start": "echo NODE_ENV=development > .env &&  webpack-dev-server --config ./config/webpack.dev.js --mode development --open",
+		"cypress": "cypress open"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
@@ -27,9 +28,12 @@
 		"babel-plugin-emotion": "^10.0.33",
 		"clean-webpack-plugin": "^3.0.0",
 		"css-loader": "^3.6.0",
+		"cypress": "^6.3.0",
+		"cypress-react-selector": "^2.3.3",
 		"dotenv": "^8.2.0",
 		"eslint": "^7.14.0",
 		"eslint-loader": "^4.0.0",
+		"eslint-plugin-cypress": "^2.11.2",
 		"eslint-plugin-emotion": "^10.0.27",
 		"eslint-plugin-react": "^7.19.0",
 		"eslint-plugin-react-hooks": "^3.0.0",
@@ -57,6 +61,8 @@
 	"dependencies": {
 		"@emotion/eslint-plugin": "^11.0.0",
 		"@emotion/react": "^11.1.4",
+		"@types/jest": "^26.0.20",
+		"@types/mocha": "^8.2.0",
 		"@types/react-router-dom": "^5.1.7",
 		"@types/uuid": "^8.3.0",
 		"@typescript-eslint/eslint-plugin": "^4.12.0",

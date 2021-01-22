@@ -38,7 +38,8 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				exclude: /node_modules/,
+				include: /src/,
+				exclude: [/node_modules/, /cypress/],
 				use: [
 					{
 						loader: 'babel-loader',
@@ -63,8 +64,8 @@ module.exports = {
 			{
 				test: /\.jsx?$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/,
 				include: /src/,
+				exclude: [/node_modules/, /cypress/],
 				options: {
 					presets: [
 						'@babel/preset-env',

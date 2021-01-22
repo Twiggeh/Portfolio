@@ -1,9 +1,11 @@
 {
-	"eslint.workingDirectories": [
-		"client",
-		"server"
-	],
-	"cSpell.words": [
-		"Anims"
+	"eslint.workingDirectories": ["client", "server"],
+	"cSpell.words": ["Anims", "khala"],
+
+	"json.schemas": [
+		{
+			"fileMatch": ["cypress.json"],
+			"url": "https://on.cypress.io/cypress.schema.json"
+		}
 	]
 }
