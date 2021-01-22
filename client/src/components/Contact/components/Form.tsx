@@ -122,6 +122,7 @@ const Form = () => {
 					<Input
 						key='ContactEmailInput'
 						type='email'
+						name='email'
 						value={formState.email}
 						onChange={({ target: { value } }) => setFormState('email', value)}
 						required
