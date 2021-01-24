@@ -19,10 +19,10 @@ interface INoteVideo {
 	precedence: Precedence;
 }
 
-const NoteVideo: React.FC<INoteVideo> = ({ src, alt, precedence }) => {
+const NoteVideo: React.FC<INoteVideo> = ({ src, precedence }) => {
 	return (
 		<StyledVideo precedence={precedence} controls loop>
-			<source src={src} type='video/mp4'></source>
+			<source src={src} type='video/mp4' />
 		</StyledVideo>
 	);
 };
@@ -30,11 +30,11 @@ const NoteVideo: React.FC<INoteVideo> = ({ src, alt, precedence }) => {
 const ImgModalCss = {
 	modalCss: `
 		display: flex;
-		flexDirection: row-reverse;
+		flex-direction: row-reverse;
 		padding: 0;
-		img: {
-			maxHeight: 'calc(100vh * 0.8)';
-			maxWidth: 'calc(100vw *0.8)';
+		img {
+			max-height: calc(100vh * 0.8);
+			max-width: calc(100vw *0.8);
 		}
 	`,
 	closeBtnCss: `
@@ -62,7 +62,7 @@ const FeatureNote: React.FC<IFeatureNote> = ({
 
 	return (
 		<FeatureWrapper>
-			{title ? <Title bigGap={!renderReverse}>{title}</Title> : null}
+			{title ? <STitle bigGap={!renderReverse}>{title}</STitle> : null}
 			<FeatureContentWrap reverse={renderReverse}>
 				{isImg ? (
 					<FeatureImg
@@ -78,7 +78,7 @@ const FeatureNote: React.FC<IFeatureNote> = ({
 					<NoteVideo {...{ precedence }} src={src} alt={alt} />
 				)}
 				<FeatureDescBtnWrap>
-					{text ? <Description>{text}</Description> : null}
+					{text ? <SDescription>{text}</SDescription> : null}
 					{btnUrl ? <Button href={btnUrl} content={btnText} /> : null}
 				</FeatureDescBtnWrap>
 			</FeatureContentWrap>
@@ -120,7 +120,7 @@ var FeatureContentWrap = styled.div<{ reverse: boolean }>`
 			div {
 				padding-left: 0;
 			}`
-			: `${Description} {
+			: `${SDescription} {
 				margin-top: -0.35em;
 			}`};
 	${[mq[1]]} {
@@ -134,8 +134,8 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { queries } from '../../../../styles/globalStyle';
 import Button from './components/Button';
-import Description from './components/Description';
-import Title from './components/Title';
+import SDescription from './components/Description';
+import STitle from './components/Title';
 import { ModalContext } from '../../../../App';
 import { Note } from '../../../../static/Projects';
 import { khala } from '../../../../static/Pictures';
