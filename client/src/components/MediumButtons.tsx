@@ -23,28 +23,24 @@ const VertSepColor = () => (
 	</>
 );
 
-const MediumButtons: React.FC<{
-	buttons: Button[];
-	scss: string;
-}> = ({ buttons, scss }) => {
-	const formatButton = (
-		btnName: string,
-		SVG?: React.FC<React.SVGProps<SVGSVGElement>>
-	) => {
-		if (!SVG) return <BtnListBtn>{btnName}</BtnListBtn>;
-		return (
-			<>
-				<HoverBorder css={HoverBorderStyle} />
-				<BtnIcoWrap>
-					<SVG />
-				</BtnIcoWrap>
-				<VertSepColor />
-				<BtnListBtn>{btnName}</BtnListBtn>
-			</>
-		);
-	};
+const formatButton = (btnName: string, SVG?: React.FC<React.SVGProps<SVGSVGElement>>) => {
+	if (!SVG) return <BtnListBtn>{btnName}</BtnListBtn>;
+	return (
+		<>
+			<HoverBorder css={HoverBorderStyle} />
+			<BtnIcoWrap>
+				<SVG />
+			</BtnIcoWrap>
+			<VertSepColor />
+			<BtnListBtn>{btnName}</BtnListBtn>
+		</>
+	);
+};
 
+const MediumButtons: React.FC<IMediumButtons> = ({ buttons, scss }) => {
 	const { setModal } = ModalContext();
+
+	if (!buttons) return null;
 
 	const btnList = buttons.map(({ btnName, btnUrl, modal, svg }, i) => {
 		return (
@@ -163,3 +159,8 @@ var VertSep = styled.div`
 `;
 
 export default MediumButtons;
+
+interface IMediumButtons {
+	buttons?: Button[];
+	scss: string;
+}

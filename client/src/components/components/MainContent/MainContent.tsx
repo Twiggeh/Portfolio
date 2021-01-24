@@ -22,7 +22,7 @@ const MainContent: React.FC<IMainContent> = ({
 					<MainTitle>{title}</MainTitle>
 					<MainSubtitle>{subTitle}</MainSubtitle>
 				</MainTitleWrap>
-				{buttons ? <MediumButtons buttons={buttons} scss={bottomLine} /> : null}
+				<MediumButtons buttons={buttons} scss={bottomLine} />
 			</MainHeadWrap>
 			<NoteRenderer notes={notes} />
 		</Main>
@@ -83,13 +83,7 @@ import React from 'react';
 import { colors, queries, styles } from '../../../styles/globalStyle';
 import NoteRenderer from './components/NoteRenderer';
 import MediumButtons from '../../MediumButtons';
-import { ModalContext } from '../../../App';
 import { Content } from '../../../static/Projects';
-import { css } from '@emotion/react';
-/** @typedef {{
-	data: import('../../../static/Projects.js').Content
-}} MainContentInput
-*/
 
 /**
  * @typedef {number} Tablet - The tablet breakpoint in px
