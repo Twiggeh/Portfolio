@@ -17,9 +17,9 @@ const Modals = () => {
 				e.preventDefault();
 				setModal(undefined);
 			}}>
-			<StyledDialog css={modalCss} modal={Boolean(modal)}>
+			<StyledDialog scss={modalCss} modal={Boolean(modal)}>
 				<ModalButton
-					css={closeBtnCss}
+					scss={closeBtnCss}
 					onClick={e => {
 						e.preventDefault();
 						setModal(undefined);
@@ -43,28 +43,26 @@ var ModalWrapper = styled.div`
 	backdrop-filter: grayscale(1) blur(1px);
 `;
 
-var StyledDialog = styled.dialog<CustomCss & { modal: boolean }>`
+var StyledDialog = styled.dialog<CustomCSS & { modal: boolean }>`
 	position: fixed;
-	display: ${props => (props.modal ? 'block' : 'none')};
 	padding-top: 2em;
 	border-style: solid;
 	border-width: 1px;
 	border-color: hotpink;
 	backdrop-filter: unset;
 	filter: 'drop-shadow(0 0 1em rgba(200, 63, 134, 0.6))';
+	${({ scss, modal }) => `
+  display: ${modal ? 'block' : 'none'};
+  ${scss};`}
 `;
 
-var ModalButton = styled.button<CustomCss>`
+var ModalButton = styled.button<CustomCSS>`
 	padding: 0;
 	border-width: 0;
 	background: transparent;
 	margin-top: -0.5em;
-	${props => props.css}
+	${({ scss }) => scss}
 `;
-
-type CustomCss = {
-	css?: string;
-};
 
 export default Modals;
 
