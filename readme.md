@@ -1,4 +1,6 @@
 # My Portfolio Site.
 
-Debug with `yarn debug`. If VSC's Chrome debugger is installed, breakpoints will be mapped to VSC.
-Run with `yarn build` and then host the index.html in public.
+Install dependencies by running `yarn install` in `client` and `server`. </br>
+Then, in VSC run `start debug session` in the debug panel.
+
+To start cypress run `yarn run cypress` in `client`.
