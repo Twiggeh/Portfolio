@@ -3,3 +3,5 @@ node_modules
 .yarn
 dist
 .env
+coverage
+.nyc_output
