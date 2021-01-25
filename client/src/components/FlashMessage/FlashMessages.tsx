@@ -95,7 +95,7 @@ const FlashMessages: React.FC<IFlashMessages> = ({ flashMessages, setFlashMessag
 					const timePassed = Date.now() - animRegistrar.startTime;
 					const minTimePassed = timePassed > minDur - animationSwitchThreshold;
 
-					if (isNewAnim) {
+					if (isNewAnim && animRegistrar.exitId) {
 						// New Animation has been detected, remove the un-mount of the element
 						clearTimeout(animRegistrar.exitId);
 					}
@@ -152,7 +152,7 @@ const FlashMessages: React.FC<IFlashMessages> = ({ flashMessages, setFlashMessag
 					// animRegistrar.startTime = Date.now();
 				}
 
-				let exitId;
+				let exitId: NodeJS.Timeout | undefined;
 				// Register deletion callback && into the regAnims holder
 				if (maxDur !== 'infinite') {
 					// Delete the animated object from the pool
@@ -239,7 +239,7 @@ export type RegisteredAnimations = {
 	current: Record<
 		string,
 		{
-			exitId?: number;
+			exitId?: NodeJS.Timeout;
 			startTime: number;
 			curAnim: FlashMessage['type'];
 			curData: string;
