@@ -25,6 +25,12 @@ const __dirname = dirname(new URL(import.meta.url).pathname);
 
 const app = express();
 
+if (!isProd) {
+	const cypressMiddleware = (await import('@cypress/code-coverage/middleware/express.js'))
+		.default;
+	cypressMiddleware(app);
+}
+
 const logStream = createWriteStream(join(__dirname, 'access.log'), { flags: 'a' });
 const myDate = new Date();
 

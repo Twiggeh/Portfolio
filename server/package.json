@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@cypress/code-coverage": "^3.9.2",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
@@ -8,7 +9,7 @@
 		"morgan": "^1.10.0"
 	},
 	"scripts": {
-		"debug": "echo NODE_ENV=development > .env && nodemon app",
+		"debug": "echo NODE_ENV=development > .env && nyc --silent nodemon app",
 		"start": "echo NODE_ENV=production > .env && node app"
 	},
 	"name": "server",
