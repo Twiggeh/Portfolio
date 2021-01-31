@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"target": "esnext",
+		"lib": ["ESNext", "DOM"],
+		"moduleResolution": "Node",
+		"baseUrl": ".",
+		"module": "ESNext",
+		"noImplicitAny": true,
+		"sourceMap": true,
+		"allowSyntheticDefaultImports": true,
+		"outDir": "dist",
+		"typeRoots": ["@types"]
+	},
+	"compileOnSave": false,
+	"include": ["src/**/*", "@types"]
+}

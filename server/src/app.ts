@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import https from 'https';
-import keys from './keys/keys.js';
+import keys from '../keys/keys.js';
 import { join, resolve, dirname } from 'path';
-import FormSubmission from './Models/FormSubmission.js';
+import FormSubmission, { validFormSubmissionSubjects } from '../Models/FormSubmission.js';
 import { cwd } from 'process';
 import { readFileSync, createWriteStream } from 'fs';
 import http from 'http';
@@ -14,18 +14,18 @@ import { config } from 'dotenv';
 config();
 
 const SECURE_PORT = 8080;
-const UPGRADE_PORT = 8081;
+const INSECURE_PORT = 8081;
 const DEV_PORT = 5050;
 
 const isProd = process.env.NODE_ENV === 'production';
-const secureServerPort = isProd ? SECURE_PORT : DEV_PORT;
-const upgradeServerPort = UPGRADE_PORT;
+const mainServerPort = isProd ? SECURE_PORT : DEV_PORT;
 
-const __dirname = dirname(new URL(import.meta.url).pathname);
+const __dirname = decodeURI(dirname(new URL(import.meta.url).pathname));
 
 const app = express();
 
 if (!isProd) {
+	// @ts-ignore
 	const cypressMiddleware = (await import('@cypress/code-coverage/middleware/express.js'))
 		.default;
 	cypressMiddleware(app);
@@ -72,8 +72,10 @@ app.use(
 	cors({
 		origin: (origin, cb) => {
 			if (!allowedOrigins.includes(origin)) {
-				const msg = `The CORS policy doesn't allow access from ${origin}.`;
-				return cb(msg, false);
+				return cb(
+					new Error(`The CORS policy doesn't allow access from ${origin}.`),
+					false
+				);
 			}
 			return cb(null, true);
 		},
@@ -91,16 +93,13 @@ if (isProd) {
 
 app.post(
 	'/api/v1/submit',
-	[
-		body('email', 'Empty or Invalid Email').isEmail(),
-		body(
-			'subject',
-			'Needs to be a value of "software", "art", "art training", "software training" or "other".'
-		)
-			.escape()
-			.isIn(['software', 'art', 'art training', 'software training', 'other']),
-		body('message', 'No message provided.').escape().trim().isLength({ min: 1 }),
-	],
+	body(
+		'subject',
+		'Needs to be a value of "software", "art", "art training", "software training" or "other".'
+	)
+		.escape()
+		.isIn(validFormSubmissionSubjects),
+	body('message', 'No message provided.').escape().trim().isLength({ min: 1 }),
 	async (req, res) => {
 		const errors = validationResult(req).array();
 		if (errors?.length !== 0) {
@@ -154,8 +153,8 @@ if (isProd) {
 					.end();
 			});
 		})
-		.listen(upgradeServerPort, () => {
-			console.log(`Http upgrade server online on port ${upgradeServerPort}`);
+		.listen(INSECURE_PORT, () => {
+			console.log(`Http upgrade server online on port ${INSECURE_PORT}`);
 		});
 
 	https
@@ -166,11 +165,11 @@ if (isProd) {
 			},
 			app
 		)
-		.listen(secureServerPort, () => {
-			console.log(`Secure Server is listening on port ${secureServerPort}`);
+		.listen(mainServerPort, () => {
+			console.log(`Secure Server is listening on port ${mainServerPort}`);
 		});
 } else {
-	app.listen(secureServerPort, () => {
-		console.log(`Dev server is listening on port ${secureServerPort}`);
+	app.listen(mainServerPort, () => {
+		console.log(`Dev server is listening on port ${mainServerPort}`);
 	});
 }
