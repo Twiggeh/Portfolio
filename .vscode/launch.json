@@ -41,12 +41,41 @@
 			"skipFiles": ["<node_internals>/**"],
 			"type": "pwa-node",
 			"runtimeArgs": ["debug"]
+		},
+		{
+			"type": "pwa-chrome",
+			"request": "attach",
+			"name": "Attach to Chrome",
+			"port": 9999,
+			"webRoot": "${workspaceFolder}/client",
+			"sourceMaps": true,
+			"skipFiles": ["cypress_runner.js"]
+		},
+		{
+			"command": "tsc --noEmit -w",
+			"cwd": "${workspaceFolder}/client",
+			"name": "TSC Watcher Client",
+			"request": "launch",
+			"type": "node-terminal",
+			"internalConsoleOptions": "neverOpen"
+		},
+		{
+			"command": "yarn debug",
+			"cwd": "${workspaceFolder}/server",
+			"name": "TSC Compiler Server",
+			"request": "launch",
+			"type": "node-terminal"
 		}
 	],
 	"compounds": [
 		{
 			"name": "start debug session",
-			"configurations": ["Launch Chrome", "Development Backend"],
+			"configurations": [
+				"Launch Chrome",
+				"Development Backend",
+				"TSC Watcher Client",
+				"TSC Compiler Server"
+			],
 			"preLaunchTask": "start Webpack",
 			"stopAll": true
 		}
