@@ -4,3 +4,4 @@ node_modules
 *.log
 *.env
 .nyc_output
+dist
