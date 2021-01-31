@@ -32,15 +32,13 @@
 		},
 		{
 			"name": "Development Backend",
-			"console": "integratedTerminal",
-			"internalConsoleOptions": "neverOpen",
 			"cwd": "${workspaceFolder}/server",
-			"request": "launch",
+			"outFiles": ["${workspaceFolder}/server/dist/**/*.js", "!**/node_modules/**"],
 			"restart": true,
-			"runtimeExecutable": "yarn",
-			"skipFiles": ["<node_internals>/**"],
+			"request": "launch",
 			"type": "pwa-node",
-			"runtimeArgs": ["debug"]
+			"runtimeExecutable": "nodemon",
+			"runtimeArgs": ["--inspect-brk", "./dist/src/app.js"]
 		},
 		{
 			"type": "pwa-chrome",
@@ -52,17 +50,17 @@
 			"skipFiles": ["cypress_runner.js"]
 		},
 		{
+			"name": "TSC Watcher Client",
 			"command": "tsc --noEmit -w",
 			"cwd": "${workspaceFolder}/client",
-			"name": "TSC Watcher Client",
 			"request": "launch",
 			"type": "node-terminal",
 			"internalConsoleOptions": "neverOpen"
 		},
 		{
+			"name": "TSC Compiler Server",
 			"command": "yarn debug",
 			"cwd": "${workspaceFolder}/server",
-			"name": "TSC Compiler Server",
 			"request": "launch",
 			"type": "node-terminal"
 		}
