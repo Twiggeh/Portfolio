@@ -1,0 +1,12 @@
+{
+	"name": "Portfolio",
+	"version": "1.0.0",
+	"description": "Twiggehs Portfolio Website",
+	"repository": "https://github.com/Twiggeh/Portfolio.git",
+	"author": "Twiggeh <twiggeh99@gmail.com>",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"install": "./setup.sh"
+	}
+}
