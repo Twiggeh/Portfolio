@@ -5,6 +5,7 @@ require('dotenv').config();
 const mode = process.env.NODE_ENV;
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 console.log(mode);
 const curProcess = process.cwd();
@@ -188,5 +189,6 @@ module.exports = {
 		new webpack.DefinePlugin({
 			BACKEND_URL: JSON.stringify(process.env.BACKEND_URL),
 		}),
+		new CleanWebpackPlugin(),
 	],
 };
