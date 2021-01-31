@@ -1,3 +1,5 @@
+const BACKEND_URL: string;
+
 type CustomCSS = {
 	scss?: string;
 };

@@ -53,9 +53,6 @@ const Form = () => {
 
 	const [sendMsgDep, sendMsg] = useState(0);
 
-	// TODO webpack prod doesn't inject variables
-	const BACKEND_URL = 'https://www.twiggeh.xyz';
-
 	const result = useFetch<ContactFetch>(`${BACKEND_URL}/api/v1/submit`, {
 		fetchOptions: {
 			method: 'POST',
