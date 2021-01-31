@@ -152,7 +152,7 @@ const FlashMessages: React.FC<IFlashMessages> = ({ flashMessages, setFlashMessag
 					// animRegistrar.startTime = Date.now();
 				}
 
-				let exitId: NodeJS.Timeout | undefined;
+				let exitId: ReturnType<typeof setTimeout> | undefined;
 				// Register deletion callback && into the regAnims holder
 				if (maxDur !== 'infinite') {
 					// Delete the animated object from the pool
@@ -239,7 +239,7 @@ export type RegisteredAnimations = {
 	current: Record<
 		string,
 		{
-			exitId?: NodeJS.Timeout;
+			exitId?: ReturnType<typeof setTimeout>;
 			startTime: number;
 			curAnim: FlashMessage['type'];
 			curData: string;
