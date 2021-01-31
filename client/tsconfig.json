@@ -23,6 +23,6 @@
 		//"jsxImportSource": "@emotion/react",
 		"jsx": "preserve"
 	},
-	"include": ["./src", "**/*.ts"],
-	"exclude": ["node_modules", "dist", "src/index.js", "config"]
+	"include": ["src", "**/*.ts"],
+	"exclude": ["node_modules", "dist", "src/index.js", "config", "cypress"]
 }
