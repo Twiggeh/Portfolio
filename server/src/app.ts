@@ -95,7 +95,11 @@ app.post(
 	'/api/v1/submit',
 	body(
 		'subject',
-		'Needs to be a value of "software", "art", "art training", "software training" or "other".'
+		`Needs to be a value of ${validFormSubmissionSubjects.reduce((acc, cur, i) => {
+			const delimiter =
+				i === 0 ? '' : i + 1 < validFormSubmissionSubjects.length ? ', ' : ', or ';
+			return acc + delimiter + cur;
+		}, '')}.`
 	)
 		.escape()
 		.isIn(validFormSubmissionSubjects),
