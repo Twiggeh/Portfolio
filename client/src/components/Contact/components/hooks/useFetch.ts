@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-const useFetch = <Result,>(
+const useFetch = <Result>(
 	url: RequestInfo,
 	{
 		fetchOptions = { method: 'GET' },
@@ -7,10 +7,10 @@ const useFetch = <Result,>(
 		callbacks: { successCb, finalCb, failCb } = {},
 	}: FetchOptions<Result>
 ) => {
-	const isMounted = useRef(true);
+	const isMounted = useRef(false);
 
 	useEffect(() => {
-		isMounted.current = false;
+		isMounted.current = true;
 	}, []);
 
 	const initFState: ReturnFStates<Result> = {
@@ -66,6 +66,7 @@ const useFetch = <Result,>(
 
 				result[0] = res;
 			} catch (error) {
+				console.log(error);
 				fDispatch({ type: 'error', error });
 				failCb && failCb(error);
 
