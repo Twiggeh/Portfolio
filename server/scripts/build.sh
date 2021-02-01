@@ -1,18 +1,29 @@
 #!/usr/bin/bash
-# Set all environ variables, then run node (with tmux, otherwise use something like pm2 to deamonize)
-echo NODE_ENV=production > .env
-echo SERVER_DIR=$PWD >> .env
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+. "$DIR/parseParameters.sh"
+
+# Set all .env parameters
+echo NODE_ENV=production >"$DIR/../.env"
+echo SERVER_DIR=$PWD >>"$DIR/../.env"
 
 # DOMAINS
-echo DOMAIN=91.89.120.211 >> .env
-echo SUBDOMAIN= >> .env
-echo DOMAINEXTENSION= >> .env
+echo DOMAIN="${arguments[DOMAIN]}" >>"$DIR/../.env"
+echo SUBDOMAIN="${arguments[SUBDOMAIN]}" >>"$DIR/../.env"
+echo DOMAINEXTENSION="${arguments[DOMAINEXTENSION]}" >>"$DIR/../.env"
 
 # PORTS
-echo SECURE_PORT= 5000 >> .env
-echo DEV_PORT= 5000 >> .env
-echo UPGRADE_PORT= 5000  >> .env
+echo SECURE_PORT="${arguments[SECUREPORT]}" >>"$DIR/../.env"
+echo DEV_PORT="${arguments[DEVELOPMENTPORT]}" >>"$DIR/../.env"
+echo INSECURE_PORT="${arguments[INSECUREPORT]}" >>"$DIR/../.env"
 # TODO : add config for production to not use maps
+
+# PROTOCOL
+echo BACKEND_PROTOCOL="${arguments[BACKENDPROTOCOL]}" >>"$DIR/../.env"
+
+# DIRECTORIES
+mkdir -p public/uploads
+mkdir -p dist/public/uploads
 
 tsc
 node ./dist/src/app.js
