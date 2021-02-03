@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 import React from 'react';
-import { SerializedStyles } from '@emotion/core';
-import { css as emotionCss } from '@emotion/react';
+import { SerializedStyles, css as emotionCss } from '@emotion/react';
 
 interface IHoverBorder {
 	hoverGradient?: boolean;

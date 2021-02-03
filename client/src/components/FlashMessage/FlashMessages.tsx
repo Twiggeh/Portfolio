@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/react';
 
 // how many milliseconds leeway to allow updating the current animation even if the minimum time has not yet passed. Removes "unnecessary" setTimeouts
 const animationSwitchThreshold = 50;

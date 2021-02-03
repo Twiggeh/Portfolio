@@ -1,4 +1,4 @@
-import { Global, css } from '@emotion/core';
+import { Global, css } from '@emotion/react';
 import { hot } from 'react-hot-loader/root';
 import './assets/global.css';
 import createCtx from './components/Providers/createCtx';
@@ -22,9 +22,20 @@ const App = () => {
 		});
 	};
 
+	const [state, setState] = useState(1);
 	return (
 		<>
 			<Global styles={globalStyle} />
+			<div css={{ background: 'black' }}> {state}</div>
+
+			<button
+				css={{ background: 'black' }}
+				onClick={e => {
+					e.preventDefault();
+					setState(c => c + 1);
+				}}>
+				Pluss
+			</button>
 			<ModalProvider value={{ modal, setModal }}>
 				<FlashMessageProvider value={{ setFlashMessages, addFlashMessages }}>
 					<FlashMessages

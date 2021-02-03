@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { colors, styles } from '../../../styles/globalStyle';
 
 const FormInputCss = css`
