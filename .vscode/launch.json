@@ -63,7 +63,13 @@
 			"cwd": "${workspaceFolder}/server",
 			"request": "launch",
 			"type": "node-terminal"
-		}
+    },
+    {
+      "name": "Build Children",
+      "command": "./server/scripts/startChildren.sh",
+      "request": "launch",
+      "type": "node-terminal"
+    }
 	],
 	"compounds": [
 		{

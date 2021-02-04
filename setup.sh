@@ -4,17 +4,12 @@
 git clone https://github.com/Twiggeh/ImgurClone
 
 # Install Dependencies Imgur Clone
-cd ./ImgurClone/client/
+cd ./ImgurClone/
 
-yarn install
-
-cd ../server
-
-yarn install
-
+./setup.sh
 
 # Install Dependencies Portfolio
-cd ../../server/
+cd ../
 
 yarn install
 
@@ -23,5 +18,3 @@ cd ../client
 yarn install
 
 echo "Done :D"
-
-
