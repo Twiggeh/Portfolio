@@ -1,7 +1,12 @@
 {
 	"compilerOptions": {
 		"target": "es2018",
-		"types": ["cypress", "cypress-react-selector", "node"],
+		"types": [
+			"cypress",
+			"cypress-react-selector",
+			"node",
+			"@emotion/react/types/css-prop"
+		],
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
