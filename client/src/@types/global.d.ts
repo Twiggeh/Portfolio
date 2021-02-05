@@ -3,6 +3,11 @@ const BACKEND_URL: string;
 type CustomCSS = {
 	scss?: string;
 };
+interface StringConstructor {
+	constructor: <Input extends unknown>(input: Input) => Input | undefined;
+	new: <Input extends unknown>(input: Input) => Input | undefined;
+	<Input extends unknown>(input: Input): Input | undefined;
+}
 
 declare module '*.svg' {
 	const content: React.FC<React.SVGProps<SVGSVGElement>>;

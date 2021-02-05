@@ -22,20 +22,9 @@ const App = () => {
 		});
 	};
 
-	const [state, setState] = useState(1);
 	return (
 		<>
 			<Global styles={globalStyle} />
-			<div css={{ background: 'black' }}> {state}</div>
-
-			<button
-				css={{ background: 'black' }}
-				onClick={e => {
-					e.preventDefault();
-					setState(c => c + 1);
-				}}>
-				Pluss
-			</button>
 			<ModalProvider value={{ modal, setModal }}>
 				<FlashMessageProvider value={{ setFlashMessages, addFlashMessages }}>
 					<FlashMessages
@@ -54,9 +43,9 @@ export default hot(App);
 
 import React, { useState } from 'react';
 import Body from './components/Body/body_index';
-import Modals, { Modal } from './components/Modals/modal_index';
+import Modals, { Modal } from './components/Modal_index';
 import { queries, colors, styles } from './styles/globalStyle';
-import FlashMessages, { FlashMessage } from './components/FlashMessage/FlashMessages';
+import FlashMessages, { FlashMessage } from './components/Contact/FlashMessages_index';
 
 var globalStyle = css`
 	* {

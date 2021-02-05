@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { colors, queries, styles } from '../styles/globalStyle';
-import HoverBorder from './components/HoverBorder';
-import ButtonS from './components/MainContent/components/components/ButtonStyle';
 import { Button } from '../static/Projects';
 import { ModalContext } from '../App';
 import { css } from '@emotion/react';
+import HoverBorder from './MainContent/HoverBorder';
+import ButtonS from './MainContent/ButtonStyle';
 
 const mq = queries.mainQueries;
 

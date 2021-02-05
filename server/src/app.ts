@@ -45,8 +45,10 @@ const logger = morgan(':time :url :method :remote-addr :user-agent :response-tim
 app.disable('x-powered-by');
 
 const allowedOrigins = [
+	'http://localhost:5050',
 	'http://localhost:5000',
 	'http://127.0.0.1:5000',
+	'http://127.0.0.1:5050',
 	'https://www.twiggeh.xyz',
 	undefined,
 ];
@@ -113,7 +115,6 @@ app.post(
 				formData: req.body,
 			});
 		}
-
 		const myFS = new FormSubmission();
 		myFS.email = req.body.email;
 		myFS.date = myDate.toISOString();
@@ -131,6 +132,10 @@ app.post(
 		}
 	}
 );
+
+app.get('/imgurclone', () => {
+	console.log('ehllo');
+});
 
 app.get('/api/v1/socket_playground', async () => {
 	// TODO : Add socket playground

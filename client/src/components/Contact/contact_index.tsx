@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { fontSizes, queries, styles, svgs } from '../../styles/globalStyle';
 import MediumButtons from '../MediumButtons';
-import Title from './components/components/Title';
-import Form from './components/Form';
+import Form from './Form';
 import CV from 'assets/cv website/CV_Twiggeh.pdf';
+import Title from '../MainContent/Title';
 
 const buttons = [{ svg: svgs.Download, btnName: 'Download', btnUrl: CV }];
 

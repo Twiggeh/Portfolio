@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
 import { colors, styles } from '../styles/globalStyle';
-import HoverBorder from './components/HoverBorder';
+import HoverBorder from './MainContent/HoverBorder';
 
 const SideBtn = styled.a`
 	pointer-events: all;

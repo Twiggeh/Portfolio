@@ -23,6 +23,17 @@ const exportMe: Cypress.PluginConfig = (on, config) => {
 
 	// IMPORTANT to return the config object
 	// with the any changed environment variables
+
+	//on('before:browser:launch', (browser = {}, args) => {
+	//
+	//  if (browser.name === 'chrome') {
+	//    args.push('--remote-debugging-port=9222')
+	//
+	//    // whatever you return here becomes the new args
+	//    return args
+	//  }
+	//
+	//})
 	return config;
 };
 

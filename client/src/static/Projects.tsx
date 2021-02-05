@@ -282,7 +282,7 @@ import {
 	medStudent_0,
 } from './Pictures';
 import { ReplayBotStateless, ReplayBotUi } from './Videos';
-import type { Modal } from '../components/Modals/modal_index';
+import type { Modal } from '../components/Modal_index';
 
 /**
  * @typedef {object} FeatureNote - Notes are the messages attached
