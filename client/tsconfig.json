@@ -29,5 +29,5 @@
 		"jsx": "preserve"
 	},
 	"include": ["src", "**/*.ts"],
-	"exclude": ["node_modules", "dist", "src/index.js", "config", "cypress"]
+	"exclude": ["node_modules", "dist", "src/index.js", "config"]
 }

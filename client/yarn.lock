@@ -4197,10 +4197,10 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-cypress-react-selector@^2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/cypress-react-selector/-/cypress-react-selector-2.3.3.tgz#2d24fdb5d87343a7dceacdf43e21b86a25ce442f"
-  integrity sha512-YuP0xNJIonVmh6UGTF9tiM8Xu6ZjglmktC+rWLswSobKUI4apyEMWNnr43WE7O0iEnWU2azwobI4RfUIJjnbBA==
+cypress-react-selector@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/cypress-react-selector/-/cypress-react-selector-2.3.6.tgz#f884292c22c5cd783bfad4c991842e5be4df9380"
+  integrity sha512-fK1jpsOIfIqjObyuMQiopkf18HZ8p0j8Gk9H2bzIbRL3KzTqkJhhLkMLOOEUNZ7P52v1U4wdUN7iaF0brAAIGA==
   dependencies:
     resq "1.10.0"
 
