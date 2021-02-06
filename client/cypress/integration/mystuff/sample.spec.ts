@@ -48,35 +48,40 @@ describe('Routing', () => {
 	});
 });
 
+describe('Content Page functionality', () => {
+	before(() => cy.visit('/'));
 	it('Shows Modals for Buttons', () => {
-		cy.visit('/');
 		cy.waitForReact(1001);
 
-		cy.getReact('MediumButtons')
-			.should('exist')
-			.each(node => {
-				cy.wrap(node)
-					.getProps('buttons')
-					.then(buttonsProp => {
-						for (
-							let buttonIndex = 0;
-							buttonIndex < buttonsProp.length;
-							buttonIndex += 1
-						) {
-							const { btnName, modal, btnUrl }: Button = buttonsProp[buttonIndex];
+		cy.getReact('MediumButtons').each(BtnListWrap => {
+			cy.wrap(BtnListWrap)
+				.getProps('buttons')
+				.each((btnProp: Button) => {
+					if (btnProp.modal === undefined) return true;
+					cy.react('BtnListWrap', { props: { href: btnProp.btnUrl } }).click();
+					cy.get('[class*="content"]')
+						.should('have.css', 'color', 'black')
+						.get('[class*="ModalButton"]')
+						.should('exist')
+						.click();
+				});
+		});
+	});
 
-							if (!modal) continue;
-
-							cy.react('BtnListWrap', { props: { href: btnUrl } })
-								.should('exist')
-								.eq(0)
-								.click()
-								.then(() => {
-									//cy.react('ModalWrapper').should('exist');
-									cy.getReact('ModalButton').nthNode(0).should('exist').trigger('click');
-								});
-						}
-					});
+	it('PopUp Images load and work', () => {
+		cy.get('[class*="FeatureImg"]').each(image => {
+			cy.wrap(image)
+				.trigger('click')
+				.get('[class*="StyledDialog"]')
+				.should('exist')
+				.get('[class*="ModalButton"]')
+				.should('exist')
+				.trigger('click')
+				.get('[class*="ModalWrapper"]')
+				.should('not.exist');
+		});
+	});
+});
 			});
 	});
 });
