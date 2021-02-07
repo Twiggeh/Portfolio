@@ -61,7 +61,9 @@ describe('Content Page functionality', () => {
 					if (btnProp.modal === undefined) return true;
 					cy.react('BtnListWrap', { props: { href: btnProp.btnUrl } }).click();
 					cy.get('[class*="content"]')
-						.should('have.css', 'color', 'black')
+						.nthNode(0)
+						.children()
+						.should('have.css', 'color', 'rgb(0, 0, 0)')
 						.get('[class*="ModalButton"]')
 						.should('exist')
 						.click();
