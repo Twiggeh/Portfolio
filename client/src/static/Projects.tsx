@@ -11,7 +11,12 @@ const ReplayBotData: Content = {
 			svg: svgs.GithubLogo,
 			modal: {
 				content: (
-					<div css={{ padding: '1em', paddingTop: '0' }}>
+					<div
+						css={{
+							padding: '1em',
+							paddingTop: '0',
+							'&>*': { color: 'black' },
+						}}>
 						<h1 css={{ fontSize: '2em', paddingBottom: '1em', fontWeight: 500 }}>
 							Currently not available
 						</h1>

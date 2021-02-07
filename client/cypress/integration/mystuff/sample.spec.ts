@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 import { Button } from '../../../src/static/Projects';
 
 // safely handles circular references
