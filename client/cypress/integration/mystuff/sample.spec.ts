@@ -84,6 +84,32 @@ describe('Content Page functionality', () => {
 				.should('not.exist');
 		});
 	});
+
+	it('Goes to the Respective Subdirection of a Sidebar', () => {
+		let page: '' | 'art' | 'project' = '';
+		cy.get('[class*="SidebarWrapper"]')
+			.should('exist')
+			.get('[class*="AsideTitle"]')
+			.click()
+			.invoke('text')
+			.then(text => {
+				page = text as typeof page;
+				switch (page) {
+					case 'art':
+						// TODO : ForEach click
+						// TODO : should check if it jumped to the correct one as well
+						// TODO : Needs to check all pages programmatically
+						cy.get('[class*="SideWrapper"]')
+							.nthNode(0)
+							.click()
+							.url()
+							.should('contain', '/' + page);
+
+					default:
+						cy.log(page);
+				}
+			});
+	});
 });
 
 describe('Contact page functionality', () => {
