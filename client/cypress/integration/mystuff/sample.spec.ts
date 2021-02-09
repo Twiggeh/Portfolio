@@ -1,5 +1,5 @@
 /* eslint-disable security/detect-object-injection */
-import { Button } from '../../../src/static/Projects';
+import Projects, { Button } from '../../../src/static/Projects';
 
 // safely handles circular references
 const safeStringify = (obj: any, indent = 2) => {
@@ -18,7 +18,13 @@ const safeStringify = (obj: any, indent = 2) => {
 	return retVal;
 };
 
-const ContentPages = ['art', 'projects', '/'] as const;
+const ContentPages: (keyof typeof Projects | '/')[] = ['art', 'projects', '/'];
+
+const forEachContentPage = (cb: (page: typeof ContentPages[number]) => void) => {
+	for (const page of ContentPages) {
+		cb(page);
+	}
+};
 
 /* eslint-disable cypress/no-unnecessary-waiting */
 describe('Routing', () => {
@@ -28,18 +34,15 @@ describe('Routing', () => {
 	});
 
 	it('Loads all content pages', () => {
-		const loadsContentPage = (pages: typeof ContentPages) => {
-			for (const page of pages) {
-				cy.visit(page)
-					.get('[class*="SideAndMainPage"]')
-					.should('exist')
-					.should('have.length.at.least', 1)
-					.get('[class*="SideWrapper"]')
-					.should('exist')
-					.should('have.length.at.least', 1);
-			}
-		};
-		loadsContentPage(ContentPages);
+		forEachContentPage(page => {
+			cy.visit(page)
+				.get('[class*="SideAndMainPage"]')
+				.should('exist')
+				.should('have.length.at.least', 1)
+				.get('[class*="SideWrapper"]')
+				.should('exist')
+				.should('have.length.at.least', 1);
+		});
 	});
 
 	it('Loads Contact Page', () => {
@@ -86,29 +89,27 @@ describe('Content Page functionality', () => {
 	});
 
 	it('Goes to the Respective Subdirection of a Sidebar', () => {
-		let page: '' | 'art' | 'project' = '';
-		cy.get('[class*="SidebarWrapper"]')
-			.should('exist')
-			.get('[class*="AsideTitle"]')
-			.click()
-			.invoke('text')
-			.then(text => {
-				page = text as typeof page;
-				switch (page) {
-					case 'art':
-						// TODO : ForEach click
-						// TODO : should check if it jumped to the correct one as well
-						// TODO : Needs to check all pages programmatically
-						cy.get('[class*="SideWrapper"]')
-							.nthNode(0)
-							.click()
-							.url()
-							.should('contain', '/' + page);
-
-					default:
-						cy.log(page);
-				}
-			});
+		forEachContentPage(() => {
+			// Check whether each content page has a sidebar wrapper and if it redirects to the correct page
+			cy.get('[class*="SidebarWrapper"]')
+				.should('exist')
+				.get('[class*="AsideTitle"]')
+				.click()
+				.invoke('text')
+				.then(text => {
+					switch (text as keyof typeof Projects) {
+						case 'art':
+						case 'projects':
+							// TODO : ForEach click
+							// TODO : should check if it jumped to the correct one as well
+							cy.get('[class*="SideWrapper"]')
+								.nthNode(0)
+								.click()
+								.url()
+								.should('contain', '/' + text);
+					}
+				});
+		});
 	});
 });
 
