@@ -8,5 +8,8 @@
 	"private": true,
 	"scripts": {
 		"install": "./setup.sh"
+	},
+	"devDependencies": {
+		"@types/node": "^14.14.29"
 	}
 }
