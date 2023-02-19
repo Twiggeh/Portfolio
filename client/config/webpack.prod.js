@@ -10,7 +10,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 console.log(mode);
 const curProcess = process.cwd();
@@ -58,7 +59,12 @@ module.exports = {
 							inputSourceMap: false,
 						},
 					},
-					{ loader: 'ts-loader' },
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+						},
+					},
 				],
 			},
 			{
