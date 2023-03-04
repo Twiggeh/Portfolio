@@ -28,6 +28,6 @@ if [[ ! -f "dist/src/app.js" ]]; then
 fi
 
 # Start all children
-"$DIR/startChildren.sh"
+# "$DIR/startChildren.sh"
 
 tsc -w

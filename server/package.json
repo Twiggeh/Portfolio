@@ -13,7 +13,8 @@
 		"express": "^4.17.1",
 		"express-validator": "^6.6.1",
 		"mongoose": "^5.10.9",
-		"morgan": "^1.10.0"
+		"morgan": "^1.10.0",
+		"typescript": "^4.9.5"
 	},
 	"scripts": {
 		"debug": "./scripts/debug.sh",
